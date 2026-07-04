@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "RyderShare Intelligence.dc.html"
-OUT = ROOT / "rydershare-intelligence.html"
+OUT = ROOT / "index.html"  # named index.html so static hosts (Vercel) serve it at the site root
 
 src = SRC.read_text(encoding="utf-8")
 

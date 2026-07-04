@@ -5,8 +5,9 @@ the Tom Regan / DTS VPs demo (week of Jul 6, 2026). PRD of record: `docs/PRD.md`
 
 ## The deliverable
 
-**`rydershare-intelligence.html`** — one self-contained file (~675 KB). Open it in any browser,
-including from `file://` with the network disabled. No server, no build step, no CDN.
+**`index.html`** — one self-contained file (~675 KB). Open it in any browser, including from
+`file://` with the network disabled — no server, no build step, no CDN. The name also makes
+static hosts (Vercel) serve it at the site root.
 
 - Zero external requests (verified via the Performance API: 0 resource fetches). Inter is embedded
   as a base64 WOFF2 (variable, latin subset) with the PRD's metric-compatible fallback stack;
