@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build the standalone RyderShare Intelligence prototype.
+"""Build the LEGACY V1 prototype (always-enabled, no onboarding journey).
+
+Superseded on the live site by V2 (src/build_v2.py → index.html). Kept so the
+V1 "product as if already enabled" variant stays reproducible; its output
+(v1.html) is gitignored and NOT deployed.
 
 Assembles one self-contained HTML file from:
   - RyderShare Intelligence.dc.html  (design source of record — markup + logic, kept verbatim)
@@ -17,7 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "RyderShare Intelligence.dc.html"
-OUT = ROOT / "index.html"  # named index.html so static hosts (Vercel) serve it at the site root
+OUT = ROOT / "v1.html"  # legacy V1 output — gitignored, not deployed (V2 owns index.html)
 
 src = SRC.read_text(encoding="utf-8")
 

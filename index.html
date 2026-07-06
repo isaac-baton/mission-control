@@ -32,11 +32,21 @@ input:focus{outline:none}
 @keyframes aiFlow{to{background-position:0 -400%}}
 @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}}
 </style>
+<style>
+/* V2 — Intelligence gating + enable-moment flash */
+[data-intel="off"] [data-intel-only]{display:none !important}
+[data-intel="on"] [data-intel-off-only]{display:none !important}
+[data-intel-flash="on"]{position:relative;isolation:isolate}
+[data-intel-flash="on"]::after{content:"";position:absolute;inset:-3px;border-radius:inherit;padding:3px;background:conic-gradient(from var(--ag),#5AC8FA,#9BE8FF,#4CD9A8,#FFD84D,#FF6B81,#5AC8FA);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 6px rgba(90,200,250,0.95)) drop-shadow(0 0 14px rgba(255,107,129,0.5));animation:aiSpin 3.84s linear infinite,v2FlashOut 3.1s ease forwards;pointer-events:none;z-index:3}
+@keyframes v2FlashOut{0%{opacity:0}10%{opacity:1}70%{opacity:1}100%{opacity:0}}
+[data-aiglow="cta"]::before{border-radius:13px}
+[data-aiglow="act"]::before{border-radius:15px;animation-duration:1.08s;filter:drop-shadow(0 0 8px rgba(90,200,250,1)) drop-shadow(0 0 18px rgba(255,107,129,0.7)) drop-shadow(0 0 32px rgba(76,217,168,0.6))}
+</style>
 <style>body:not(.dc-ready){visibility:hidden}x-dc{display:contents}</style>
 </head>
 <body>
 <x-dc>
-<div style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">
+<div data-intel="{{ dataIntel }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">
 
   <!-- ============ LEFT RAIL ============ -->
   <nav style="width:64px;min-width:64px;background:#303235;display:flex;flex-direction:column;align-items:stretch;z-index:40">
@@ -55,22 +65,23 @@ input:focus{outline:none}
     </a>
     <a href="#/insights" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isInsights }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <span style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
+      <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>
+      <span data-intel-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Insights</span>
     </a>
-    <a href="#/agents" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+    <a href="#/agents" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isAgents }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <span style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
+      <span data-intel-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="2"></rect><path d="M12 9V5"></path><circle cx="12" cy="4" r="1"></circle><path d="M9.5 13.5v2"></path><path d="M14.5 13.5v2"></path><path d="M2 14h3"></path><path d="M19 14h3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">AI agents</span>
     </a>
-    <a href="#/reviews" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+    <a href="#/reviews" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isReviews }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 18v-1"></path><path d="M12 18v-6"></path><path d="M16 18v-3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Reviews</span>
     </a>
-    <a href="#/risk" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+    <a href="#/risk" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isRisk }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Risk</span>
@@ -105,15 +116,22 @@ input:focus{outline:none}
         <!-- ============ S0a SHIPMENTS ============ -->
         <sc-if value="{{ shipMain }}">
         <div data-screen-label="Shipments" style="padding:20px 24px 120px">
+          <div data-intel-off-only="" style="margin-bottom:14px">
+          <button data-nav="insights" onClick="{{ navTo }}" data-aiedge="" style="position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:11px 16px;cursor:pointer;font-family:inherit;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6">
+            <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>
+            <span style="font-size:13px;color:#303235;flex:1"><b style="font-weight:600">New — RyderShare Intelligence.</b> Digests, cited answers, and a storm plan before you ask.</span>
+            <span style="font-size:12.5px;font-weight:500;color:#307CA7;white-space:nowrap">See what it finds →</span>
+          </button>
+          </div>
           <sc-if value="{{ notApproved }}">
-          <button data-nav="risk" onClick="{{ navTo }}" style="display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#FEF9E6;border:0;border-left:3px solid #F0C005;border-radius:8px;padding:11px 16px;margin-bottom:14px;cursor:pointer;font-family:inherit">
+          <button data-nav="risk" onClick="{{ navTo }}" data-intel-only="" data-intel-flash="{{ intelFlash }}" style="display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#FEF9E6;border:0;border-left:3px solid #F0C005;border-radius:8px;padding:11px 16px;margin-bottom:14px;cursor:pointer;font-family:inherit">
             <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
             <span style="font-size:13px;color:#655102;flex:1"><b style="font-weight:600">Heads up:</b> Thursday's Gulf storm puts 6 of this week's loads at risk — RyderShare has a mitigation plan ready.</span>
             <span style="font-size:12.5px;font-weight:600;color:#655102;white-space:nowrap">Review plan →</span>
           </button>
           </sc-if>
           <sc-if value="{{ approved }}">
-          <div style="display:flex;align-items:center;gap:10px;background:#E8F5F0;border-left:3px solid #34A081;border-radius:8px;padding:11px 16px;margin-bottom:14px">
+          <div data-intel-only="" style="display:flex;align-items:center;gap:10px;background:#E8F5F0;border-left:3px solid #34A081;border-radius:8px;padding:11px 16px;margin-bottom:14px">
             <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
             <span style="font-size:13px;color:#1F7A61;flex:1"><b style="font-weight:600">Storm plan active</b> — 6 Thursday loads pre-load Wednesday or reroute via I-75. Marcus Reed and your DCs are notified.</span>
           </div>
@@ -239,7 +257,7 @@ input:focus{outline:none}
                   <div style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">Atlanta DC-03</div>
                   <div style="padding:13px 16px;white-space:nowrap"><span style="font-size:13px;font-weight:500;color:#1D1D20">Savannah corridor</span><span style="font-size:12px;color:#696B6F"> · Savannah, GA</span></div>
                   <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#303235;font-variant-numeric:tabular-nums">2/5</span><div style="width:56px;height:4px;background:#ECEDED;border-radius:2px"><div style="width:40%;height:4px;background:#F0C005;border-radius:2px"></div></div></div></div>
-                  <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#655102;font-weight:500">4:15 PM ET · Jul 7</span><button data-l="SBG-31241" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:3px;background:none;border:0;padding:0 2px;font-family:inherit;font-size:11.5px;font-weight:600;color:#307CA7;cursor:pointer"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why?</button></div></div>
+                  <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#655102;font-weight:500">4:15 PM ET · Jul 7</span><button data-l="SBG-31241" data-intel-only="" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:3px;background:none;border:0;padding:0 2px;font-family:inherit;font-size:11.5px;font-weight:600;color:#307CA7;cursor:pointer"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why?</button></div></div>
                   <div style="padding:13px 16px;font-size:12.5px;color:#696B6F;white-space:nowrap">3m ago</div>
                 </div>
                 <div data-ref="SBG-31242" onClick="{{ openLoad }}" style="display:grid;grid-template-columns:minmax(118px,1fr) minmax(104px,0.9fr) minmax(128px,1fr) minmax(132px,1.1fr) minmax(230px,1.8fr) minmax(138px,1fr) minmax(200px,1.6fr) minmax(84px,0.7fr);align-items:center;border-top:1px solid #E3E4E5;cursor:pointer;{{ r2Ord }};{{ r2St }}" style-hover="background:#F5F6F6">
@@ -259,7 +277,7 @@ input:focus{outline:none}
                   <div style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">Memphis DC-02</div>
                   <div style="padding:13px 16px;white-space:nowrap"><span style="font-size:13px;font-weight:500;color:#1D1D20">Nashville retail</span><span style="font-size:12px;color:#696B6F"> · Nashville, TN</span></div>
                   <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#303235;font-variant-numeric:tabular-nums">1/6</span><div style="width:56px;height:4px;background:#ECEDED;border-radius:2px"><div style="width:16.7%;height:4px;background:#F0C005;border-radius:2px"></div></div></div></div>
-                  <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#655102;font-weight:500">3:05 PM CT · Jul 7</span><button data-l="SBG-31243" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:3px;background:none;border:0;padding:0 2px;font-family:inherit;font-size:11.5px;font-weight:600;color:#307CA7;cursor:pointer"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why?</button></div></div>
+                  <div style="padding:13px 16px;white-space:nowrap"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:13px;color:#655102;font-weight:500">3:05 PM CT · Jul 7</span><button data-l="SBG-31243" data-intel-only="" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:3px;background:none;border:0;padding:0 2px;font-family:inherit;font-size:11.5px;font-weight:600;color:#307CA7;cursor:pointer"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why?</button></div></div>
                   <div style="padding:13px 16px;font-size:12.5px;color:#696B6F;white-space:nowrap">6m ago</div>
                 </div>
                 <div data-ref="SBG-31244" onClick="{{ openLoad }}" style="display:grid;grid-template-columns:minmax(118px,1fr) minmax(104px,0.9fr) minmax(128px,1fr) minmax(132px,1.1fr) minmax(230px,1.8fr) minmax(138px,1fr) minmax(200px,1.6fr) minmax(84px,0.7fr);align-items:center;border-top:1px solid #E3E4E5;cursor:pointer;{{ r4Ord }};{{ r4St }}" style-hover="background:#F5F6F6">
@@ -411,15 +429,15 @@ input:focus{outline:none}
 
         <sc-if value="{{ netMain }}"><div data-screen-label="Network" style="display:flex;flex-direction:column;height:100%;background:#fff">
           <!-- Mission-control stat strip -->
-          <div style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;padding:12px 20px;border-bottom:1px solid #E3E4E5;background:#F5F6F6">
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg><span style="font-size:16px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">60</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Active loads</span></div>
-            <button data-f="late" onClick="{{ nfClick }}" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#F5F6F6"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span style="font-size:16px;font-weight:600;color:#655102;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">3</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Running late</span></button>
-            <button data-nav="risk" onClick="{{ navTo }}" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#F5F6F6"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg><span style="font-size:16px;font-weight:600;color:#655102;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">6</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">At-risk · Thu</span></button>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span style="font-size:16px;font-weight:600;color:#1F7A61;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">96.2%</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">On-time · this week</span></div>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span style="font-size:16px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">59/60</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">GPS coverage</span></div>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span style="font-size:16px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">2</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">White glove</span></div>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg><span style="font-size:16px;font-weight:600;color:#1F7A61;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">18.4%</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Empty miles · ▼ 0.6</span></div>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:9px 12px;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg><span style="font-size:16px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">$3.68<span style="font-size:11px;font-weight:500;color:#696B6F">/gal</span></span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Fuel · DOE index</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;padding:12px 20px;border-bottom:1px solid #E3E4E5;background:#F5F6F6">
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg><span style="font-size:18px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">60</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Active loads</span></div>
+            <button data-f="late" onClick="{{ nfClick }}" style="position:relative;padding-right:32px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#F5F6F6"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span style="font-size:18px;font-weight:600;color:#655102;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">3</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Running late</span><svg style="flex:none;position:absolute;right:12px;top:50%;transform:translateY(-50%)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+            <button data-intel-only="" data-nav="risk" onClick="{{ navTo }}" style="position:relative;padding-right:32px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center;cursor:pointer;font-family:inherit;text-align:left" style-hover="background:#F5F6F6"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg><span style="font-size:18px;font-weight:600;color:#655102;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">6</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">At-risk · Thu</span><svg style="flex:none;position:absolute;right:12px;top:50%;transform:translateY(-50%)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span style="font-size:18px;font-weight:600;color:#1F7A61;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">96.2%</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">On-time · this week</span></div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span style="font-size:18px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">59/60</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">GPS coverage</span></div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg><span style="font-size:18px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">2</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">White glove</span></div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg><span style="font-size:18px;font-weight:600;color:#1F7A61;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">18.4%</span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Empty miles · ▼ 0.6</span></div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 14px;min-width:0;display:flex;flex-direction:column;gap:7px;justify-content:center"><span style="display:flex;align-items:center;gap:6px;min-width:0"><svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#696B6F" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg><span style="font-size:18px;font-weight:600;color:#1D1D20;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap">$3.68<span style="font-size:11px;font-weight:500;color:#696B6F">/gal</span></span></span><span style="font-size:10px;font-weight:500;letter-spacing:0.03em;text-transform:uppercase;color:#696B6F;line-height:1.35">Fuel · DOE index</span></div>
           </div>
           <div style="display:flex;flex:1;min-height:0">
           <!-- Left card list -->
@@ -573,9 +591,9 @@ input:focus{outline:none}
               <div style="border:1px solid #ECEDED;border-radius:6px;padding:10px 12px"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Next stop ETA</div><div style="font-size:13px;margin-top:4px;{{ lEtaStyle }}">{{ lEta }}</div></div>
               <div style="border:1px solid #ECEDED;border-radius:6px;padding:10px 12px"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Trailer</div><div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:4px">{{ lTrailer }}</div><div style="font-size:11.5px;color:#696B6F;margin-top:2px">Driver + helper crew</div></div>
             </div>
-            <div data-aiglow="card" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:10px 12px;margin-top:14px;flex-wrap:wrap">
+            <div data-aiglow="card" data-intel-only="" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:10px 12px;margin-top:14px;flex-wrap:wrap">
               <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
-              <sc-if value="{{ lChipLate }}"><button data-l="{{ lRef }}" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why is it late?</button></sc-if>
+              <sc-if value="{{ lChipLate }}"><button data-l="{{ lRef }}" data-intel-only="" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why is it late?</button></sc-if>
               <button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">At-risk this week</button>
               <button data-q="q1" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Fleet performance</button>
             </div>
@@ -710,7 +728,7 @@ input:focus{outline:none}
                 <sc-if value="{{ popStd }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;line-height:16px;white-space:nowrap;background:#E8F5F0;color:#1F7A61">Started</span></sc-if>
               </div>
               <div style="font-size:12.5px;margin-top:8px;{{ popEtaStyle }}">{{ popEta }}</div>
-              <div style="display:flex;gap:14px;margin-top:8px;align-items:center"><button data-ref="{{ popRef }}" onClick="{{ openLoad }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">View load</button><sc-if value="{{ popLate }}"><button data-l="{{ popRef }}" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:4px;background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why late?</button></sc-if></div>
+              <div style="display:flex;gap:14px;margin-top:8px;align-items:center"><button data-ref="{{ popRef }}" onClick="{{ openLoad }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">View load</button><sc-if value="{{ popLate }}"><button data-l="{{ popRef }}" data-intel-only="" onClick="{{ askLate }}" style="display:inline-flex;align-items:center;gap:4px;background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path></svg>Why late?</button></sc-if></div>
             </div>
             </sc-if>
             <!-- Overlay pills -->
@@ -720,20 +738,20 @@ input:focus{outline:none}
                 <button data-f="on" onClick="{{ nfClick }}" style="flex:1;border:0;border-radius:999px;padding:5px 0;font-family:inherit;font-size:12px;font-weight:500;background:none;cursor:pointer;{{ nfOnSt }}">On time (12)</button>
                 <button data-f="late" onClick="{{ nfClick }}" style="flex:1;border:0;border-radius:999px;padding:5px 0;font-family:inherit;font-size:12px;font-weight:500;background:none;cursor:pointer;{{ nfLateSt }}">Late (2)</button>
               </div>
-              <div data-aiglow="card" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 14px">
+              <div data-aiglow="card" data-intel-only="" data-intel-flash="{{ intelFlash }}" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 14px">
                 <div style="display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Network brief</span></div>
                 <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px"><sc-if value="{{ notApproved }}"><span>2 loads are running late — both first-stop delays, ETAs hold. Thursday's storm puts <b style="font-weight:600">6 loads</b> at risk; a mitigation plan is ready.</span></sc-if><sc-if value="{{ approved }}"><span>Storm plan active — 6 Thursday loads pre-load or reroute. 2 late loads are tracking to updated ETAs.</span></sc-if></div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
                   <button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">At-risk loads</button>
-                  <button data-l="SBG-31241" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">Why late?</button>
+                  <button data-l="SBG-31241" data-intel-only="" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">Why late?</button>
                   <button data-q="q3" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">Backhaul value</button>
                 </div>
               </div>
             </div>
             <div style="position:absolute;bottom:84px;left:16px;display:flex;gap:8px;z-index:6">
               
-              <button data-y="lyStorm" onClick="{{ lyClick }}" style="border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;{{ lyStormSt }}">Storm</button>
-              <button data-y="lyBh" onClick="{{ lyClick }}" style="border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;{{ lyBhSt }}">Backhaul $</button>
+              <button data-y="lyStorm" data-intel-only="" onClick="{{ lyClick }}" style="border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;{{ lyStormSt }}">Storm</button>
+              <button data-y="lyBh" data-intel-only="" onClick="{{ lyClick }}" style="border:0;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;{{ lyBhSt }}">Backhaul $</button>
             </div>
             <div style="position:absolute;bottom:84px;right:16px;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
               <div style="display:flex;flex-direction:column;background:#fff;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden">
@@ -772,9 +790,9 @@ input:focus{outline:none}
               <div style="border:1px solid #ECEDED;border-radius:6px;padding:10px 12px"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Next stop ETA</div><div style="font-size:13px;margin-top:4px;{{ lEtaStyle }}">{{ lEta }}</div></div>
               <div style="border:1px solid #ECEDED;border-radius:6px;padding:10px 12px"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Trailer</div><div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:4px">{{ lTrailer }}</div><div style="font-size:11.5px;color:#696B6F;margin-top:2px">Driver + helper crew</div></div>
             </div>
-            <div data-aiglow="card" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:10px 12px;margin-top:14px;flex-wrap:wrap">
+            <div data-aiglow="card" data-intel-only="" style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:10px 12px;margin-top:14px;flex-wrap:wrap">
               <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
-              <sc-if value="{{ lChipLate }}"><button data-l="{{ lRef }}" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why is it late?</button></sc-if>
+              <sc-if value="{{ lChipLate }}"><button data-l="{{ lRef }}" data-intel-only="" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why is it late?</button></sc-if>
               <button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">At-risk this week</button>
               <button data-q="q1" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Fleet performance</button>
             </div>
@@ -799,7 +817,137 @@ input:focus{outline:none}
           </div>
         </div>
         </sc-if>
-        <sc-if value="{{ isInsights }}"><div data-screen-label="Insights" style="padding:24px 24px 140px;max-width:1440px;margin:0 auto">
+        <sc-if value="{{ showLanding }}">
+        <div data-screen-label="Intelligence landing" style="padding:0 24px 140px;max-width:1020px;margin:0 auto">
+
+          <!-- Hero -->
+          <div style="padding:58px 0 36px;text-align:center">
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>
+              <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">RyderShare Intelligence</span>
+            </div>
+            <div style="font-size:34px;font-weight:600;color:#1D1D20;letter-spacing:-0.01em;margin-top:18px;line-height:1.15">Your fleet, explained.</div>
+            <div style="font-size:15px;color:#303235;line-height:1.6;max-width:600px;margin:14px auto 0">RyderShare shows you every load, live. Intelligence reads them — what happened, what it costs, and what to do next — grounded in the records that already run your freight.</div>
+
+            <sc-if value="{{ actIdle }}">
+            <div style="margin-top:28px">
+              <button data-aiglow="cta" onClick="{{ enableIntel }}" style="background:#1D1D20;color:#fff;border:0;border-radius:10px;padding:0 26px;height:44px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap">Enable RyderShare Intelligence</button>
+              <div style="font-size:12px;color:#696B6F;margin-top:14px">No setup — it reads the RyderShare data you already have · Preview for Summit Beverage Group</div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ activating }}">
+            <div style="margin-top:28px;display:flex;justify-content:center">
+              <div data-aiglow="act" style="background:#fff;border:1px solid transparent;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px 24px;width:420px;max-width:100%;text-align:left">
+                <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-bottom:12px">Turning on Intelligence for Summit Beverage Group</div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-if value="{{ act1 }}">
+                  <div style="display:flex;align-items:center;gap:10px;animation:rev .25s ease both">
+                    <sc-if value="{{ act1Done }}"><svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
+                    <sc-if value="{{ act1Now }}"><span style="flex:none;width:9px;height:9px;margin:3px;border-radius:50%;background:#5AC8FA;animation:dotPulse 1.2s ease infinite"></span></sc-if>
+                    <span style="font-size:13px;color:#303235">Connecting to your RyderShare records</span>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ act2 }}">
+                  <div style="display:flex;align-items:center;gap:10px;animation:rev .25s ease both">
+                    <sc-if value="{{ act2Done }}"><svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
+                    <sc-if value="{{ act2Now }}"><span style="flex:none;width:9px;height:9px;margin:3px;border-radius:50%;background:#5AC8FA;animation:dotPulse 1.2s ease infinite"></span></sc-if>
+                    <span style="font-size:13px;color:#303235">Reading June — 1,187 loads · 214 invoice lines · 4 DC feeds</span>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ act3 }}">
+                  <div style="display:flex;align-items:center;gap:10px;animation:rev .25s ease both">
+                    <sc-if value="{{ act3Done }}"><svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
+                    <sc-if value="{{ act3Now }}"><span style="flex:none;width:9px;height:9px;margin:3px;border-radius:50%;background:#5AC8FA;animation:dotPulse 1.2s ease infinite"></span></sc-if>
+                    <span style="font-size:13px;color:#303235">Generating your first digest</span>
+                  </div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+            </sc-if>
+          </div>
+
+          <!-- Benefits -->
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg></span>
+                <span style="font-size:15px;font-weight:600;color:#1D1D20">Your week, already read</span>
+              </div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">A morning digest of on-time, cost per stop, and the two things worth your attention — written from your live loads and invoices before you sit down.</div>
+              <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">96.2% on-time, explained · generated 6:02 AM</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
+                <span style="font-size:15px;font-weight:600;color:#1D1D20">Ask anything, get a cited answer</span>
+              </div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Why was June 8% higher? What is my empty backhaul worth? Chart-backed answers with sources you can audit — your data, showing its work.</div>
+              <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Found for SBG: ≈ $458K/yr in empty return lanes</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span>
+                <span style="font-size:15px;font-weight:600;color:#1D1D20">Your business review, in 42 seconds</span>
+              </div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">The monthly review your team assembles by hand — generated for every account, every month, from invoice bridge to open opportunities.</div>
+              <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">June review ready Jul 1 · 214 lines audited against contract</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
+                <span style="font-size:15px;font-weight:600;color:#1D1D20">Ahead of the storm</span>
+              </div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">At-risk loads flagged days early, with a recommended plan — pre-loads, reroutes, receiver notices. You approve; it happens.</div>
+              <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Thursday handled Tuesday · 6 avoided failures for +$1,840</div>
+            </div>
+          </div>
+
+          <!-- Agents -->
+          <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:36px 0 6px">Four agents, ready to work</div>
+          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails — every action is logged and reversible, and nothing cost-bearing ships without your decision.</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+              <span style="width:28px;height:28px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
+              <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">ETA &amp; notifications</div>
+              <div style="font-size:12px;color:#696B6F;line-height:1.5;margin-top:3px">Pushes updated ETAs to receivers when loads run late.</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+              <span style="width:28px;height:28px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+              <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Dock scheduling</div>
+              <div style="font-size:12px;color:#696B6F;line-height:1.5;margin-top:3px">Requests and reschedules dock slots at your DCs and receivers.</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+              <span style="width:28px;height:28px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span>
+              <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Invoice audit</div>
+              <div style="font-size:12px;color:#696B6F;line-height:1.5;margin-top:3px">First-pass audit of every line against contract rates.</div>
+            </div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+              <span style="width:28px;height:28px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
+              <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Backhaul tender</div>
+              <div style="font-size:12px;color:#696B6F;line-height:1.5;margin-top:3px">Drafts tenders for empty lanes. Never sends without your approval.</div>
+            </div>
+          </div>
+
+          <!-- Trust -->
+          <div data-aiedge="" style="position:relative;overflow:hidden;background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px 24px;margin-top:36px">
+            <div style="font-size:15px;font-weight:600;color:#1D1D20">Every answer shows its work</div>
+            <div style="font-size:13px;color:#303235;line-height:1.6;margin-top:8px;max-width:760px">Intelligence reads the same records that run your freight — loads, invoices, telemetry, contracts. Answers cite their sources. Agents keep an audit log. And you stay the approver on anything that costs money.</div>
+          </div>
+
+          <!-- Bottom CTA -->
+          <sc-if value="{{ actIdle }}">
+          <div style="text-align:center;margin:44px 0 0">
+            <button data-aiglow="cta" onClick="{{ enableIntel }}" style="background:#1D1D20;color:#fff;border:0;border-radius:10px;padding:0 26px;height:44px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap">Enable RyderShare Intelligence</button>
+            <div style="font-size:12px;color:#696B6F;margin-top:14px">Takes seconds · No new integrations</div>
+          </div>
+          </sc-if>
+
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ showIntelHub }}"><div data-screen-label="Insights" style="padding:24px 24px 140px;max-width:1440px;margin:0 auto">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
             <div>
               <div style="font-size:24px;font-weight:600;color:#1D1D20">Good morning, Dana</div>
@@ -926,7 +1074,7 @@ input:focus{outline:none}
             <button onClick="{{ goBack }}" aria-label="Back" style="width:32px;height:32px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#44464B" style-hover="background:#F5F6F6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg></button>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
             <span style="font-size:16px;font-weight:600;color:#1D1D20">Ask RyderShare</span>
-            <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;line-height:16px;background:#FEF9E6;color:#655102">Concept</span>
+            
           </div>
           <div ref="{{ threadRef }}" style="flex:1;overflow:auto">
             <div style="max-width:760px;margin:0 auto;padding:20px 20px 130px">
@@ -2389,7 +2537,108 @@ class Component extends DCLogic {
   }
 }
 
-window.__dcBoot(Component, {"motion": true, "startRoute": "shipments"});
+/* V2 — RyderShare Intelligence onboarding layer.
+ *
+ * Extends the verbatim V1 Component. Pre-enable, the product is "RyderShare
+ * today": no AI surfaces (CSS-gated via [data-intel]), the AI rail routes are
+ * hidden, and #/insights is a landing page that sells the capability. Enabling
+ * runs a short staged activation, then the same route becomes the intelligence
+ * hub and every AI surface unlocks with a few seconds of rainbow flash
+ * ([data-intel-flash]). In-memory only: reload returns to the un-enabled state
+ * (demo reset). `?intel=1` or the startEnabled prop boots straight to enabled.
+ */
+class ComponentV2 extends Component {
+  constructor(props) {
+    super(props);
+    var self = this;
+    this.INTEL_GATED = ['insights', 'agents', 'reviews', 'risk', 'ask'];
+
+    var startOn = props.startEnabled === true;
+    try {
+      if (new URLSearchParams(location.search).get('intel') === '1') startOn = true;
+    } catch (e) {}
+
+    this.state.intel = startOn;
+    this.state.intelFlash = '';
+    this.state.activating = false;
+    this.state.actStep = 0;
+
+    // A cold load on a gated route lands on the landing page instead
+    // (#/insights is the landing pre-enable, so it stays reachable).
+    if (!startOn) {
+      if (['agents', 'reviews', 'risk'].indexOf(this.state.route) >= 0) {
+        this.state.route = 'insights';
+        try { history.replaceState(null, '', '#/insights'); } catch (e) {}
+      }
+      if (this.state.askOpen) { this.state.askOpen = false; this.state.route = 'insights'; try { history.replaceState(null, '', '#/insights'); } catch (e) {} }
+    }
+
+    // Ask is part of Intelligence: pre-enable, any entry point routes to the pitch.
+    var baseOpenAsk = this.openAsk;
+    this.openAsk = function (text, qid) {
+      if (!self.state.intel) { self.nav('insights'); return; }
+      baseOpenAsk(text, qid);
+    };
+
+    // Gate hash navigation to AI routes pre-enable.
+    var baseCDM = this.componentDidMount;
+    this.componentDidMount = function () {
+      baseCDM();
+      var origOnHash = self._onHash;
+      window.removeEventListener('hashchange', origOnHash);
+      self._onHash = function () {
+        var h = location.hash.replace(/^#\//, '');
+        if (!self.state.intel && self.INTEL_GATED.indexOf(h) >= 0 && h !== 'insights') {
+          try { history.replaceState(null, '', '#/insights'); } catch (e) {}
+          if (self.state.route !== 'insights') self.setRoute('insights');
+          return;
+        }
+        origOnHash();
+      };
+      window.addEventListener('hashchange', self._onHash);
+    };
+
+    var baseRV = this.renderVals;
+    this.renderVals = function () {
+      var v = baseRV();
+      var s = self.state;
+      v.dataIntel = s.intel ? 'on' : 'off';
+      v.intelOn = s.intel;
+      v.intelFlash = s.intelFlash;
+      // Weather response is Intelligence: pre-enable the map carries no storm overlay.
+      if (!s.intel) v.stormOp = '0';
+      v.showLanding = s.route === 'insights' && !s.intel;
+      v.showIntelHub = s.route === 'insights' && s.intel;
+      v.showGlobalBar = v.showGlobalBar && s.intel;
+      v.actIdle = !s.activating;
+      v.activating = s.activating;
+      v.act1 = s.actStep >= 1; v.act1Done = s.actStep > 1; v.act1Now = s.actStep === 1;
+      v.act2 = s.actStep >= 2; v.act2Done = s.actStep > 2; v.act2Now = s.actStep === 2;
+      v.act3 = s.actStep >= 3; v.act3Done = false;         v.act3Now = s.actStep === 3;
+      v.enableIntel = function () { self.enableIntel(); };
+      return v;
+    };
+  }
+
+  enableIntel() {
+    if (this.state.intel || this.state.activating) return;
+    var self = this;
+    var finish = function () {
+      self.setState({ activating: false, actStep: 0, intel: true, intelFlash: 'on' }, function () {
+        requestAnimationFrame(function () { if (self._main) self._main.scrollTop = 0; });
+      });
+      self.t(function () { self.setState({ intelFlash: '' }); }, 5200);
+    };
+    if (this.rm()) { finish(); return; }
+    this.setState({ activating: true, actStep: 1 });
+    requestAnimationFrame(function () { if (self._main) self._main.scrollTop = 0; });
+    this.t(function () { self.setState({ actStep: 2 }); }, 1700);
+    this.t(function () { self.setState({ actStep: 3 }); }, 3400);
+    this.t(finish, 5200);
+  }
+}
+
+window.__dcBoot(ComponentV2, {"motion": true, "startRoute": "shipments", "startEnabled": false});
 </script>
 </body>
 </html>

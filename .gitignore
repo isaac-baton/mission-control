@@ -1,0 +1,9 @@
+# Legacy V1 build output — reproducible via `python3 src/build.py`, not deployed
+v1.html
+# Superseded V2 output name (V2 now builds to index.html)
+index-v2.html
+
+# Duplicate Inter weights (variable font inter-400.woff2 covers all)
+assets/inter-500.woff2
+assets/inter-600.woff2
+assets/inter-700.woff2

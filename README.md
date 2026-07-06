@@ -5,9 +5,11 @@ the Tom Regan / DTS VPs demo (week of Jul 6, 2026). PRD of record: `docs/PRD.md`
 
 ## The deliverable
 
-**`index.html`** — one self-contained file (~675 KB). Open it in any browser, including from
-`file://` with the network disabled — no server, no build step, no CDN. The name also makes
-static hosts (Vercel) serve it at the site root.
+**`index.html`** — the **Version 2** onboarding journey (see the V2 section below). This is the
+deployed site: Vercel serves `index.html` at the root. Built by `python3 src/build_v2.py`.
+
+One self-contained file (~698 KB). Open it in any browser, including from `file://` with the
+network disabled — no server, no build step, no CDN.
 
 - Zero external requests (verified via the Performance API: 0 resource fetches). Inter is embedded
   as a base64 WOFF2 (variable, latin subset) with the PRD's metric-compatible fallback stack;
@@ -17,6 +19,9 @@ static hosts (Vercel) serve it at the site root.
 
 Routes: `#/shipments` `#/network` `#/insights` `#/reviews` `#/risk` (+ `#/agents`, and `#/ask`
 which opens the Ask RyderShare slide-over on top of the current screen).
+
+**Version 1** (the "product as if Intelligence is already on" — no onboarding) is superseded on the
+live site but stays reproducible: `python3 src/build.py` → `v1.html` (gitignored, not deployed).
 
 ## How it was built
 
@@ -31,15 +36,19 @@ synchronous `setState` commits against `renderVals()`.
 ```
 RyderShare Intelligence.dc.html   design source of record (exported from Claude Design)
 support.js                        the preview runtime it replaces (reference only)
-src/runtime.js                    dc-lite standalone runtime
-src/build.py                      assembles the single-file deliverable
+src/runtime.js                    dc-lite standalone runtime (shared by both builds)
+src/build_v2.py                   canonical build → index.html (V2, deployed)
+src/v2/                           V2 patch layer: landing.html, logic.js, v2.css
+src/build.py                      legacy V1 build → v1.html (gitignored)
 assets/                           Inter woff2 + logo png (embedded at build time)
 docs/PRD.md                       the PRD (from the design project's uploads/)
 uploads/                          logo at its original path, so the .dc.html preview also works locally
 ```
 
 **Rebuild after a design change:** replace `RyderShare Intelligence.dc.html` with the new export
-from claude.ai/design, then run `python3 src/build.py`. If the design ever adds template features
+from claude.ai/design, then run `python3 src/build_v2.py` (rebuilds `index.html`). The V2 build
+applies count-asserted transforms over the verbatim source, so a design re-export that moves an
+anchor fails the build loudly instead of drifting silently. If the design adds template features
 the runtime doesn't know (new `on*` events are handled generically; `sc-for` nesting, `$index`,
 mixed-string attributes are supported), `src/runtime.js` is the place to extend.
 
@@ -62,3 +71,27 @@ six screens pixel-equivalent, and the PRD §12 acceptance checklist passed line 
 
 Prop defaults baked at build time: `motion: true`, `startRoute: "shipments"` (same as the design's
 Tweaks panel).
+
+## Version 2 — the onboarding journey (`index.html`, deployed)
+
+V2 tells the adoption story: RyderShare **without** Intelligence, then the switch flips.
+Built by `python3 src/build_v2.py` from the same verbatim design source plus a patch layer in
+`src/v2/` (landing markup, `ComponentV2` logic, gating CSS).
+
+- **Pre-enable** — the rail holds only Shipments / Network / Insights (pulsing cue); no prompt
+  bar, no storm plan, no Why? links, no network brief, no at-risk tile, no Backhaul $ layer.
+  A one-line teaser sits in the storm band's slot. `#/insights` is a landing page: hero, four
+  benefit cards, the four agents, a trust card, Enable CTA. Deep links to gated routes
+  (`#/risk`, `#/agents`, `#/reviews`, `#/ask`) land on the landing.
+- **Enable** — a ~5s staged activation ("Connecting… · Reading June — 1,187 loads · 214
+  invoice lines · Generating your first digest") inside a corner-matched fast rainbow ring, then
+  the same page becomes the intelligence hub (its persistent glows only — no extra flash) and the
+  rail grows to six destinations. AI surfaces discovered on *other* pages (shipments storm band,
+  network brief) carry a one-time ~3s rainbow flash (`[data-intel-flash]`) while the enable moment
+  is fresh. Reduced motion ⇒ instant enable.
+  Pre-enable there is no storm overlay anywhere (map zone, label, layer pill, board band) —
+  weather response arrives with Intelligence. No "Concept" chips: it presents as real product.
+- **Map tiles** — the Network stat strip renders as cards (taller, larger icons); the two
+  actionable tiles (Running late → filters the load list, At-risk → Risk radar) carry a chevron.
+- **State** — in-memory; reload returns to the un-enabled state (demo reset).
+  `?intel=1` boots straight to enabled for rehearsal.
