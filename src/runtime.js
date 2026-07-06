@@ -244,52 +244,48 @@
     el.parentNode.removeChild(el);
     binds.push({
       t: 'for', anchor: anchor, tpl: tpl, asName: asName,
-      expr: expr ? expr[1] : '', lastJson: '', items: [], list: [],
+      expr: expr ? expr[1] : '', items: [], list: [],
       update: forUpdate, scopeGet: scopeGet
     });
   }
+  // Index-keyed reconciliation, matching React's behavior for unkeyed lists:
+  // existing instances keep their DOM (their bindings re-evaluate against the
+  // item now at that index — nested sc-ifs mount/unmount as needed), new
+  // indexes append fresh instances, extras are removed from the end. This is
+  // what keeps the chat thread stable when a message is added: old bubbles
+  // are untouched and only the new ones run their entrance animations.
   function forUpdate() {
     var self = this;
     var list = resolve(this.scopeGet(), this.expr);
     if (!Array.isArray(list)) list = [];
-    var json;
-    try { json = JSON.stringify(list); } catch (e) { json = String(Math.random()); }
-    if (json !== this.lastJson) {
-      this.lastJson = json;
-      this.list = list;
-      // tear down
-      for (var i = 0; i < this.items.length; i++) {
-        var it = this.items[i];
-        detachRefs(it.kids);
-        for (var n = 0; n < it.nodes.length; n++) {
-          var nd = it.nodes[n];
-          if (nd.parentNode) nd.parentNode.removeChild(nd);
-        }
+    this.list = list;
+    while (this.items.length > list.length) {
+      var it = this.items.pop();
+      detachRefs(it.kids);
+      for (var n = 0; n < it.nodes.length; n++) {
+        var nd = it.nodes[n];
+        if (nd.parentNode) nd.parentNode.removeChild(nd);
       }
-      this.items = [];
-      // build
-      var parent = this.anchor.parentNode;
-      for (var x = 0; x < list.length; x++) {
-        (function (ix) {
-          var itemScopeGet = function () {
-            var base = self.scopeGet();
-            var s = Object.assign({}, base);
-            s[self.asName] = self.list[ix];
-            s.$index = ix;
-            return s;
-          };
-          var frag = self.tpl.cloneNode(true);
-          var kidBinds = [];
-          var child = frag.firstChild;
-          while (child) { var next = child.nextSibling; compileNode(child, kidBinds, itemScopeGet); child = next; }
-          var nodes = [];
-          for (var j = 0; j < frag.childNodes.length; j++) nodes.push(frag.childNodes[j]);
-          parent.insertBefore(frag, self.anchor);
-          self.items.push({ nodes: nodes, kids: kidBinds });
-        })(x);
-      }
-    } else {
-      this.list = list;
+    }
+    var parent = this.anchor.parentNode;
+    for (var x = this.items.length; x < list.length; x++) {
+      (function (ix) {
+        var itemScopeGet = function () {
+          var base = self.scopeGet();
+          var s = Object.assign({}, base);
+          s[self.asName] = self.list[ix];
+          s.$index = ix;
+          return s;
+        };
+        var frag = self.tpl.cloneNode(true);
+        var kidBinds = [];
+        var child = frag.firstChild;
+        while (child) { var next = child.nextSibling; compileNode(child, kidBinds, itemScopeGet); child = next; }
+        var nodes = [];
+        for (var j = 0; j < frag.childNodes.length; j++) nodes.push(frag.childNodes[j]);
+        parent.insertBefore(frag, self.anchor);
+        self.items.push({ nodes: nodes, kids: kidBinds });
+      })(x);
     }
     for (var k = 0; k < this.items.length; k++) evalBinds(this.items[k].kids);
   }

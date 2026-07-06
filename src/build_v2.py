@@ -164,6 +164,18 @@ applied.append("tile chevrons (2)")
 
 markup = markup[:s0] + strip + markup[s1:]
 
+# T11c — Ask panel: the suggestion pills float in a fixed block over the
+# thread; with three long pills wrapping to two rows that block is ~150px
+# tall, so the thread needs more bottom clearance than the design's 130px or
+# the pills sit on the last chat bubble. Opaque pills keep the layers legible
+# while content scrolls beneath.
+sub("ask thread bottom clearance",
+    '<div style="max-width:760px;margin:0 auto;padding:20px 20px 130px">',
+    '<div style="max-width:760px;margin:0 auto;padding:20px 20px 180px">')
+sub("opaque suggestion pills",
+    "background:rgba(255,255,255,0.96)",
+    "background:#fff")
+
 # T12 — #/insights: landing pre-enable, intelligence hub post-enable
 HUB_ANCHOR = '<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}"><div data-screen-label="Insights"'
 landing = (V2 / "landing.html").read_text(encoding="utf-8")
