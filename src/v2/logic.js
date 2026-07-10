@@ -14,13 +14,24 @@ class ComponentV2 extends Component {
   constructor(props) {
     super(props);
     var self = this;
-    this.INTEL_GATED = ['insights', 'agents', 'reviews', 'risk', 'ask'];
+    this.INTEL_GATED = ['insights', 'agents', 'reviews', 'risk', 'ask', 'workforce'];
+    this.VALID = this.VALID.concat(['workforce']);
 
     // The document-style review shipped as THE reviews screen; the old
     // #/reviews2 preview address stays as an alias.
     if (__initialHash === '#/reviews2') {
       this.state.route = 'reviews';
       try { history.replaceState(null, '', '#/reviews'); } catch (e) {}
+    }
+    if (__initialHash === '#/workforce') {
+      this.state.route = 'workforce';
+      try { history.replaceState(null, '', '#/workforce'); } catch (e) {}
+    }
+    // Risk radar merged into Autopilot (the agents route): every old entry
+    // point — cold loads, hash changes, in-app nav — lands on the merged tab.
+    if (this.state.route === 'risk') {
+      this.state.route = 'agents';
+      try { history.replaceState(null, '', '#/agents'); } catch (e) {}
     }
     this.state.revMonth = 'jun'; // reviews month tabs: 'jun' | 'may' | 'apr'
 
@@ -47,8 +58,15 @@ class ComponentV2 extends Component {
     this.state.tenderSent = false;   // in-log approval: MEM → DAL tender
     this.state.everAsked = false;    // retires the ask bar's New badge
     this.state.noticeOpen = false;   // receiver-notice artifact expander
+    this.state.agDwell = true;       // Detention & dwell agent
+    this.state.agDocs = true;        // Documents & POD agent
+    this.state.agSafety = true;      // Safety coach agent
+    this.state.riskExpanded = false; // approved incident details re-expand
+    this.state.wfOpen = null;        // workforce showroom: which agent's history is open
+    this.state.detClaimFiled = false; // in-log approval: Macon detention claim
+    this.state.osdFiled = false;      // in-log approval: OS&D short-shipment claim
     if (saved) {
-      ['approved', 'wSched', 'tenderGone', 'tenderSent', 'disputeFiled', 'everAsked'].forEach(function (k) {
+      ['approved', 'wSched', 'tenderGone', 'tenderSent', 'disputeFiled', 'everAsked', 'detClaimFiled', 'osdFiled'].forEach(function (k) {
         if (saved[k]) this.state[k] = true;
       }, this);
     }
@@ -74,7 +92,7 @@ class ComponentV2 extends Component {
         entries: [
           { t: 'Today · 6:04 AM', title: 'Pushed updated ETA to 2 receivers', d: 'SBG-31241 Savannah corridor — ETA 4:15 PM ET (was 3:05). First-stop dock delay; downstream stops hold.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Today · 5:52 AM', title: 'Nudged a silent telematics feed', d: 'SBG-31253 went 45 minutes without a ping near Tyler, TX. Re-polled the unit; updates resumed.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
-          { t: 'Mon Jul 6 · 4:41 PM', title: 'Shared POD with a consignee', d: 'Athens retail requested proof of delivery for SBG-31249; sent from the document repository.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 4:41 PM', title: 'Answered a receiver ETA query', d: 'Savannah receiving asked for tomorrow\u2019s window; replied from the live plan in 40 seconds.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Mon Jul 6 · 9:15 AM', title: 'Held a notification for review', d: 'SBG-31248 Miami corridor ETA moved 2h 10m — beyond the 60-minute guardrail, so nothing went out without you.', chip: 'Escalated', cs: AMBER, who: 'Routed to you — over guardrail' },
           { t: 'Sun Jul 5 · 6:00 PM', title: 'Sent the weekly receiver digest', d: 'On-time summary and this week’s appointment windows to 14 receiving locations.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Fri Jul 3 · 3:22 PM', title: 'Updated the delay-notice template', d: 'You shortened the delay-reason wording on Thursday; the edit now applies to every notice.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
@@ -118,6 +136,42 @@ class ComponentV2 extends Component {
           { t: 'Wed Jul 1 · 10:00 AM', title: 'Sized the full backhaul opportunity', d: 'Three lanes ≈ $458K/yr gross at market; a typical revenue share returns ≈ $320K/yr to SBG.', chip: 'Sized', cs: BLUE, who: 'Sent to Insights' },
           { t: 'Tue Jun 30 · 2:20 PM', title: 'Prepared the enrollment brief', d: 'Per-lane steps and the revenue-share model, ready for your review — lanes enroll one at a time.', chip: 'Ready', cs: GREY, who: 'Awaiting your approval' }
         ]
+      },
+      agDwell: {
+        title: 'Detention & dwell',
+        summary: 'June · 41 dock stops timed · $1,120 in evidence handed to Invoice audit · 1 claim ready',
+        guard: 'Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.',
+        entries: [
+          { t: 'Today · 7:15 AM', title: 'Timed a 96-minute dock hold', d: 'SBG-31248 Miami receiver held the trailer 36 minutes past free time; evidence pack assembled — geofence stamps + BOL times.', chip: 'Assembled', cs: BLUE, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 6:10 PM', title: 'Draft detention claim ready — Macon', d: '$186 for 47 minutes over free time on Jul 2; receiver signature and telematics attached. Files when you approve.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileDetention', actLabel: 'Approve & file claim' },
+          { t: 'Fri Jul 3 · 4:30 PM', title: 'Flagged Tampa retail #2 as chronic', d: 'Fourth consecutive Friday over free time; pattern sent to your weekly digest and Dock scheduling.', chip: 'Flagged', cs: BLUE, who: 'Sent to Insights' },
+          { t: 'Wed Jul 1 · 6:12 AM', title: 'Handed detention evidence to Invoice audit', d: 'Two May holds documented; $1,120 in carrier credits filed with the June invoice.', chip: 'Recovered', cs: GREEN, who: 'Handed off to Invoice audit' },
+          { t: 'Tue Jun 30 · 3:05 PM', title: 'Learned your free-time terms', d: 'You corrected the Macon contract to 60 minutes; all future timing uses it.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
+        ]
+      },
+      agDocs: {
+        title: 'Documents & POD',
+        summary: 'June cycle · 214 PODs matched · 2 chased & recovered · 1 OS&D draft',
+        guard: 'Auto: chasing, matching, and sharing paperwork. Needs you: anything that changes an invoice or files a claim.',
+        entries: [
+          { t: 'Today · 6:20 AM', title: 'Matched yesterday\u2019s PODs to loads', d: '14 of 14 in by 6 AM; all signatures clean.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 4:41 PM', title: 'Shared the POD pack with Athens retail', d: 'Consignee requested proof of delivery for SBG-31249; sent from the repository with the BOL attached.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Fri Jul 3 · 11:40 AM', title: 'Chased two missing PODs', d: 'TR-4440 and TR-4442 drivers nudged; both documents in by 5 PM, billing unblocked.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
+          { t: 'Thu Jul 2 · 9:05 AM', title: 'Drafted an OS&D claim from a POD notation', d: 'Two cases short noted on SBG-31249; $312 claim drafted with photos and BOL line refs.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileOsd', actLabel: 'Approve & file OS&D claim' },
+          { t: 'Wed Jul 1 · 6:12 AM', title: '3-way matched the June invoice', d: '214 lines against BOLs and PODs for Invoice audit — zero unmatched.', chip: 'Clean', cs: GREEN, who: 'Handed off to Invoice audit' }
+        ]
+      },
+      agSafety: {
+        title: 'Safety coach',
+        summary: 'TTM 0.4/100K mi · 12 events coached in June · 61-day clean streak',
+        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder\u2019s, reviews stay human.',
+        entries: [
+          { t: 'Today · 5:40 AM', title: 'Briefed Thursday drivers on the storm corridor', d: 'Start-of-day risk briefing for the 6 storm-plan routes: crosswinds, staging changes, revised windows.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 2:50 PM', title: 'Assigned self-coaching for hard braking', d: 'TR-4438 on I-4 near Orlando; the driver completed the module the same day.', chip: 'Coached', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts on two runs in one week — human review, not automation.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
+          { t: 'Wed Jul 1 · 6:00 AM', title: 'June closed with zero preventable incidents', d: 'Clean streak at 61 days; TTM rate 0.4/100K mi, trending down.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'May 2 · 3:00 PM', title: 'Closed the April incident review', d: 'Coaching plan completed; the April business review carries the record.', chip: 'Closed', cs: GREY, who: 'Approved by your Ryder team' }
+        ]
       }
     };
 
@@ -150,6 +204,10 @@ class ComponentV2 extends Component {
           try { history.replaceState(null, '', '#/reviews'); } catch (e) {}
           h = 'reviews';
         }
+        if (h === 'risk') { // merged into Autopilot
+          try { history.replaceState(null, '', '#/agents'); } catch (e) {}
+          h = 'agents';
+        }
         if (!self.state.intel && self.INTEL_GATED.indexOf(h) >= 0 && h !== 'insights') {
           try { history.replaceState(null, '', '#/insights'); } catch (e) {}
           if (self.state.route !== 'insights') self.setRoute('insights');
@@ -165,6 +223,7 @@ class ComponentV2 extends Component {
       var v = baseRV();
       var s = self.state;
       v.dataIntel = s.intel ? 'on' : 'off';
+      v.pageTheme = s.route === 'workforce' ? 'dark' : 'light';
       v.intelOn = s.intel;
       v.intelFlash = s.intelFlash;
 
@@ -173,7 +232,7 @@ class ComponentV2 extends Component {
         sessionStorage.setItem('rsIntelState', JSON.stringify({
           intel: s.intel, approved: s.approved, wSched: s.wSched,
           tenderGone: s.tenderGone, tenderSent: s.tenderSent, disputeFiled: s.disputeFiled,
-          everAsked: s.everAsked
+          everAsked: s.everAsked, detClaimFiled: s.detClaimFiled, osdFiled: s.osdFiled
         }));
       } catch (e) {}
 
@@ -255,11 +314,57 @@ class ComponentV2 extends Component {
       v.bhTenderSent = s.tenderSent;
 
       // ----- Value ledger: what Intelligence returned this month -----
-      v.ledgerDisputed = s.disputeFiled ? '$1,334 recovered or in dispute' : '$1,120 recovered in June';
-      // Same live plan-cost formula the risk page uses, so an adjusted plan
-      // carries its real cost into the ledger.
+      // Stat tiles: number-first, labels flip live on approvals. Plan cost
+      // uses the same formula as the risk page so adjustments carry through.
       var pc2 = 1840 + (s.adjWin === '8' ? 310 : 0) + (s.adjRoute === '16' ? 450 : 0);
-      v.ledgerStorm = s.approved ? '6 failures avoided for +$' + pc2.toLocaleString('en-US') : '6 at-risk loads, plan ready';
+      var lv = 1120 + (s.disputeFiled ? 214 : 0) + (s.detClaimFiled ? 186 : 0) + (s.osdFiled ? 312 : 0);
+      v.ledgerV1 = '$' + lv.toLocaleString('en-US');
+      v.ledgerL1 = lv > 1120 ? 'Recovered or in dispute' : 'Recovered in June';
+      v.ledgerL2 = s.approved ? 'Failures avoided · +$' + pc2.toLocaleString('en-US') : 'At-risk loads · plan ready';
+      // Merged incident module (ex Risk radar): full detail until approved,
+      // then a one-line active bar with re-expand.
+      v.riskOpen = !s.approved || s.riskExpanded;
+      v.riskCollapsed = s.approved && !s.riskExpanded;
+      v.riskToggle = function () { self.setState({ riskExpanded: !self.state.riskExpanded }); };
+      v.decQueueEmpty = s.tenderGone && s.wSched;
+
+      // Workforce showroom
+      v.isWorkforce = s.route === 'workforce';
+      v.wfEtaHist = s.wfOpen === 'agEta'; v.wfDockHist = s.wfOpen === 'agDock';
+      v.wfAuditHist = s.wfOpen === 'agAudit'; v.wfBhHist = s.wfOpen === 'agBh';
+      v.wfDwellHist = s.wfOpen === 'agDwell'; v.wfDocsHist = s.wfOpen === 'agDocs';
+      v.wfSafetyHist = s.wfOpen === 'agSafety';
+      v.agEtaHistClosed = s.wfOpen !== 'agEta'; v.agDockHistClosed = s.wfOpen !== 'agDock';
+      v.agAuditHistClosed = s.wfOpen !== 'agAudit'; v.agBhHistClosed = s.wfOpen !== 'agBh';
+      v.agDwellHistClosed = s.wfOpen !== 'agDwell'; v.agDocsHistClosed = s.wfOpen !== 'agDocs';
+      v.agSafetyHistClosed = s.wfOpen !== 'agSafety';
+      v.wfEntries = s.wfOpen ? self.entriesFor(s.wfOpen).entries : [];
+      v.wfHist = function (e) {
+        if (e.stopPropagation) e.stopPropagation();
+        var k = e.currentTarget.dataset.w;
+        self.setState({ wfOpen: self.state.wfOpen === k ? null : k });
+      };
+      v.wfEtaSum = self.entriesFor('agEta').summary;
+      v.wfDockSum = self.entriesFor('agDock').summary;
+      v.wfAuditSum = self.entriesFor('agAudit').summary;
+      v.wfBhSum = self.entriesFor('agBh').summary;
+      v.wfDwellSum = self.entriesFor('agDwell').summary;
+      v.wfDocsSum = self.entriesFor('agDocs').summary;
+      v.wfSafetySum = self.entriesFor('agSafety').summary;
+
+      // Right-side meta per agent row: when it last acted — live, so a
+      // session approval reads "Just now".
+      v.agEtaMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 6:04 AM';
+      v.agDockMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 5:58 AM';
+      v.agAuditMeta = s.disputeFiled ? 'Last action · Just now' : 'Last run · Jul 1';
+      v.agBhMeta = s.tenderSent ? 'Tender sent · Just now' : 'Draft waiting · MEM \u2192 DAL';
+      v.agDwellMeta = s.detClaimFiled ? 'Last action · Just now' : 'Last action · Today 7:15 AM';
+      v.agDocsMeta = s.osdFiled ? 'Last action · Just now' : 'Last action · Today 6:20 AM';
+      v.agSafetyMeta = 'Last action · Today 5:40 AM';
+      // Toggles sit inside clickable agent rows — don't let the tap bubble
+      // into the row's open-log handler.
+      var baseTog = v.agToggle;
+      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); };
       // Weather response is Intelligence: pre-enable the map carries no storm overlay.
       if (!s.intel) v.stormOp = '0';
       v.showLanding = s.route === 'insights' && !s.intel;
@@ -280,45 +385,36 @@ class ComponentV2 extends Component {
       // trailer service, in-log approvals — appear as "Just now" entries, so
       // the audit trail visibly reacts to what the user just did.
       var L = s.agLog ? self.AGLOG[s.agLog] : null;
-      v.agLogOpen = !!L && s.route === 'agents';
+      v.agLogOpen = !!L && (s.route === 'agents' || s.route === 'workforce');
       v.agLogIsEta = s.agLog === 'agEta';
       v.agLogIsDock = s.agLog === 'agDock';
       v.agLogIsAudit = s.agLog === 'agAudit';
       v.agLogIsBh = s.agLog === 'agBh';
+      v.agLogIsDwell = s.agLog === 'agDwell';
+      v.agLogIsDocs = s.agLog === 'agDocs';
+      v.agLogIsSafety = s.agLog === 'agSafety';
+      var swOn2 = 'background:#34A081', swOff2 = 'background:#C5C6C7';
+      var knOn2 = 'transform:translateX(14px)', knOff2 = 'transform:translateX(0)';
+      ['agDwell', 'agDocs', 'agSafety'].forEach(function (k2) {
+        var on = !!s[k2];
+        v[k2 + 'On'] = on; v[k2 + 'Off'] = !on;
+        v[k2 + 'Track'] = on ? swOn2 : swOff2;
+        v[k2 + 'Knob'] = on ? knOn2 : knOff2;
+        v[k2 + 'Flash'] = s.agFlash === k2 ? 'on' : '';
+      });
       v.agLogTitle = L ? L.title : '';
       v.agLogSummary = L ? L.summary : '';
       v.agLogGuard = L ? L.guard : '';
-      var GREEN2 = 'background:#E8F5F0;color:#1F7A61';
-      var entries = L ? L.entries : [];
-      if (L && s.agLog === 'agEta' && s.approved) {
-        entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar — approved by you', exp: 1 }].concat(entries);
-      }
-      if (L && s.agLog === 'agDock') {
-        var pre = [];
-        if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04 — no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
-        if (s.approved) pre.push({ t: 'Just now', title: 'Locked Wednesday pre-load slots', d: '4 storm-plan loads staged at Orlando DC-04, 6:00–7:00 PM, per the plan you approved.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
-        entries = pre.concat(entries);
-      }
-      if (L && s.agLog === 'agAudit' && s.disputeFiled) {
-        entries = entries.map(function (en) {
-          if (en.act !== 'fileDispute') return en;
-          return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214) — dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
-        });
-        v.agLogSummary = 'June cycle · 214 lines audited · 1 dispute filed today · $1,120 recovered';
-      }
-      if (L && s.agLog === 'agBh' && s.tenderSent) {
-        entries = entries.map(function (en) {
-          if (en.act !== 'sendTender') return en;
-          return { t: 'Just now', title: 'Sent the MEM → DAL tender', d: '3 loads/wk ≈ $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
-        });
-        v.agLogSummary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
-      }
-      v.agLogEntries = entries;
+      var LF = s.agLog ? self.entriesFor(s.agLog) : null;
+      if (LF) { v.agLogSummary = LF.summary; }
+      v.agLogEntries = LF ? LF.entries : [];
       v.agLogAction = function (e) {
         if (e.stopPropagation) e.stopPropagation();
         var k = e.currentTarget.dataset.k;
         if (k === 'fileDispute') self.setState({ disputeFiled: true });
         else if (k === 'sendTender') self.setState({ tenderSent: true, tenderGone: true });
+        else if (k === 'fileDetention') self.setState({ detClaimFiled: true });
+        else if (k === 'fileOsd') self.setState({ osdFiled: true });
       };
       // Evidence, not claims: the storm-notice entry expands to the artifact sent.
       v.stormNoticeOpen = !!s.noticeOpen;
@@ -333,6 +429,58 @@ class ComponentV2 extends Component {
       v.closeAgLog = function () { self.setState({ agLog: null }); };
       return v;
     };
+  }
+
+  // One source of truth for an agent's audit entries + summary, including the
+  // live session variants — used by the side panel and the workforce showroom.
+  entriesFor(key) {
+    var s = this.state;
+    var L = this.AGLOG[key];
+    var GREEN2 = 'background:#E8F5F0;color:#1F7A61';
+    var entries = L.entries, summary = L.summary;
+    if (key === 'agEta' && s.approved) {
+      entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar — approved by you', exp: 1 }].concat(entries);
+    }
+    if (key === 'agDock') {
+      var pre = [];
+      if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04 — no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
+      if (s.approved) pre.push({ t: 'Just now', title: 'Locked Wednesday pre-load slots', d: '4 storm-plan loads staged at Orlando DC-04, 6:00–7:00 PM, per the plan you approved.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
+      entries = pre.concat(entries);
+    }
+    if (key === 'agAudit' && s.disputeFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileDispute') return en;
+        return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214) — dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June cycle · 214 lines audited · 1 dispute filed today · $1,120 recovered';
+    }
+    if (key === 'agBh' && s.tenderSent) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'sendTender') return en;
+        return { t: 'Just now', title: 'Sent the MEM \u2192 DAL tender', d: '3 loads/wk \u2248 $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
+    }
+    if (key === 'agDwell' && s.detClaimFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileDetention') return en;
+        return { t: 'Just now', title: 'Filed the Macon detention claim', d: '$186 claim submitted with telematics evidence; receiver acknowledged receipt.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June · 41 dock stops timed · 1 claim filed today · $1,120 recovered via Invoice audit';
+    }
+    if (key === 'agDocs' && s.osdFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileOsd') return en;
+        return { t: 'Just now', title: 'Filed the OS&D claim', d: '$312 short-shipment claim submitted; the carrier has 30 days to respond.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June cycle · 214 PODs matched · 1 OS&D claim filed today';
+    }
+    return { entries: entries, summary: summary };
+  }
+
+  nav(r) {
+    if (r === 'risk') r = 'agents';
+    super.nav(r);
   }
 
   setRoute(r) {

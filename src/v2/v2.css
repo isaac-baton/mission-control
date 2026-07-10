@@ -6,3 +6,51 @@
 @keyframes v2FlashOut{0%{opacity:0}10%{opacity:1}70%{opacity:1}100%{opacity:0}}
 [data-aiglow="cta"]::before{border-radius:13px}
 [data-aiglow="act"]::before{border-radius:15px;animation-duration:1.08s;filter:drop-shadow(0 0 8px rgba(90,200,250,1)) drop-shadow(0 0 18px rgba(255,107,129,0.7)) drop-shadow(0 0 32px rgba(76,217,168,0.6))}
+
+/* The workforce cards are radius 14, so the enable-flash ring (inset -3px)
+   needs a wider radius than the stock 12px rows it was tuned for. */
+[data-screen-label="Workforce"] [data-aiflash="on"]::before{border-radius:17px}
+
+/* Agents tab dark theme: the root crossfades to black and the chrome follows.
+   Reduced-motion users get an instant switch via the global media rule. */
+[data-intel]{transition:background-color .45s ease}
+header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-color .45s ease}
+[data-theme="dark"]{background:#101114 !important}
+[data-theme="dark"] header{background:#141519 !important;border-bottom:1px solid #26272C !important}
+[data-theme="dark"] header img{filter:brightness(0) invert(1);opacity:0.92}
+[data-theme="dark"] header span{color:#A6ABB4 !important}
+[data-theme="dark"] [data-pbar]{background:#17181C !important;border-color:#26272C !important}
+[data-theme="dark"] [data-pbar] input{color:#F4F5F7 !important}
+[data-theme="dark"] [data-pbar] span[style*="background:#FEF9E6"]{background:rgba(255,216,77,0.14) !important;color:#FFD84D !important}
+[data-theme="dark"] [data-badge]{background:rgba(20,21,25,0.85) !important;color:#8A8F98 !important;box-shadow:0 1px 2px rgba(0,0,0,0.4) !important}
+
+/* The audit side panel follows the dark theme on the Agents tab */
+[data-aglog][data-ptheme="dark"]{background:#141519 !important;border-left:1px solid #26272C !important;box-shadow:-8px 0 24px rgba(0,0,0,0.55) !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#1D1D20"]{color:#F4F5F7 !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#303235"]{color:#C4C8CF !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#696B6F"]{color:#8A8F98 !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#A9AAAC"]{color:#6E7278 !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#FAFAFA"]{background:#101114 !important}
+[data-aglog][data-ptheme="dark"] [style*="border-bottom:1px solid #E3E4E5"]{border-bottom-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="border-top:1px solid #E3E4E5"]{border-top-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="border-bottom:1px solid #F0F0F1"]{border-bottom-color:#232429 !important}
+[data-aglog][data-ptheme="dark"] button[data-k]{background:#F4F5F7 !important;color:#141519 !important}
+/* Chips, status badges, and icon tiles carry light-mode inline palettes
+   (GREEN/AMBER/BLUE/GREY in logic.js) — remap each to a translucent dark chip. */
+[data-aglog][data-ptheme="dark"] [style*="background:#E8F5F0"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#FEF9E6"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#ECF4F9"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#F5F6F6"]{background:rgba(255,255,255,0.08) !important;color:#9BA0A8 !important}
+/* Entry chips get their palette via a {{ en.cs }} binding; the runtime writes
+   bound styles through cssText, which normalizes hex to rgb() — match both. */
+[data-aglog][data-ptheme="dark"] [style*="rgb(232, 245, 240)"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(254, 249, 230)"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(236, 244, 249)"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(245, 246, 246)"]{background:rgba(255,255,255,0.08) !important;color:#9BA0A8 !important}
+[data-aglog][data-ptheme="dark"] svg[stroke="#1F7A61"]{stroke:#5BDCAF}
+[data-aglog][data-ptheme="dark"] svg[stroke="#655102"]{stroke:#FFD84D}
+[data-aglog][data-ptheme="dark"] svg[stroke="#276A92"]{stroke:#5AC8FA}
+[data-aglog][data-ptheme="dark"] svg[stroke="#44464B"]{stroke:#C4C8CF}
+[data-aglog][data-ptheme="dark"] [style*="border:1px solid #E3E4E5"]{border-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#307CA7"]{color:#5AC8FA !important}
+[data-aglog][data-ptheme="dark"] button[aria-label="Close actions log"]:hover{background:rgba(255,255,255,0.08) !important}

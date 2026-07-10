@@ -41,12 +41,60 @@ input:focus{outline:none}
 @keyframes v2FlashOut{0%{opacity:0}10%{opacity:1}70%{opacity:1}100%{opacity:0}}
 [data-aiglow="cta"]::before{border-radius:13px}
 [data-aiglow="act"]::before{border-radius:15px;animation-duration:1.08s;filter:drop-shadow(0 0 8px rgba(90,200,250,1)) drop-shadow(0 0 18px rgba(255,107,129,0.7)) drop-shadow(0 0 32px rgba(76,217,168,0.6))}
+
+/* The workforce cards are radius 14, so the enable-flash ring (inset -3px)
+   needs a wider radius than the stock 12px rows it was tuned for. */
+[data-screen-label="Workforce"] [data-aiflash="on"]::before{border-radius:17px}
+
+/* Agents tab dark theme: the root crossfades to black and the chrome follows.
+   Reduced-motion users get an instant switch via the global media rule. */
+[data-intel]{transition:background-color .45s ease}
+header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-color .45s ease}
+[data-theme="dark"]{background:#101114 !important}
+[data-theme="dark"] header{background:#141519 !important;border-bottom:1px solid #26272C !important}
+[data-theme="dark"] header img{filter:brightness(0) invert(1);opacity:0.92}
+[data-theme="dark"] header span{color:#A6ABB4 !important}
+[data-theme="dark"] [data-pbar]{background:#17181C !important;border-color:#26272C !important}
+[data-theme="dark"] [data-pbar] input{color:#F4F5F7 !important}
+[data-theme="dark"] [data-pbar] span[style*="background:#FEF9E6"]{background:rgba(255,216,77,0.14) !important;color:#FFD84D !important}
+[data-theme="dark"] [data-badge]{background:rgba(20,21,25,0.85) !important;color:#8A8F98 !important;box-shadow:0 1px 2px rgba(0,0,0,0.4) !important}
+
+/* The audit side panel follows the dark theme on the Agents tab */
+[data-aglog][data-ptheme="dark"]{background:#141519 !important;border-left:1px solid #26272C !important;box-shadow:-8px 0 24px rgba(0,0,0,0.55) !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#1D1D20"]{color:#F4F5F7 !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#303235"]{color:#C4C8CF !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#696B6F"]{color:#8A8F98 !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#A9AAAC"]{color:#6E7278 !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#FAFAFA"]{background:#101114 !important}
+[data-aglog][data-ptheme="dark"] [style*="border-bottom:1px solid #E3E4E5"]{border-bottom-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="border-top:1px solid #E3E4E5"]{border-top-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="border-bottom:1px solid #F0F0F1"]{border-bottom-color:#232429 !important}
+[data-aglog][data-ptheme="dark"] button[data-k]{background:#F4F5F7 !important;color:#141519 !important}
+/* Chips, status badges, and icon tiles carry light-mode inline palettes
+   (GREEN/AMBER/BLUE/GREY in logic.js) — remap each to a translucent dark chip. */
+[data-aglog][data-ptheme="dark"] [style*="background:#E8F5F0"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#FEF9E6"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#ECF4F9"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
+[data-aglog][data-ptheme="dark"] [style*="background:#F5F6F6"]{background:rgba(255,255,255,0.08) !important;color:#9BA0A8 !important}
+/* Entry chips get their palette via a {{ en.cs }} binding; the runtime writes
+   bound styles through cssText, which normalizes hex to rgb() — match both. */
+[data-aglog][data-ptheme="dark"] [style*="rgb(232, 245, 240)"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(254, 249, 230)"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(236, 244, 249)"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
+[data-aglog][data-ptheme="dark"] [style*="rgb(245, 246, 246)"]{background:rgba(255,255,255,0.08) !important;color:#9BA0A8 !important}
+[data-aglog][data-ptheme="dark"] svg[stroke="#1F7A61"]{stroke:#5BDCAF}
+[data-aglog][data-ptheme="dark"] svg[stroke="#655102"]{stroke:#FFD84D}
+[data-aglog][data-ptheme="dark"] svg[stroke="#276A92"]{stroke:#5AC8FA}
+[data-aglog][data-ptheme="dark"] svg[stroke="#44464B"]{stroke:#C4C8CF}
+[data-aglog][data-ptheme="dark"] [style*="border:1px solid #E3E4E5"]{border-color:#26272C !important}
+[data-aglog][data-ptheme="dark"] [style*="color:#307CA7"]{color:#5AC8FA !important}
+[data-aglog][data-ptheme="dark"] button[aria-label="Close actions log"]:hover{background:rgba(255,255,255,0.08) !important}
 </style>
 <style>body:not(.dc-ready){visibility:hidden}x-dc{display:contents}</style>
 </head>
 <body>
 <x-dc>
-<div data-intel="{{ dataIntel }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">
+<div data-intel="{{ dataIntel }}" data-theme="{{ pageTheme }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">
 
   <!-- ============ LEFT RAIL ============ -->
   <nav style="width:64px;min-width:64px;background:#303235;display:flex;flex-direction:column;align-items:stretch;z-index:40">
@@ -66,26 +114,29 @@ input:focus{outline:none}
     <a href="#/insights" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isInsights }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>
-      <span data-intel-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
+      
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Insights</span>
-    </a>
-    <a href="#/agents" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
-      <sc-if value="{{ isAgents }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <span data-intel-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>
-      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="2"></rect><path d="M12 9V5"></path><circle cx="12" cy="4" r="1"></circle><path d="M9.5 13.5v2"></path><path d="M14.5 13.5v2"></path><path d="M2 14h3"></path><path d="M19 14h3"></path></svg>
-      <span style="position:relative;font-size:10px;font-weight:500">AI agents</span>
     </a>
     <a href="#/reviews" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isReviews }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 18v-1"></path><path d="M12 18v-6"></path><path d="M16 18v-3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Reviews</span>
     </a>
-    <a href="#/risk" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
-      <sc-if value="{{ isRisk }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
-      <span style="position:relative;font-size:10px;font-weight:500">Risk</span>
+    <a href="#/agents" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+      <sc-if value="{{ isAgents }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
+      
+      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg>
+      <span style="position:relative;font-size:10px;font-weight:500">Autopilot</span>
     </a>
+    <a href="#/workforce" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+      <sc-if value="{{ isWorkforce }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
+      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="2"></rect><path d="M12 9V5"></path><circle cx="12" cy="4" r="1"></circle><path d="M9.5 13.5v2"></path><path d="M14.5 13.5v2"></path><path d="M2 14h3"></path><path d="M19 14h3"></path></svg>
+      <span style="position:relative;font-size:10px;font-weight:500">Agents</span>
+    </a>
+    
+    
+    
     <div style="flex:1"></div>
     <button style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;background:none;border:0;cursor:pointer;color:rgba(255,255,255,0.78);font-family:inherit" style-hover="background:rgba(255,255,255,0.06)">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -915,8 +966,8 @@ input:focus{outline:none}
           </div>
 
           <!-- Agents -->
-          <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:36px 0 6px">Four agents, ready to work</div>
-          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails — every action is logged and reversible, and nothing cost-bearing ships without your decision.</div>
+          <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:36px 0 6px">A workforce of seven agents</div>
+          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails — every action is logged and reversible, and nothing cost-bearing ships without your decision. Alongside these four: Detention &amp; dwell, Documents &amp; POD, and a Safety coach for Ryder’s drivers.</div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
               <span style="width:28px;height:28px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
@@ -971,7 +1022,7 @@ input:focus{outline:none}
               <span style="flex:1"></span>
               <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#A9AAAC">Generated 6:02 AM</span>
             </div>
-            <div style="font-size:14px;color:#303235;line-height:1.65;margin-top:12px;max-width:980px">A strong week. On-time delivery held at <b style="font-weight:600;color:#1D1D20">96.2%</b>, comfortably above your 95% target, and cost per stop held near plan at <b style="font-weight:600;color:#1D1D20">$248</b> — up $6 on peak-season volume. Two things worth your attention: driver unload time at <b style="font-weight:600;color:#1D1D20">Orlando DC-04</b> is running nearly 3× a typical month, and <b style="font-weight:600;color:#1D1D20">Thursday's Gulf storm</b> puts 6 loads at risk — a mitigation plan is ready in <a href="#/risk" style="color:#307CA7;font-weight:500;text-decoration:none">Risk radar</a>. Your <b style="font-weight:600;color:#1D1D20">June business review</b> is <a href="#/reviews" style="color:#307CA7;font-weight:500;text-decoration:none">ready to read</a>.</div>
+            <div style="font-size:14px;color:#303235;line-height:1.65;margin-top:12px;max-width:980px">A strong week. On-time delivery held at <b style="font-weight:600;color:#1D1D20">96.2%</b>, comfortably above your 95% target, and cost per stop held near plan at <b style="font-weight:600;color:#1D1D20">$248</b> — up $6 on peak-season volume. Two things worth your attention: driver unload time at <b style="font-weight:600;color:#1D1D20">Orlando DC-04</b> is running nearly 3× a typical month, and <b style="font-weight:600;color:#1D1D20">Thursday's Gulf storm</b> puts 6 loads at risk — a mitigation plan is ready in <a href="#/risk" style="color:#307CA7;font-weight:500;text-decoration:none">Autopilot</a>. Your <b style="font-weight:600;color:#1D1D20">June business review</b> is <a href="#/reviews" style="color:#307CA7;font-weight:500;text-decoration:none">ready to read</a>.</div>
             <div style="margin-top:12px">
               <button data-i="-1" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (3)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
               <sc-if value="{{ digestOpen }}">
@@ -1353,107 +1404,374 @@ input:focus{outline:none}
 
         <sc-if value="{{ isAgents }}">
         <div data-screen-label="AI agents" style="padding:24px 24px 140px">
-<sc-if value="{{ agLogOpen }}">
-          <div data-screen-label="Agent actions log" style="position:fixed;top:48px;right:0;bottom:0;width:440px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+          <div style="max-width:1040px;margin:0 auto">
 
             <!-- Header -->
-            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
-              <sc-if value="{{ agLogIsEta }}"><span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span></sc-if>
-              <sc-if value="{{ agLogIsDock }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span></sc-if>
-              <sc-if value="{{ agLogIsAudit }}"><span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span></sc-if>
-              <sc-if value="{{ agLogIsBh }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span></sc-if>
-              <div style="flex:1;min-width:0">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="font-size:15px;font-weight:600;color:#1D1D20">{{ agLogTitle }}</span>
-                  <sc-if value="{{ agLogStatusOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
-                  <sc-if value="{{ agLogStatusOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if>
-                </div>
-                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">{{ agLogSummary }}</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Autopilot</span><span style="flex:1"></span><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#A9AAAC">Updated 6:02 AM</span></div>
+            <div style="font-size:24px;font-weight:600;color:#1D1D20;margin-top:10px;line-height:1.3">Good morning, Dana — you have <span style="color:#307CA7">{{ todoCount }} {{ todoWord }}</span> and <span style="color:#307CA7">4 topics</span>.</div>
+            <div style="font-size:12.5px;color:#696B6F;margin-top:6px">Runs within your guardrails · every action logged and reversible · nothing cost-bearing ships without you</div>
+
+            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Active risk — Thursday, Jul 9<sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;margin-left:10px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;background:#E8F5F0;color:#1F7A61">Plan active</span></sc-if></div><sc-if value="{{ riskCollapsed }}"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61;flex:1">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified.</span><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Show details</button></div></sc-if><sc-if value="{{ riskOpen }}"><div><sc-if value="{{ approved }}"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Hide details</button></div></sc-if><div style="display:flex;align-items:flex-start;gap:12px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:14px 18px;margin-top:16px">
+              <svg style="flex:none;margin-top:1px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
+              <span style="font-size:13.5px;color:#655102;line-height:1.55">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
+            </div>
+
+            <!-- At-risk loads table -->
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden;margin-top:16px">
+              <table style="width:100%;border-collapse:collapse">
+                <thead>
+                  <tr>
+                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Load</th>
+                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Route</th>
+                    <th style="text-align:right;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Stops</th>
+                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Scheduled</th>
+                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Risk</th>
+                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31307</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Tampa retail loop</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">8</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 6:00 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31309</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Jacksonville run</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 7:30 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31315</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Miami corridor</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">9</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 5:15 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31321</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Orlando metro</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">7</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 8:00 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31288</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Savannah corridor</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">5</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 9:45 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
+                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31294</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Macon/Columbus</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
+                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 10:30 AM</td>
+                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
+                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Plan card -->
+            <div data-aiglow="card" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px;margin-top:16px">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended plan</div>
+              <div style="font-size:13.5px;color:#303235;line-height:1.6;margin-top:10px;max-width:820px">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
+              <div style="display:flex;gap:10px;margin-top:16px">
+                <sc-if value="{{ notApproved }}"><button onClick="{{ approve }}" style="display:inline-flex;align-items:center;gap:8px;background:#303235;color:#fff;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#1D1D20">Approve plan</button></sc-if>
+                <sc-if value="{{ approved }}"><button disabled="{{ true }}" style="display:inline-flex;align-items:center;gap:8px;background:#ECEDED;color:#44464B;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:default;font-family:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Plan approved</button></sc-if>
+                <sc-if value="{{ notApproved }}"><button style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" onClick="{{ adjToggle }}" style-hover="background:#F5F6F6">Adjust</button></sc-if>
               </div>
-              <button onClick="{{ closeAgLog }}" aria-label="Close actions log" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-            </div>
-
-            <!-- Guardrails -->
-            <div style="padding:12px 18px;border-bottom:1px solid #E3E4E5;background:#FAFAFA">
-              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:4px">Guardrails</div>
-              <div style="font-size:12.5px;color:#303235;line-height:1.5">{{ agLogGuard }}</div>
-            </div>
-
-            <!-- Entries -->
-            <div style="flex:1;overflow:auto;padding:6px 18px 12px">
-              <sc-for list="{{ agLogEntries }}" as="en">
-                <div style="padding:13px 0;border-bottom:1px solid #F0F0F1">
-                  <div style="display:flex;align-items:flex-start;gap:8px">
-                    <div style="flex:1;min-width:0">
-                      <div style="font-size:13px;font-weight:600;color:#1D1D20;line-height:1.4">{{ en.title }}</div>
-                      <div style="font-size:12.5px;color:#303235;line-height:1.5;margin-top:3px">{{ en.d }}</div>
+              <sc-if value="{{ adjOpen }}">
+              <div style="border-top:1px solid #ECEDED;margin-top:16px;padding-top:14px">
+                <div style="display:flex;gap:28px;flex-wrap:wrap">
+                  <div>
+                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Orlando pre-load window · 4 loads</div>
+                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                      <button data-w="6" onClick="{{ adjPickW }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw6St }}">Wed 6:00 PM</button>
+                      <button data-w="8" onClick="{{ adjPickW }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw8St }}">Wed 8:00 PM (+$310)</button>
                     </div>
-                    <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex:none;{{ en.cs }}">{{ en.chip }}</span>
                   </div>
-                  <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
-                    <span style="font-size:11.5px;color:#A9AAAC">{{ en.t }}</span>
-                    <span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>
-                    <span style="font-size:11.5px;color:#696B6F">{{ en.who }}</span>
-                  </div>
-                  <sc-if value="{{ en.act }}">
-                  <div style="margin-top:9px">
-                    <button data-k="{{ en.act }}" onClick="{{ agLogAction }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:7px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit">{{ en.actLabel }}</button>
-                  </div>
-                  </sc-if>
-                  <sc-if value="{{ en.exp }}">
-                  <div style="margin-top:8px">
-                    <button onClick="{{ toggleNotice }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">{{ noticeToggleLabel }}</button>
-                    <sc-if value="{{ stormNoticeOpen }}">
-                    <div style="border:1px solid #E3E4E5;border-radius:8px;background:#FAFAFA;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
-                      <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Receiver notice · sent to 6 locations</div>
-                      <div style="font-size:12px;color:#696B6F;margin-top:7px">To: Receiving — Tampa Retail Group · +5 more</div>
-                      <div style="font-size:12px;color:#696B6F;margin-top:2px">From: RyderShare, on behalf of Summit Beverage Group</div>
-                      <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Delivery update — Thursday, Jul 9 (weather plan)</div>
-                      <div style="font-size:12.5px;color:#303235;line-height:1.6;margin-top:5px">Ahead of Thursday's Gulf storm, your Summit Beverage deliveries are pre-staged to protect the schedule. Your delivery windows are unchanged, and live tracking stays current in RyderShare.</div>
-                      <div style="font-size:11px;color:#A9AAAC;margin-top:9px">Sent by ETA &amp; notifications · Logged &amp; reversible · Replies go to your Ryder team</div>
+                  <div>
+                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Atlanta reroute · 2 loads</div>
+                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                      <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
+                      <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
                     </div>
-                    </sc-if>
                   </div>
-                  </sc-if>
                 </div>
-              </sc-for>
+                <div style="font-size:12px;color:#696B6F;margin-top:12px">Adjustments update the plan summary and cost estimate above — nothing is committed until you approve.</div>
+              </div>
+              </sc-if>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px"><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg><span style="font-size:13px;font-weight:600;color:#44464B">If you do nothing</span></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#655102">6</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Est. exposure — redelivery + detention</span><b style="font-weight:600;color:#655102">≈ $9.8K</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#655102">▼ ≈ 2.2 pts</b></div></div><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span style="font-size:13px;font-weight:600;color:#1D1D20">With the plan</span><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#1F7A61">0 — deliveries unaffected</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Cost to run the plan</span><b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#1F7A61">holds at 96.2%</b></div></div></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week's load values · Sources · Load records · Invoice SBG-2026-06</div></div></sc-if>
+
+            <!-- Decisions: the queue is the hero -->
+            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Decisions</div>
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden">
+              <div style="margin-top:-1px">
+                <sc-if value="{{ tenderOn }}">
+                <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid #E3E4E5;flex-wrap:wrap;min-height:60px">
+                  <span style="width:28px;height:28px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
+                  <div style="flex:1;min-width:280px">
+                    <div style="font-size:14px;font-weight:600;color:#1D1D20">MEM → DAL backhaul tender draft</div>
+                    <div style="font-size:12.5px;color:#696B6F;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">3 loads/wk ≈ <b style="font-weight:600;color:#303235">$3.9K/wk gross</b>, credited to your invoice · draft expires Friday</div>
+                  </div>
+                  <span style="display:inline-flex;align-items:center;gap:8px;flex:none">
+                    <button data-q="q5" onClick="{{ askQ }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Review enrollment</button>
+                    <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:7px 4px;font-family:inherit;font-size:12.5px;font-weight:500;color:#696B6F;cursor:pointer">Dismiss</button>
+                  </span>
+                </div>
+                </sc-if>
+                <sc-if value="{{ wNotSched }}">
+                <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid #E3E4E5;flex-wrap:wrap;min-height:60px">
+                  <span style="width:28px;height:28px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>
+                  <div style="flex:1;min-width:280px">
+                    <div style="font-size:14px;font-weight:600;color:#1D1D20">Trailer 4482 preventive service</div>
+                    <div style="font-size:12.5px;color:#696B6F;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Open window Saturday at Orlando DC-04 · no route impact this week</div>
+                  </div>
+                  <span style="display:inline-flex;align-items:center;flex:none">
+                    <button onClick="{{ wSchedule }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Schedule service</button>
+                  </span>
+                </div>
+                </sc-if>
+                <sc-if value="{{ wSched }}">
+                <div style="display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid #E3E4E5;font-size:13px;font-weight:500;color:#1F7A61"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Trailer 4482 service scheduled — Sat Jul 12 · Orlando DC-04.</div>
+                </sc-if>
+                <sc-if value="{{ decQueueEmpty }}">
+                <div style="display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid #E3E4E5;font-size:13px;color:#696B6F"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>All caught up — nothing needs you right now.</div>
+                </sc-if>
+              </div>
             </div>
 
-            <!-- Footer -->
-            <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
-              <div style="font-size:11.5px;color:#696B6F;line-height:1.5">Every action is logged and reversible. Your approvals and edits tune this agent's guardrails.</div>
+            <!-- Value: three big numbers, the page's moment of rest -->
+            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Intelligence this month</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ ledgerL1 }}</div>
+                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">{{ ledgerV1 }}</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ ledgerL2 }}</div>
+                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">6</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Identified in backhaul</div>
+                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">≈ $458K/yr</div>
+              </div>
             </div>
-          </div>
-          </sc-if>
 
-          <div style="max-width:1040px;margin:0 auto">
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">AI agents</span><span style="flex:1"></span><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#A9AAAC">Updated 6:02 AM</span></div>
-            <div style="font-size:24px;font-weight:600;color:#1D1D20;margin-top:10px;line-height:1.3">Good morning, Dana — you have <span style="color:#307CA7">{{ todoCount }} {{ todoWord }}</span> and <span style="color:#307CA7">4 topics</span> to catch up on.</div>
-            <div style="font-size:12.5px;color:#696B6F;margin-top:6px">AI agents act within approved guardrails · every action is logged and reversible · nothing ships without your decision on cost-bearing changes</div><div data-intel-only="" style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 18px;margin:14px 0 4px"><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Intelligence this month</span><span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerDisputed }}</span><span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span><span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerStorm }}</span><span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span><span style="font-size:13px;color:#1D1D20;font-weight:600">≈ $458K/yr identified in backhaul</span></div>
-<div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:24px 0 10px">Your agents</div>            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
-<div data-aiflash="{{ agEtaFlash }}" style="display:flex;gap:12px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px"><span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#1D1D20">ETA &amp; notifications</div><div style="font-size:12.5px;color:#696B6F;line-height:1.5;margin-top:3px">Pushes updated ETAs to receivers when loads run late. Auto within guardrails.</div><div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">Last action · Today 6:04 AM · <button data-log="agEta" onClick="{{ openAgLog }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none"><sc-if value="{{ agEtaOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if><sc-if value="{{ agEtaOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if><button data-a="agEta" onClick="{{ agToggle }}" aria-label="Toggle ETA &amp; notifications" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;{{ agEtaTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);transition:transform .15s ease;{{ agEtaKnob }}"></span></button></div></div>
-<div data-aiflash="{{ agDockFlash }}" style="display:flex;gap:12px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#1D1D20">Dock scheduling</div><div style="font-size:12.5px;color:#696B6F;line-height:1.5;margin-top:3px">Requests and reschedules dock slots at your DCs and receivers.</div><div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">Last action · Today 5:58 AM · <button data-log="agDock" onClick="{{ openAgLog }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none"><sc-if value="{{ agDockOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if><sc-if value="{{ agDockOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if><button data-a="agDock" onClick="{{ agToggle }}" aria-label="Toggle Dock scheduling" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;{{ agDockTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);transition:transform .15s ease;{{ agDockKnob }}"></span></button></div></div>
-<div data-aiflash="{{ agAuditFlash }}" style="display:flex;gap:12px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px"><span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#1D1D20">Invoice audit</div><div style="font-size:12.5px;color:#696B6F;line-height:1.5;margin-top:3px">First-pass audit of every invoice line against contract rates.</div><div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">Last run · Jul 1 · 214 lines · <button data-log="agAudit" onClick="{{ openAgLog }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none"><sc-if value="{{ agAuditOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if><sc-if value="{{ agAuditOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if><button data-a="agAudit" onClick="{{ agToggle }}" aria-label="Toggle Invoice audit" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;{{ agAuditTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);transition:transform .15s ease;{{ agAuditKnob }}"></span></button></div></div>
-<div data-aiflash="{{ agBhFlash }}" style="display:flex;gap:12px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul tender</div><div style="font-size:12.5px;color:#696B6F;line-height:1.5;margin-top:3px">Drafts tenders for approved empty lanes. Paused = analysis only; nothing sends without your approval.</div><div style="font-size:11.5px;color:#A9AAAC;margin-top:6px"><sc-if value="{{ bhDraftWaiting }}">Draft waiting · MEM → DAL</sc-if><sc-if value="{{ bhTenderSent }}"><span style="color:#1F7A61">Tender sent today · awaiting carrier response</span></sc-if> · <button data-log="agBh" onClick="{{ openAgLog }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button></div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none"><sc-if value="{{ agBhOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if><sc-if value="{{ agBhOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if><button data-a="agBh" onClick="{{ agToggle }}" aria-label="Toggle Backhaul tender" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;{{ agBhTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.2);transition:transform .15s ease;{{ agBhKnob }}"></span></button></div></div>
+            <!-- Agents: workforce health, glanceable -->
+                        <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Your workforce</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 18px">
+              <button data-log="agEta" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agEtaOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agEtaOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>ETA &amp; notifications</button>
+              <button data-log="agDock" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDockOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDockOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Dock scheduling</button>
+              <button data-log="agAudit" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agAuditOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agAuditOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Invoice audit</button>
+              <button data-log="agBh" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agBhOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agBhOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Backhaul tender</button>
+              <button data-log="agDwell" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDwellOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDwellOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Detention &amp; dwell</button>
+              <button data-log="agDocs" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDocsOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDocsOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Documents &amp; POD</button>
+              <button data-log="agSafety" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agSafetyOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agSafetyOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Safety coach</button>
+              <span style="flex:1"></span>
+              <button data-nav="workforce" onClick="{{ navTo }}" style="background:none;border:0;padding:6px 4px;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Meet your agents →</button>
             </div>
-<div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:24px 0 10px">Suggested to-dos</div>            <div style="display:flex;flex-direction:column;gap:10px">
-              <sc-if value="{{ notApproved }}"><div style="display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;flex-wrap:wrap"><span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span><div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Approve the storm plan &amp; receiver notices</div><div style="font-size:12.5px;color:#696B6F;line-height:1.55;margin-top:3px">6 Thursday loads pre-load or reroute; drafted notifications send on your approval. Estimated cost <b style="font-weight:600">+$1,840</b> against <b style="font-weight:600">6</b> avoided service failures.</div></div><span style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;align-self:center"><button onClick="{{ approve }}" style="background:#303235;color:#fff;border:0;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#1D1D20">Approve &amp; send</button><button data-nav="risk" onClick="{{ navTo }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View plan</button></span></div></sc-if>
-              <sc-if value="{{ approved }}"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px;font-size:12.5px;font-weight:500;color:#1F7A61"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Storm plan approved — 6 loads updated, 6 receivers notified.</div></sc-if>
-              <sc-if value="{{ tenderOn }}"><div style="display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;flex-wrap:wrap"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span><div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Review the MEM → DAL backhaul tender draft</div><div style="font-size:12.5px;color:#696B6F;line-height:1.55;margin-top:3px">3 loads/wk of Ryder-managed freight ≈ <b style="font-weight:600">$3.9K/wk gross</b>; credits net against your invoice. Draft expires Friday.</div></div><span style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;align-self:center"><button data-q="q5" onClick="{{ askQ }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Review enrollment</button><button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#696B6F;cursor:pointer">Dismiss</button></span></div></sc-if>
-              <sc-if value="{{ wNotSched }}"><div style="display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;flex-wrap:wrap"><span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span><div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Schedule trailer 4482 preventive service</div><div style="font-size:12.5px;color:#696B6F;line-height:1.55;margin-top:3px">Open window Saturday at Orlando DC-04; no route impact if scheduled this week.</div></div><span style="display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;align-self:center"><button onClick="{{ wSchedule }}" style="background:#303235;color:#fff;border:0;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#1D1D20">Schedule service</button></span></div></sc-if>
-              <sc-if value="{{ wSched }}"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px;font-size:12.5px;font-weight:500;color:#1F7A61"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Trailer 4482 service scheduled — Sat Jul 12 · Orlando DC-04.</div></sc-if>
-              <sc-if value="{{ todoZero }}"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px;font-size:13px;color:#696B6F">All caught up — nothing needs your decision right now.</div></sc-if>
-            </div>
-<div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:24px 0 10px">Topics to catch up on</div>            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
-<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Storm response — Thursday, Jul 9</span></div><sc-if value="{{ notApproved }}"><div style="font-size:13px;color:#303235;line-height:1.55">Receiver notifications for <b style="font-weight:600">6 deliveries</b> are drafted and queued — they send the moment you approve the plan.</div></sc-if><sc-if value="{{ approved }}"><div style="font-size:13px;color:#303235;line-height:1.55">Notifications sent to all <b style="font-weight:600">6 receivers</b>; pre-loads and reroutes are scheduled.</div></sc-if><div style="font-size:13px;color:#303235;line-height:1.55">Dock slots confirmed Wed 6:00–7:00 PM at Orlando DC-04 for the 4 pre-load candidates.</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">At-risk loads</button><button data-nav="risk" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Open Risk radar</button></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · NWS advisory 041 · Load schedule, week of Jul 6</div></div>
-<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">June billing — closed clean</span></div><div style="font-size:13px;color:#303235;line-height:1.55"><b style="font-weight:600">214 line items</b> matched to rate schedule C — nothing ran off-contract.</div><div style="font-size:13px;color:#303235;line-height:1.55"><b style="font-weight:600">9 disputes</b> carried · 4.2-day average resolution.</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q2" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why was June 8% higher?</button><button data-nav="reviews" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View business review</button></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Invoice SBG-2026-06 · Contract SBG-DTS-2024</div></div>
-<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Watching this week</span></div><div style="font-size:13px;color:#303235;line-height:1.55">Dock congestion at two Tampa retailers — 9 of 12 June missed stops trace here; recurs Friday afternoons.</div><div style="font-size:13px;color:#303235;line-height:1.55">Saturday crew hours, Atlanta — the two-route plan keeps drivers 40 min inside HOS limits.</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q1" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Tampa dock misses</button><button data-q="q6" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Saturday consolidation</button></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Load records · Site telemetry</div></div>
-<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px"><div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul opportunity — ≈ $458K/yr gross</span></div><div style="font-size:13px;color:#303235;line-height:1.55">Three return lanes run empty on a regular schedule; <b style="font-weight:600">MEM → DAL alone is 44%</b> of the value.</div><div style="font-size:13px;color:#303235;line-height:1.55">A typical revenue share returns <b style="font-weight:600">≈ $320K/yr to SBG</b>.</div><div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q3" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Backhaul value</button><button data-q="q5" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Enrollment steps</button></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Ryder network freight availability · Market rate index</div></div>
+
+            <!-- Topics: optional reading, fact fragments -->
+            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Topics · 4</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Storm response — Thursday, Jul 9</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <sc-if value="{{ notApproved }}"><div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">6 notifications drafted</b> — send on your approval</div></sc-if>
+                  <sc-if value="{{ approved }}"><div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">6 receivers notified</b> — pre-loads and reroutes scheduled</div></sc-if>
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Dock slots held</b> Wed 6:00–7:00 PM · Orlando DC-04</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">At-risk loads</button><button data-nav="risk" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View the storm plan</button></div>
+                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · NWS advisory 041 · Load schedule, week of Jul 6</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">June billing — closed clean</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">214 lines matched</b> to rate schedule C — zero off-contract</div>
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">9 disputes carried</b> · 4.2-day avg resolution</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q2" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why was June 8% higher?</button><button data-nav="reviews" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View business review</button></div>
+                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Invoice SBG-2026-06 · Contract SBG-DTS-2024</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Watching this week</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Tampa docks</b> — 9 of 12 June misses trace here; recurs Fri PM</div>
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Atlanta Saturday</b> — two-route plan holds 40 min HOS margin</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q1" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Tampa dock misses</button><button data-q="q6" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Saturday consolidation</button></div>
+                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Load records · Site telemetry</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul opportunity — ≈ $458K/yr gross</span></div>
+                <div style="display:flex;flex-direction:column;gap:6px">
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">3 return lanes run empty</b> — MEM → DAL is 44% of value</div>
+                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Revenue share</b> returns ≈ $320K/yr to SBG</div>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q3" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Backhaul value</button><button data-q="q5" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Enrollment steps</button></div>
+                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Ryder network freight availability · Market rate index</div>
+              </div>
             </div>
 
           </div>
         </div>
         </sc-if>
+
+        <sc-if value="{{ isWorkforce }}">
+        <div data-screen-label="Workforce" style="min-height:100%;padding:26px 24px 160px">
+          <div style="max-width:1100px;margin:0 auto;animation:rev .45s ease both">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5AC8FA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>
+              <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#8A8F98">Your workforce</span>
+            </div>
+            <div style="font-size:30px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em;margin-top:12px;line-height:1.2">7 AI agents at your disposal</div>
+            <div style="font-size:13.5px;color:#8A8F98;margin-top:8px">Every action is logged and reversible · anything cost-bearing waits for you · repeat patterns go to your Ryder team</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px">
+            <div data-aiflash="{{ agEtaFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaEta" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#5AC8FA" stop-opacity="0.34"/><stop offset="55%" stop-color="#5AC8FA" stop-opacity="0.10"/><stop offset="100%" stop-color="#5AC8FA" stop-opacity="0"/></radialGradient><radialGradient id="wfbEta" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#5AC8FA" stop-opacity="0.14"/><stop offset="100%" stop-color="#5AC8FA" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaEta)"/><rect width="520" height="260" fill="url(#wfbEta)"/><circle cx="428" cy="34" r="2.5" fill="#5AC8FA" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#5AC8FA" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#5AC8FA" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#5AC8FA" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5AC8FA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">ETA &amp; notifications</span>
+                <sc-if value="{{ agEtaOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agEtaOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agEta" onClick="{{ agToggle }}" aria-label="Toggle ETA &amp; notifications" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agEtaTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agEtaKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Sends updated delivery ETAs to receivers automatically; delays over 60 minutes are held for you.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: receiver notices for ETA shifts up to 60 minutes. Needs you: bigger shifts and anything cost-bearing.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#5AC8FA;font-variant-numeric:tabular-nums">{{ wfEtaSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agEta" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agDockFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaDock" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#FFB86B" stop-opacity="0.34"/><stop offset="55%" stop-color="#FFB86B" stop-opacity="0.10"/><stop offset="100%" stop-color="#FFB86B" stop-opacity="0"/></radialGradient><radialGradient id="wfbDock" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#FFB86B" stop-opacity="0.14"/><stop offset="100%" stop-color="#FFB86B" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaDock)"/><rect width="520" height="260" fill="url(#wfbDock)"/><circle cx="428" cy="34" r="2.5" fill="#FFB86B" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#FFB86B" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#FFB86B" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#FFB86B" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFB86B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Dock scheduling</span>
+                <sc-if value="{{ agDockOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agDockOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agDock" onClick="{{ agToggle }}" aria-label="Toggle Dock scheduling" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agDockTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agDockKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Books and reshuffles dock slots at your DCs autonomously; receiver-side changes need a yes.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: slot requests and swaps at your DCs. Needs you: receiver-side changes it cannot confirm.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#FFB86B;font-variant-numeric:tabular-nums">{{ wfDockSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agDock" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agAuditFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaAudit" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#4CD9A8" stop-opacity="0.34"/><stop offset="55%" stop-color="#4CD9A8" stop-opacity="0.10"/><stop offset="100%" stop-color="#4CD9A8" stop-opacity="0"/></radialGradient><radialGradient id="wfbAudit" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#4CD9A8" stop-opacity="0.14"/><stop offset="100%" stop-color="#4CD9A8" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaAudit)"/><rect width="520" height="260" fill="url(#wfbAudit)"/><circle cx="428" cy="34" r="2.5" fill="#4CD9A8" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#4CD9A8" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#4CD9A8" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#4CD9A8" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4CD9A8" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Invoice audit</span>
+                <sc-if value="{{ agAuditOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agAuditOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agAudit" onClick="{{ agToggle }}" aria-label="Toggle Invoice audit" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agAuditTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agAuditKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Audits every invoice line against contract rates; drafts disputes that file on your approval.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: line-by-line checks against contract rates. Needs you: filing disputes — anything cost-bearing.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#4CD9A8;font-variant-numeric:tabular-nums">{{ wfAuditSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agAudit" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agBhFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaBh" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#A78BFA" stop-opacity="0.34"/><stop offset="55%" stop-color="#A78BFA" stop-opacity="0.10"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/></radialGradient><radialGradient id="wfbBh" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#A78BFA" stop-opacity="0.14"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaBh)"/><rect width="520" height="260" fill="url(#wfbBh)"/><circle cx="428" cy="34" r="2.5" fill="#A78BFA" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#A78BFA" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#A78BFA" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Backhaul tender</span>
+                <sc-if value="{{ agBhOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agBhOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agBh" onClick="{{ agToggle }}" aria-label="Toggle Backhaul tender" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agBhTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agBhKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Scouts empty lanes and drafts tenders — analysis is automatic, nothing sends without you.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: matching, pricing, and lane analysis. Needs you: every tender — nothing sends without your approval.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#A78BFA;font-variant-numeric:tabular-nums">{{ wfBhSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agBh" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agDwellFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaDwell" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#FFD84D" stop-opacity="0.34"/><stop offset="55%" stop-color="#FFD84D" stop-opacity="0.10"/><stop offset="100%" stop-color="#FFD84D" stop-opacity="0"/></radialGradient><radialGradient id="wfbDwell" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#FFD84D" stop-opacity="0.14"/><stop offset="100%" stop-color="#FFD84D" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaDwell)"/><rect width="520" height="260" fill="url(#wfbDwell)"/><circle cx="428" cy="34" r="2.5" fill="#FFD84D" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#FFD84D" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#FFD84D" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#FFD84D" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD84D" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Detention &amp; dwell</span>
+                <sc-if value="{{ agDwellOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agDwellOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agDwell" onClick="{{ agToggle }}" aria-label="Toggle Detention &amp; dwell" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agDwellTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agDwellKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Times every dock hold and assembles claim evidence; filing always waits for your approval.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#FFD84D;font-variant-numeric:tabular-nums">{{ wfDwellSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agDwell" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agDocsFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaDocs" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#FF5C5C" stop-opacity="0.34"/><stop offset="55%" stop-color="#FF5C5C" stop-opacity="0.10"/><stop offset="100%" stop-color="#FF5C5C" stop-opacity="0"/></radialGradient><radialGradient id="wfbDocs" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#FF5C5C" stop-opacity="0.14"/><stop offset="100%" stop-color="#FF5C5C" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaDocs)"/><rect width="520" height="260" fill="url(#wfbDocs)"/><circle cx="428" cy="34" r="2.5" fill="#FF5C5C" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#FF5C5C" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#FF5C5C" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#FF5C5C" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF5C5C" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Documents &amp; POD</span>
+                <sc-if value="{{ agDocsOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agDocsOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agDocs" onClick="{{ agToggle }}" aria-label="Toggle Documents &amp; POD" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agDocsTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agDocsKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Chases, matches, and shares paperwork on its own; anything touching an invoice needs you.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: chasing, matching, and sharing paperwork. Needs you: anything that changes an invoice or files a claim.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#FF5C5C;font-variant-numeric:tabular-nums">{{ wfDocsSum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agDocs" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            <div data-aiflash="{{ agSafetyFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+              <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaSafety" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#9BE8FF" stop-opacity="0.34"/><stop offset="55%" stop-color="#9BE8FF" stop-opacity="0.10"/><stop offset="100%" stop-color="#9BE8FF" stop-opacity="0"/></radialGradient><radialGradient id="wfbSafety" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#9BE8FF" stop-opacity="0.14"/><stop offset="100%" stop-color="#9BE8FF" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaSafety)"/><rect width="520" height="260" fill="url(#wfbSafety)"/><circle cx="428" cy="34" r="2.5" fill="#9BE8FF" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="#9BE8FF" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="#9BE8FF" opacity="0.5"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#9BE8FF" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></div>
+              <div style="position:relative;display:flex;align-items:center;gap:12px">
+                <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9BE8FF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <span style="font-size:19px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em">Safety coach</span>
+                <sc-if value="{{ agSafetyOn }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(52,160,129,0.16);color:#5BDCAF;border:1px solid rgba(91,220,175,0.25)">Active</span></sc-if>
+                <sc-if value="{{ agSafetyOff }}"><span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:rgba(255,255,255,0.07);color:#9BA0A8;border:1px solid rgba(255,255,255,0.12)">Paused</span></sc-if>
+                <span style="flex:1"></span>
+                <button data-a="agSafety" onClick="{{ agToggle }}" aria-label="Toggle Safety coach" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agSafetyTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agSafetyKnob }}"></span></button>
+              </div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Turns telematics events into driver coaching; repeat patterns escalate to your Ryder safety lead.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder’s, reviews stay human.</div>
+              <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
+                <span style="font-size:12px;color:#9BE8FF;font-variant-numeric:tabular-nums">{{ wfSafetySum }}</span>
+                <span style="flex:1"></span>
+                <button data-log="agSafety" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
+              </div>
+            </div>
+            </div>
+            <div style="font-size:11.5px;color:#5C6066;margin-top:26px">Agents run on the records that already run your freight — loads, invoices, telematics, contracts. Tune any guardrail with your Ryder team.</div>
+          </div>
+        </div>
+        </sc-if>
+
         <sc-if value="{{ isReviews }}"><div data-screen-label="Reviews (document)" style="padding:20px 24px 140px">
           <div style="max-width:880px;margin:0 auto">
 
@@ -1605,125 +1923,81 @@ input:focus{outline:none}
           </div>
         </div></sc-if>
 
-        <sc-if value="{{ isRisk }}"><div data-screen-label="Risk radar" style="padding:24px 24px 140px">
-          <div style="max-width:1040px;margin:0 auto">
-            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-              <span style="font-size:20px;font-weight:600;color:#1D1D20">Risk radar</span>
-              <sc-if value="{{ notApproved }}"><span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">6 loads at risk · Thu Jul 9</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Plan active · 6 loads covered</span></sc-if>
-            </div>
-
-            <!-- Cause banner -->
-            <div style="display:flex;align-items:flex-start;gap:12px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:14px 18px;margin-top:16px">
-              <svg style="flex:none;margin-top:1px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
-              <span style="font-size:13.5px;color:#655102;line-height:1.55">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
-            </div>
-
-            <!-- At-risk loads table -->
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden;margin-top:16px">
-              <table style="width:100%;border-collapse:collapse">
-                <thead>
-                  <tr>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Load</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Route</th>
-                    <th style="text-align:right;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Stops</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Scheduled</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Risk</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31307</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Tampa retail loop</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">8</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 6:00 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31309</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Jacksonville run</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 7:30 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31315</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Miami corridor</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">9</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 5:15 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31321</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Orlando metro</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">7</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 8:00 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31288</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Savannah corridor</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">5</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 9:45 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31294</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Macon/Columbus</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 10:30 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Plan card -->
-            <div data-aiglow="card" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px;margin-top:16px">
-              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended plan</div>
-              <div style="font-size:13.5px;color:#303235;line-height:1.6;margin-top:10px;max-width:820px">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
-              <div style="display:flex;gap:10px;margin-top:16px">
-                <sc-if value="{{ notApproved }}"><button onClick="{{ approve }}" style="display:inline-flex;align-items:center;gap:8px;background:#303235;color:#fff;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#1D1D20">Approve plan</button></sc-if>
-                <sc-if value="{{ approved }}"><button disabled="{{ true }}" style="display:inline-flex;align-items:center;gap:8px;background:#ECEDED;color:#44464B;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:default;font-family:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Plan approved</button></sc-if>
-                <sc-if value="{{ notApproved }}"><button style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" onClick="{{ adjToggle }}" style-hover="background:#F5F6F6">Adjust</button></sc-if>
-              </div>
-              <sc-if value="{{ adjOpen }}">
-              <div style="border-top:1px solid #ECEDED;margin-top:16px;padding-top:14px">
-                <div style="display:flex;gap:28px;flex-wrap:wrap">
-                  <div>
-                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Orlando pre-load window · 4 loads</div>
-                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
-                      <button data-w="6" onClick="{{ adjPickW }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw6St }}">Wed 6:00 PM</button>
-                      <button data-w="8" onClick="{{ adjPickW }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw8St }}">Wed 8:00 PM (+$310)</button>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Atlanta reroute · 2 loads</div>
-                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
-                      <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
-                      <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
-                    </div>
-                  </div>
-                </div>
-                <div style="font-size:12px;color:#696B6F;margin-top:12px">Adjustments update the plan summary and cost estimate above — nothing is committed until you approve.</div>
-              </div>
-              </sc-if>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px"><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg><span style="font-size:13px;font-weight:600;color:#44464B">If you do nothing</span></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#655102">6</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Est. exposure — redelivery + detention</span><b style="font-weight:600;color:#655102">≈ $9.8K</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#655102">▼ ≈ 2.2 pts</b></div></div><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span style="font-size:13px;font-weight:600;color:#1D1D20">With the plan</span><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#1F7A61">0 — deliveries unaffected</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Cost to run the plan</span><b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#1F7A61">holds at 96.2%</b></div></div></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week's load values · Sources · Load records · Invoice SBG-2026-06</div>
-
-
-
-
-          </div>
-        </div></sc-if>
+        
 
       </div>
+
+      <sc-if value="{{ agLogOpen }}">
+          <div data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Agent actions log" style="position:fixed;top:48px;right:0;bottom:0;width:440px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <sc-if value="{{ agLogIsEta }}"><span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span></sc-if>
+              <sc-if value="{{ agLogIsDock }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span></sc-if>
+              <sc-if value="{{ agLogIsAudit }}"><span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span></sc-if>
+              <sc-if value="{{ agLogIsBh }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span></sc-if>
+              <sc-if value="{{ agLogIsDwell }}"><span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg></span></sc-if>
+              <sc-if value="{{ agLogIsDocs }}"><span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path></svg></span></sc-if>
+              <sc-if value="{{ agLogIsSafety }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span></sc-if>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">{{ agLogTitle }}</span>
+                  <sc-if value="{{ agLogStatusOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
+                  <sc-if value="{{ agLogStatusOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">{{ agLogSummary }}</div>
+              </div>
+              <button onClick="{{ closeAgLog }}" aria-label="Close actions log" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+
+            <!-- Guardrails -->
+            <div style="padding:12px 18px;border-bottom:1px solid #E3E4E5;background:#FAFAFA">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:4px">Guardrails</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.5">{{ agLogGuard }}</div>
+            </div>
+
+            <!-- Entries -->
+            <div style="flex:1;overflow:auto;padding:6px 18px 12px">
+              <sc-for list="{{ agLogEntries }}" as="en">
+                <div style="padding:13px 0;border-bottom:1px solid #F0F0F1">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font-size:12px;font-weight:600;color:#1D1D20;font-variant-numeric:tabular-nums;white-space:nowrap">{{ en.t }}</span>
+                    <span style="flex:1"></span>
+                    <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex:none;{{ en.cs }}">{{ en.chip }}</span>
+                  </div>
+                  <div style="font-size:13px;font-weight:600;color:#1D1D20;line-height:1.4;margin-top:6px">{{ en.title }}</div>
+                  <div style="font-size:12.5px;color:#303235;line-height:1.5;margin-top:3px">{{ en.d }}</div>
+                  <div style="font-size:11.5px;color:#696B6F;margin-top:6px">{{ en.who }}</div>
+                  <sc-if value="{{ en.act }}">
+                  <div style="margin-top:9px">
+                    <button data-k="{{ en.act }}" onClick="{{ agLogAction }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:7px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit">{{ en.actLabel }}</button>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ en.exp }}">
+                  <div style="margin-top:8px">
+                    <button onClick="{{ toggleNotice }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">{{ noticeToggleLabel }}</button>
+                    <sc-if value="{{ stormNoticeOpen }}">
+                    <div style="border:1px solid #E3E4E5;border-radius:8px;background:#FAFAFA;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
+                      <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Receiver notice · sent to 6 locations</div>
+                      <div style="font-size:12px;color:#696B6F;margin-top:7px">To: Receiving — Tampa Retail Group · +5 more</div>
+                      <div style="font-size:12px;color:#696B6F;margin-top:2px">From: RyderShare, on behalf of Summit Beverage Group</div>
+                      <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Delivery update — Thursday, Jul 9 (weather plan)</div>
+                      <div style="font-size:12.5px;color:#303235;line-height:1.6;margin-top:5px">Ahead of Thursday's Gulf storm, your Summit Beverage deliveries are pre-staged to protect the schedule. Your delivery windows are unchanged, and live tracking stays current in RyderShare.</div>
+                      <div style="font-size:11px;color:#A9AAAC;margin-top:9px">Sent by ETA &amp; notifications · Logged &amp; reversible · Replies go to your Ryder team</div>
+                    </div>
+                    </sc-if>
+                  </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- Footer -->
+            <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <div style="font-size:11.5px;color:#696B6F;line-height:1.5">Every action is logged and reversible. Your approvals and edits tune this agent's guardrails.</div>
+            </div>
+          </div>
+          </sc-if>
 
       <!-- S0a docked prompt bar -->
       <sc-if value="{{ showGlobalBar }}">
@@ -1763,7 +2037,7 @@ input:focus{outline:none}
       </sc-if>
 
       <!-- Persistent footer badge -->
-      <div style="position:absolute;left:12px;bottom:10px;z-index:9;pointer-events:none;background:rgba(255,255,255,0.85);border-radius:999px;padding:4px 10px;font-size:11px;color:#696B6F;box-shadow:0 1px 2px rgba(0,0,0,0.06)">Vision prototype · Synthetic data · Baton Product &amp; Design</div>
+      <div data-badge="" style="position:absolute;left:12px;bottom:10px;z-index:9;pointer-events:none;background:rgba(255,255,255,0.85);border-radius:999px;padding:4px 10px;font-size:11px;color:#696B6F;box-shadow:0 1px 2px rgba(0,0,0,0.06)">Vision prototype · Synthetic data · Baton Product &amp; Design</div>
     </div>
   </div>
 </div>
@@ -2716,13 +2990,24 @@ class ComponentV2 extends Component {
   constructor(props) {
     super(props);
     var self = this;
-    this.INTEL_GATED = ['insights', 'agents', 'reviews', 'risk', 'ask'];
+    this.INTEL_GATED = ['insights', 'agents', 'reviews', 'risk', 'ask', 'workforce'];
+    this.VALID = this.VALID.concat(['workforce']);
 
     // The document-style review shipped as THE reviews screen; the old
     // #/reviews2 preview address stays as an alias.
     if (__initialHash === '#/reviews2') {
       this.state.route = 'reviews';
       try { history.replaceState(null, '', '#/reviews'); } catch (e) {}
+    }
+    if (__initialHash === '#/workforce') {
+      this.state.route = 'workforce';
+      try { history.replaceState(null, '', '#/workforce'); } catch (e) {}
+    }
+    // Risk radar merged into Autopilot (the agents route): every old entry
+    // point — cold loads, hash changes, in-app nav — lands on the merged tab.
+    if (this.state.route === 'risk') {
+      this.state.route = 'agents';
+      try { history.replaceState(null, '', '#/agents'); } catch (e) {}
     }
     this.state.revMonth = 'jun'; // reviews month tabs: 'jun' | 'may' | 'apr'
 
@@ -2749,8 +3034,15 @@ class ComponentV2 extends Component {
     this.state.tenderSent = false;   // in-log approval: MEM → DAL tender
     this.state.everAsked = false;    // retires the ask bar's New badge
     this.state.noticeOpen = false;   // receiver-notice artifact expander
+    this.state.agDwell = true;       // Detention & dwell agent
+    this.state.agDocs = true;        // Documents & POD agent
+    this.state.agSafety = true;      // Safety coach agent
+    this.state.riskExpanded = false; // approved incident details re-expand
+    this.state.wfOpen = null;        // workforce showroom: which agent's history is open
+    this.state.detClaimFiled = false; // in-log approval: Macon detention claim
+    this.state.osdFiled = false;      // in-log approval: OS&D short-shipment claim
     if (saved) {
-      ['approved', 'wSched', 'tenderGone', 'tenderSent', 'disputeFiled', 'everAsked'].forEach(function (k) {
+      ['approved', 'wSched', 'tenderGone', 'tenderSent', 'disputeFiled', 'everAsked', 'detClaimFiled', 'osdFiled'].forEach(function (k) {
         if (saved[k]) this.state[k] = true;
       }, this);
     }
@@ -2776,7 +3068,7 @@ class ComponentV2 extends Component {
         entries: [
           { t: 'Today · 6:04 AM', title: 'Pushed updated ETA to 2 receivers', d: 'SBG-31241 Savannah corridor — ETA 4:15 PM ET (was 3:05). First-stop dock delay; downstream stops hold.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Today · 5:52 AM', title: 'Nudged a silent telematics feed', d: 'SBG-31253 went 45 minutes without a ping near Tyler, TX. Re-polled the unit; updates resumed.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
-          { t: 'Mon Jul 6 · 4:41 PM', title: 'Shared POD with a consignee', d: 'Athens retail requested proof of delivery for SBG-31249; sent from the document repository.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 4:41 PM', title: 'Answered a receiver ETA query', d: 'Savannah receiving asked for tomorrow\u2019s window; replied from the live plan in 40 seconds.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Mon Jul 6 · 9:15 AM', title: 'Held a notification for review', d: 'SBG-31248 Miami corridor ETA moved 2h 10m — beyond the 60-minute guardrail, so nothing went out without you.', chip: 'Escalated', cs: AMBER, who: 'Routed to you — over guardrail' },
           { t: 'Sun Jul 5 · 6:00 PM', title: 'Sent the weekly receiver digest', d: 'On-time summary and this week’s appointment windows to 14 receiving locations.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Fri Jul 3 · 3:22 PM', title: 'Updated the delay-notice template', d: 'You shortened the delay-reason wording on Thursday; the edit now applies to every notice.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
@@ -2820,6 +3112,42 @@ class ComponentV2 extends Component {
           { t: 'Wed Jul 1 · 10:00 AM', title: 'Sized the full backhaul opportunity', d: 'Three lanes ≈ $458K/yr gross at market; a typical revenue share returns ≈ $320K/yr to SBG.', chip: 'Sized', cs: BLUE, who: 'Sent to Insights' },
           { t: 'Tue Jun 30 · 2:20 PM', title: 'Prepared the enrollment brief', d: 'Per-lane steps and the revenue-share model, ready for your review — lanes enroll one at a time.', chip: 'Ready', cs: GREY, who: 'Awaiting your approval' }
         ]
+      },
+      agDwell: {
+        title: 'Detention & dwell',
+        summary: 'June · 41 dock stops timed · $1,120 in evidence handed to Invoice audit · 1 claim ready',
+        guard: 'Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.',
+        entries: [
+          { t: 'Today · 7:15 AM', title: 'Timed a 96-minute dock hold', d: 'SBG-31248 Miami receiver held the trailer 36 minutes past free time; evidence pack assembled — geofence stamps + BOL times.', chip: 'Assembled', cs: BLUE, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 6:10 PM', title: 'Draft detention claim ready — Macon', d: '$186 for 47 minutes over free time on Jul 2; receiver signature and telematics attached. Files when you approve.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileDetention', actLabel: 'Approve & file claim' },
+          { t: 'Fri Jul 3 · 4:30 PM', title: 'Flagged Tampa retail #2 as chronic', d: 'Fourth consecutive Friday over free time; pattern sent to your weekly digest and Dock scheduling.', chip: 'Flagged', cs: BLUE, who: 'Sent to Insights' },
+          { t: 'Wed Jul 1 · 6:12 AM', title: 'Handed detention evidence to Invoice audit', d: 'Two May holds documented; $1,120 in carrier credits filed with the June invoice.', chip: 'Recovered', cs: GREEN, who: 'Handed off to Invoice audit' },
+          { t: 'Tue Jun 30 · 3:05 PM', title: 'Learned your free-time terms', d: 'You corrected the Macon contract to 60 minutes; all future timing uses it.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
+        ]
+      },
+      agDocs: {
+        title: 'Documents & POD',
+        summary: 'June cycle · 214 PODs matched · 2 chased & recovered · 1 OS&D draft',
+        guard: 'Auto: chasing, matching, and sharing paperwork. Needs you: anything that changes an invoice or files a claim.',
+        entries: [
+          { t: 'Today · 6:20 AM', title: 'Matched yesterday\u2019s PODs to loads', d: '14 of 14 in by 6 AM; all signatures clean.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 4:41 PM', title: 'Shared the POD pack with Athens retail', d: 'Consignee requested proof of delivery for SBG-31249; sent from the repository with the BOL attached.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Fri Jul 3 · 11:40 AM', title: 'Chased two missing PODs', d: 'TR-4440 and TR-4442 drivers nudged; both documents in by 5 PM, billing unblocked.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
+          { t: 'Thu Jul 2 · 9:05 AM', title: 'Drafted an OS&D claim from a POD notation', d: 'Two cases short noted on SBG-31249; $312 claim drafted with photos and BOL line refs.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileOsd', actLabel: 'Approve & file OS&D claim' },
+          { t: 'Wed Jul 1 · 6:12 AM', title: '3-way matched the June invoice', d: '214 lines against BOLs and PODs for Invoice audit — zero unmatched.', chip: 'Clean', cs: GREEN, who: 'Handed off to Invoice audit' }
+        ]
+      },
+      agSafety: {
+        title: 'Safety coach',
+        summary: 'TTM 0.4/100K mi · 12 events coached in June · 61-day clean streak',
+        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder\u2019s, reviews stay human.',
+        entries: [
+          { t: 'Today · 5:40 AM', title: 'Briefed Thursday drivers on the storm corridor', d: 'Start-of-day risk briefing for the 6 storm-plan routes: crosswinds, staging changes, revised windows.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 2:50 PM', title: 'Assigned self-coaching for hard braking', d: 'TR-4438 on I-4 near Orlando; the driver completed the module the same day.', chip: 'Coached', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts on two runs in one week — human review, not automation.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
+          { t: 'Wed Jul 1 · 6:00 AM', title: 'June closed with zero preventable incidents', d: 'Clean streak at 61 days; TTM rate 0.4/100K mi, trending down.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'May 2 · 3:00 PM', title: 'Closed the April incident review', d: 'Coaching plan completed; the April business review carries the record.', chip: 'Closed', cs: GREY, who: 'Approved by your Ryder team' }
+        ]
       }
     };
 
@@ -2852,6 +3180,10 @@ class ComponentV2 extends Component {
           try { history.replaceState(null, '', '#/reviews'); } catch (e) {}
           h = 'reviews';
         }
+        if (h === 'risk') { // merged into Autopilot
+          try { history.replaceState(null, '', '#/agents'); } catch (e) {}
+          h = 'agents';
+        }
         if (!self.state.intel && self.INTEL_GATED.indexOf(h) >= 0 && h !== 'insights') {
           try { history.replaceState(null, '', '#/insights'); } catch (e) {}
           if (self.state.route !== 'insights') self.setRoute('insights');
@@ -2867,6 +3199,7 @@ class ComponentV2 extends Component {
       var v = baseRV();
       var s = self.state;
       v.dataIntel = s.intel ? 'on' : 'off';
+      v.pageTheme = s.route === 'workforce' ? 'dark' : 'light';
       v.intelOn = s.intel;
       v.intelFlash = s.intelFlash;
 
@@ -2875,7 +3208,7 @@ class ComponentV2 extends Component {
         sessionStorage.setItem('rsIntelState', JSON.stringify({
           intel: s.intel, approved: s.approved, wSched: s.wSched,
           tenderGone: s.tenderGone, tenderSent: s.tenderSent, disputeFiled: s.disputeFiled,
-          everAsked: s.everAsked
+          everAsked: s.everAsked, detClaimFiled: s.detClaimFiled, osdFiled: s.osdFiled
         }));
       } catch (e) {}
 
@@ -2957,11 +3290,57 @@ class ComponentV2 extends Component {
       v.bhTenderSent = s.tenderSent;
 
       // ----- Value ledger: what Intelligence returned this month -----
-      v.ledgerDisputed = s.disputeFiled ? '$1,334 recovered or in dispute' : '$1,120 recovered in June';
-      // Same live plan-cost formula the risk page uses, so an adjusted plan
-      // carries its real cost into the ledger.
+      // Stat tiles: number-first, labels flip live on approvals. Plan cost
+      // uses the same formula as the risk page so adjustments carry through.
       var pc2 = 1840 + (s.adjWin === '8' ? 310 : 0) + (s.adjRoute === '16' ? 450 : 0);
-      v.ledgerStorm = s.approved ? '6 failures avoided for +$' + pc2.toLocaleString('en-US') : '6 at-risk loads, plan ready';
+      var lv = 1120 + (s.disputeFiled ? 214 : 0) + (s.detClaimFiled ? 186 : 0) + (s.osdFiled ? 312 : 0);
+      v.ledgerV1 = '$' + lv.toLocaleString('en-US');
+      v.ledgerL1 = lv > 1120 ? 'Recovered or in dispute' : 'Recovered in June';
+      v.ledgerL2 = s.approved ? 'Failures avoided · +$' + pc2.toLocaleString('en-US') : 'At-risk loads · plan ready';
+      // Merged incident module (ex Risk radar): full detail until approved,
+      // then a one-line active bar with re-expand.
+      v.riskOpen = !s.approved || s.riskExpanded;
+      v.riskCollapsed = s.approved && !s.riskExpanded;
+      v.riskToggle = function () { self.setState({ riskExpanded: !self.state.riskExpanded }); };
+      v.decQueueEmpty = s.tenderGone && s.wSched;
+
+      // Workforce showroom
+      v.isWorkforce = s.route === 'workforce';
+      v.wfEtaHist = s.wfOpen === 'agEta'; v.wfDockHist = s.wfOpen === 'agDock';
+      v.wfAuditHist = s.wfOpen === 'agAudit'; v.wfBhHist = s.wfOpen === 'agBh';
+      v.wfDwellHist = s.wfOpen === 'agDwell'; v.wfDocsHist = s.wfOpen === 'agDocs';
+      v.wfSafetyHist = s.wfOpen === 'agSafety';
+      v.agEtaHistClosed = s.wfOpen !== 'agEta'; v.agDockHistClosed = s.wfOpen !== 'agDock';
+      v.agAuditHistClosed = s.wfOpen !== 'agAudit'; v.agBhHistClosed = s.wfOpen !== 'agBh';
+      v.agDwellHistClosed = s.wfOpen !== 'agDwell'; v.agDocsHistClosed = s.wfOpen !== 'agDocs';
+      v.agSafetyHistClosed = s.wfOpen !== 'agSafety';
+      v.wfEntries = s.wfOpen ? self.entriesFor(s.wfOpen).entries : [];
+      v.wfHist = function (e) {
+        if (e.stopPropagation) e.stopPropagation();
+        var k = e.currentTarget.dataset.w;
+        self.setState({ wfOpen: self.state.wfOpen === k ? null : k });
+      };
+      v.wfEtaSum = self.entriesFor('agEta').summary;
+      v.wfDockSum = self.entriesFor('agDock').summary;
+      v.wfAuditSum = self.entriesFor('agAudit').summary;
+      v.wfBhSum = self.entriesFor('agBh').summary;
+      v.wfDwellSum = self.entriesFor('agDwell').summary;
+      v.wfDocsSum = self.entriesFor('agDocs').summary;
+      v.wfSafetySum = self.entriesFor('agSafety').summary;
+
+      // Right-side meta per agent row: when it last acted — live, so a
+      // session approval reads "Just now".
+      v.agEtaMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 6:04 AM';
+      v.agDockMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 5:58 AM';
+      v.agAuditMeta = s.disputeFiled ? 'Last action · Just now' : 'Last run · Jul 1';
+      v.agBhMeta = s.tenderSent ? 'Tender sent · Just now' : 'Draft waiting · MEM \u2192 DAL';
+      v.agDwellMeta = s.detClaimFiled ? 'Last action · Just now' : 'Last action · Today 7:15 AM';
+      v.agDocsMeta = s.osdFiled ? 'Last action · Just now' : 'Last action · Today 6:20 AM';
+      v.agSafetyMeta = 'Last action · Today 5:40 AM';
+      // Toggles sit inside clickable agent rows — don't let the tap bubble
+      // into the row's open-log handler.
+      var baseTog = v.agToggle;
+      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); };
       // Weather response is Intelligence: pre-enable the map carries no storm overlay.
       if (!s.intel) v.stormOp = '0';
       v.showLanding = s.route === 'insights' && !s.intel;
@@ -2982,45 +3361,36 @@ class ComponentV2 extends Component {
       // trailer service, in-log approvals — appear as "Just now" entries, so
       // the audit trail visibly reacts to what the user just did.
       var L = s.agLog ? self.AGLOG[s.agLog] : null;
-      v.agLogOpen = !!L && s.route === 'agents';
+      v.agLogOpen = !!L && (s.route === 'agents' || s.route === 'workforce');
       v.agLogIsEta = s.agLog === 'agEta';
       v.agLogIsDock = s.agLog === 'agDock';
       v.agLogIsAudit = s.agLog === 'agAudit';
       v.agLogIsBh = s.agLog === 'agBh';
+      v.agLogIsDwell = s.agLog === 'agDwell';
+      v.agLogIsDocs = s.agLog === 'agDocs';
+      v.agLogIsSafety = s.agLog === 'agSafety';
+      var swOn2 = 'background:#34A081', swOff2 = 'background:#C5C6C7';
+      var knOn2 = 'transform:translateX(14px)', knOff2 = 'transform:translateX(0)';
+      ['agDwell', 'agDocs', 'agSafety'].forEach(function (k2) {
+        var on = !!s[k2];
+        v[k2 + 'On'] = on; v[k2 + 'Off'] = !on;
+        v[k2 + 'Track'] = on ? swOn2 : swOff2;
+        v[k2 + 'Knob'] = on ? knOn2 : knOff2;
+        v[k2 + 'Flash'] = s.agFlash === k2 ? 'on' : '';
+      });
       v.agLogTitle = L ? L.title : '';
       v.agLogSummary = L ? L.summary : '';
       v.agLogGuard = L ? L.guard : '';
-      var GREEN2 = 'background:#E8F5F0;color:#1F7A61';
-      var entries = L ? L.entries : [];
-      if (L && s.agLog === 'agEta' && s.approved) {
-        entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar — approved by you', exp: 1 }].concat(entries);
-      }
-      if (L && s.agLog === 'agDock') {
-        var pre = [];
-        if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04 — no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
-        if (s.approved) pre.push({ t: 'Just now', title: 'Locked Wednesday pre-load slots', d: '4 storm-plan loads staged at Orlando DC-04, 6:00–7:00 PM, per the plan you approved.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
-        entries = pre.concat(entries);
-      }
-      if (L && s.agLog === 'agAudit' && s.disputeFiled) {
-        entries = entries.map(function (en) {
-          if (en.act !== 'fileDispute') return en;
-          return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214) — dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
-        });
-        v.agLogSummary = 'June cycle · 214 lines audited · 1 dispute filed today · $1,120 recovered';
-      }
-      if (L && s.agLog === 'agBh' && s.tenderSent) {
-        entries = entries.map(function (en) {
-          if (en.act !== 'sendTender') return en;
-          return { t: 'Just now', title: 'Sent the MEM → DAL tender', d: '3 loads/wk ≈ $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
-        });
-        v.agLogSummary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
-      }
-      v.agLogEntries = entries;
+      var LF = s.agLog ? self.entriesFor(s.agLog) : null;
+      if (LF) { v.agLogSummary = LF.summary; }
+      v.agLogEntries = LF ? LF.entries : [];
       v.agLogAction = function (e) {
         if (e.stopPropagation) e.stopPropagation();
         var k = e.currentTarget.dataset.k;
         if (k === 'fileDispute') self.setState({ disputeFiled: true });
         else if (k === 'sendTender') self.setState({ tenderSent: true, tenderGone: true });
+        else if (k === 'fileDetention') self.setState({ detClaimFiled: true });
+        else if (k === 'fileOsd') self.setState({ osdFiled: true });
       };
       // Evidence, not claims: the storm-notice entry expands to the artifact sent.
       v.stormNoticeOpen = !!s.noticeOpen;
@@ -3035,6 +3405,58 @@ class ComponentV2 extends Component {
       v.closeAgLog = function () { self.setState({ agLog: null }); };
       return v;
     };
+  }
+
+  // One source of truth for an agent's audit entries + summary, including the
+  // live session variants — used by the side panel and the workforce showroom.
+  entriesFor(key) {
+    var s = this.state;
+    var L = this.AGLOG[key];
+    var GREEN2 = 'background:#E8F5F0;color:#1F7A61';
+    var entries = L.entries, summary = L.summary;
+    if (key === 'agEta' && s.approved) {
+      entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar — approved by you', exp: 1 }].concat(entries);
+    }
+    if (key === 'agDock') {
+      var pre = [];
+      if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04 — no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
+      if (s.approved) pre.push({ t: 'Just now', title: 'Locked Wednesday pre-load slots', d: '4 storm-plan loads staged at Orlando DC-04, 6:00–7:00 PM, per the plan you approved.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
+      entries = pre.concat(entries);
+    }
+    if (key === 'agAudit' && s.disputeFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileDispute') return en;
+        return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214) — dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June cycle · 214 lines audited · 1 dispute filed today · $1,120 recovered';
+    }
+    if (key === 'agBh' && s.tenderSent) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'sendTender') return en;
+        return { t: 'Just now', title: 'Sent the MEM \u2192 DAL tender', d: '3 loads/wk \u2248 $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
+    }
+    if (key === 'agDwell' && s.detClaimFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileDetention') return en;
+        return { t: 'Just now', title: 'Filed the Macon detention claim', d: '$186 claim submitted with telematics evidence; receiver acknowledged receipt.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June · 41 dock stops timed · 1 claim filed today · $1,120 recovered via Invoice audit';
+    }
+    if (key === 'agDocs' && s.osdFiled) {
+      entries = entries.map(function (en) {
+        if (en.act !== 'fileOsd') return en;
+        return { t: 'Just now', title: 'Filed the OS&D claim', d: '$312 short-shipment claim submitted; the carrier has 30 days to respond.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+      });
+      summary = 'June cycle · 214 PODs matched · 1 OS&D claim filed today';
+    }
+    return { entries: entries, summary: summary };
+  }
+
+  nav(r) {
+    if (r === 'risk') r = 'agents';
+    super.nav(r);
   }
 
   setRoute(r) {

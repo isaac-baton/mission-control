@@ -43,7 +43,12 @@ def sub(label, find, replace, count=1):
 # T1 — app root carries the intel state for CSS gating
 sub("root data-intel",
     '<div style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">',
-    '<div data-intel="{{ dataIntel }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">')
+    '<div data-intel="{{ dataIntel }}" data-theme="{{ pageTheme }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">')
+
+# footer badge hook so the dark theme can restyle it
+sub("footer badge hook",
+    '<div style="position:absolute;left:12px;bottom:10px;z-index:9;pointer-events:none;background:rgba(255,255,255,0.85);',
+    '<div data-badge="" style="position:absolute;left:12px;bottom:10px;z-index:9;pointer-events:none;background:rgba(255,255,255,0.85);')
 
 # T2 — AI rail destinations exist only once Intelligence is on
 RAIL_STYLE = 'style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)"'
@@ -52,16 +57,16 @@ for r in ("agents", "reviews", "risk"):
         f'<a href="#/{r}" {RAIL_STYLE}',
         f'<a href="#/{r}" data-intel-only="" {RAIL_STYLE}')
 
-# T3 — red activity dots (Insights + AI agents) are post-enable signals
-sub("rail activity dots",
+# T3 — the red activity dots (Insights + Autopilot) are removed entirely
+sub("rail activity dots removed",
     '<span style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>',
-    '<span data-intel-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#CE1126;z-index:2"></span>',
+    '',
     count=2)
 
-# T4 — pre-enable, Insights gets a soft pulsing cue instead of the red dot
+# T4 — pre-enable, Insights keeps its soft pulsing discovery cue
 sub("rail insights pulse cue",
-    '<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>\n      <span data-intel-only=""',
-    '<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>\n      <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>\n      <span data-intel-only=""')
+    '<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>',
+    '<sc-if value="{{ isInsights }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>\n      <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>')
 
 # T5 — shipments teaser banner (pre-enable) in the storm band's slot
 TEASER = (
@@ -164,24 +169,6 @@ applied.append("tile chevrons (2)")
 
 markup = markup[:s0] + strip + markup[s1:]
 
-# T11b — agent tiles get a "See all actions" affordance opening the audit-log
-# side panel (one per agent; the meta line becomes a meta + action row).
-SEE_ALL = (
-    '<button data-log="{key}" onClick="{{{{ openAgLog }}}}" '
-    'style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;'
-    'font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button>'
-)
-for key, meta in (
-    ("agEta", "Last action · Today 6:04 AM"),
-    ("agDock", "Last action · Today 5:58 AM"),
-    ("agAudit", "Last run · Jul 1 · 214 lines"),
-    ("agBh", "Draft waiting · MEM → DAL"),
-):
-    sub(f"see-all-actions {key}",
-        f'<div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">{meta}</div>',
-        f'<div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">{meta} · '
-        + SEE_ALL.format(key=key) + '</div>')
-
 # T11a2 — the document-style review ships as THE reviews screen (judge verdict:
 # a review is an artifact customers forward, not a second dashboard). The old
 # tile-grid reviews section is removed wholesale; the replacement binds to the
@@ -228,31 +215,6 @@ assert _r53 > 0, "31253 row not found"
 markup = markup[:_r53] + row + markup[_r53:]
 applied.append("board row SBG-31252 (1)")
 
-# T11a4 — backhaul tile footer follows the in-log tender approval; paused
-# semantics get a one-line definition (paused = analysis only).
-sub("backhaul tile footer states",
-    'Draft waiting · MEM → DAL · <button data-log="agBh"',
-    '<sc-if value="{{ bhDraftWaiting }}">Draft waiting · MEM → DAL</sc-if>'
-    '<sc-if value="{{ bhTenderSent }}"><span style="color:#1F7A61">Tender sent today · awaiting carrier response</span></sc-if>'
-    ' · <button data-log="agBh"')
-sub("paused semantics",
-    'Drafts tenders for approved empty lanes. Never sends without your approval.</div>',
-    'Drafts tenders for approved empty lanes. Paused = analysis only; nothing sends without your approval.</div>')
-
-# T11a5 — value ledger on the agents screen: what Intelligence returned.
-LEDGER = (
-    '<div data-intel-only="" style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 18px;margin:14px 0 4px">'
-    '<span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Intelligence this month</span>'
-    '<span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerDisputed }}</span>'
-    '<span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>'
-    '<span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerStorm }}</span>'
-    '<span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>'
-    '<span style="font-size:13px;color:#1D1D20;font-weight:600">≈ $458K/yr identified in backhaul</span>'
-    '</div>')
-sub("agents value ledger",
-    'nothing ships without your decision on cost-bearing changes</div>',
-    'nothing ships without your decision on cost-bearing changes</div>' + LEDGER)
-
 # T11a6 — Risk radar: the "if you do nothing" counterfactual under the plan
 # card. Reframes Approve as economics (judge frontier idea #3) and fills the
 # page's empty lower half. The plan-cost figure is the live {{ planCostLabel }}
@@ -287,11 +249,109 @@ sub("adjust hidden when locked",
     ADJUST_BTN,
     '<sc-if value="{{ notApproved }}">' + ADJUST_BTN + '</sc-if>')
 
+# T11b0 — Risk radar merges into Autopilot: slice the risk screen's working
+# content (advisory, load table, plan card, counterfactual — all bindings are
+# route-agnostic), delete the screen, drop its rail item, and rename the
+# agents rail item. The slice becomes the incident module on the merged tab.
+_rk = markup.find('<div data-screen-label="Risk radar"')
+assert _rk > 0, "risk screen not found"
+_rs2 = markup.rfind('<sc-if', 0, _rk)
+# no labeled screen follows Risk — terminate at the screen's compact close
+_re2 = markup.find('</div></sc-if>', _rk)
+assert _re2 > 0, "risk screen close not found"
+_re2 += len('</div></sc-if>')
+risk_section = markup[_rs2:_re2]
+assert 15000 < len(risk_section) < 32000, f"risk slice looks wrong ({len(risk_section)} chars)"
+
+_adv = risk_section.find('Tropical system expected across the Gulf Coast')
+assert _adv > 0, "risk advisory not found"
+_adv = risk_section.rfind('<div', 0, _adv)
+_cfe = risk_section.find("Estimates from June service-failure costs")
+assert _cfe > 0, "counterfactual footer not found"
+_cfe = risk_section.find('</div>', _cfe) + len('</div>')
+INCIDENT_BODY = risk_section[_adv:_cfe]
+markup = markup[:_rs2] + markup[_re2:]
+applied.append("risk screen merged out (1)")
+
+INCIDENT = (
+    '<div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Active risk — Thursday, Jul 9'
+    '<sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;margin-left:10px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;background:#E8F5F0;color:#1F7A61">Plan active</span></sc-if></div>'
+    '<sc-if value="{{ riskCollapsed }}">'
+    '<div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">'
+    '<svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+    '<span style="font-size:13px;font-weight:500;color:#1F7A61;flex:1">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified.</span>'
+    '<button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Show details</button>'
+    '</div></sc-if>'
+    '<sc-if value="{{ riskOpen }}"><div>'
+    '<sc-if value="{{ approved }}"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Hide details</button></div></sc-if>'
+    + INCIDENT_BODY +
+    '</div></sc-if>')
+
+sub("risk rail item removed",
+    f'<a href="#/risk" data-intel-only="" {RAIL_STYLE}', '<a data-removed-risk ')
+_ri = markup.find('<a data-removed-risk ')
+_rj = markup.find('</a>', _ri) + len('</a>')
+markup = markup[:_ri] + markup[_rj:]
+
+# T11b1 — AI agents screen, redesigned (principal-designer spec: decisions
+# promoted to hero, agents as one-line rows, ledger as stat tiles, topics as
+# fact fragments). The old section is sliced out; the authored replacement's
+# opening div is byte-identical so the panel insert below keeps anchoring.
+_ad = markup.find('<div data-screen-label="AI agents"')
+assert _ad > 0, "agents screen not found"
+_as = markup.rfind('<sc-if', 0, _ad)
+_ae = markup.find('data-screen-label', _ad + 40)
+_ae = markup.rfind('<sc-if', 0, _ae)
+assert 20000 < (_ae - _as) < 30000, f"agents slice looks wrong ({_ae - _as} chars)"
+agents2 = (V2 / "agents2.html").read_text(encoding="utf-8")
+assert agents2.count('<!--INCIDENT-->') == 1
+agents2 = agents2.replace('<!--INCIDENT-->', INCIDENT)
+workforce = (V2 / "workforce.html").read_text(encoding="utf-8")
+markup = markup[:_as] + agents2 + '\n        ' + workforce + '\n        ' + markup[_ae:]
+applied.append("agents screen redesign + incident + workforce (1)")
+
+# Rail + copy renames for the merged tab
+sub("rail label Autopilot",
+    '<span style="position:relative;font-size:10px;font-weight:500">AI agents</span>',
+    '<span style="position:relative;font-size:10px;font-weight:500">Autopilot</span>')
+sub("digest link renamed", '>Risk radar</', '>Autopilot</')
+
+# The Workforce showroom is a first-class rail tab ("Agents", bot icon);
+# Autopilot swaps to a gauge — the control-room instrument, not the robot.
+BOT_ICON = '<svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="2"></rect><path d="M12 9V5"></path><circle cx="12" cy="4" r="1"></circle><path d="M9.5 13.5v2"></path><path d="M14.5 13.5v2"></path><path d="M2 14h3"></path><path d="M19 14h3"></path></svg>'
+GAUGE_ICON = '<svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg>'
+sub("autopilot gauge icon", BOT_ICON, GAUGE_ICON)
+
+AGENTS_TAB = (
+    f'<a href="#/workforce" data-intel-only="" {RAIL_STYLE} style-hover="background:rgba(255,255,255,0.06)">\n'
+    '      <sc-if value="{{ isWorkforce }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>\n'
+    '      ' + BOT_ICON + '\n'
+    '      <span style="position:relative;font-size:10px;font-weight:500">Agents</span>\n'
+    '    </a>\n    '
+)
+_ap = markup.find('<a href="#/agents" data-intel-only="" ')
+assert _ap > 0, "autopilot rail item not found"
+_ap_end = markup.find('</a>', _ap) + len('</a>')
+markup = markup[:_ap_end] + '\n    ' + AGENTS_TAB + markup[_ap_end:]
+applied.append("agents rail tab (1)")
+
+# Rail order: Shipments · Network · Insights · Reviews · Autopilot · Agents —
+# the Reviews item moves up so the two agentic tabs sit together at the bottom.
+_rv = markup.find('<a href="#/reviews" data-intel-only="" ')
+assert _rv > 0, "reviews rail item not found"
+_rv_end = markup.find('</a>', _rv) + len('</a>')
+reviews_item = markup[_rv:_rv_end]
+markup = markup[:_rv] + markup[_rv_end:]
+_ap2 = markup.find('<a href="#/agents" data-intel-only="" ')
+assert 0 < _ap2 < _rv, "autopilot rail item must precede the old reviews slot"
+markup = markup[:_ap2] + reviews_item + '\n    ' + markup[_ap2:]
+applied.append("rail reordered: reviews before autopilot (1)")
+
 # T11b2 — the audit-log side panel itself, mounted inside the agents route
 agent_log = (V2 / "agent-log.html").read_text(encoding="utf-8")
 sub("agent log panel insert",
-    '<div data-screen-label="AI agents" style="padding:24px 24px 140px">',
-    '<div data-screen-label="AI agents" style="padding:24px 24px 140px">\n' + agent_log)
+    '<!-- S0a docked prompt bar -->',
+    agent_log + '\n      <!-- S0a docked prompt bar -->')
 
 # T11c — Ask panel: the suggestion pills float in a fixed block over the
 # thread; with three long pills wrapping to two rows that block is ~150px
