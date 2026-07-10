@@ -3011,19 +3011,14 @@ class ComponentV2 extends Component {
     }
     this.state.revMonth = 'jun'; // reviews month tabs: 'jun' | 'may' | 'apr'
 
+    // A reload is a clean rehearsal reset — nothing persists across refreshes.
+    // ?intel=1 is the one deep-link override for booting straight into enabled.
     var startOn = props.startEnabled === true;
     try {
       var qs = new URLSearchParams(location.search);
-      if (qs.get('reset') === '1') sessionStorage.removeItem('rsIntelState');
       if (qs.get('intel') === '1') startOn = true;
+      sessionStorage.removeItem('rsIntelState'); // clear any pre-reset-era blob
     } catch (e) {}
-
-    // Survive an accidental mid-demo refresh: enablement and approvals mirror
-    // to sessionStorage (per-tab, so a fresh tab is still a clean rehearsal
-    // reset; ?reset=1 clears explicitly).
-    var saved = null;
-    try { saved = JSON.parse(sessionStorage.getItem('rsIntelState') || 'null'); } catch (e) {}
-    if (saved && saved.intel) startOn = true;
 
     this.state.intel = startOn;
     this.state.intelFlash = '';
@@ -3041,12 +3036,6 @@ class ComponentV2 extends Component {
     this.state.wfOpen = null;        // workforce showroom: which agent's history is open
     this.state.detClaimFiled = false; // in-log approval: Macon detention claim
     this.state.osdFiled = false;      // in-log approval: OS&D short-shipment claim
-    if (saved) {
-      ['approved', 'wSched', 'tenderGone', 'tenderSent', 'disputeFiled', 'everAsked', 'detClaimFiled', 'osdFiled'].forEach(function (k) {
-        if (saved[k]) this.state[k] = true;
-      }, this);
-    }
-
     // SBG-31252 — the board's third late load (GPS-offline unit, driver-reported
     // ETA). The Network "No location" tab reconciles the map's 2 late pins with
     // the board's 3; this row is the one an exec would ask to see.
@@ -3202,15 +3191,6 @@ class ComponentV2 extends Component {
       v.pageTheme = s.route === 'workforce' ? 'dark' : 'light';
       v.intelOn = s.intel;
       v.intelFlash = s.intelFlash;
-
-      // Mirror demo-critical state so a mid-demo refresh recovers (per-tab).
-      try {
-        sessionStorage.setItem('rsIntelState', JSON.stringify({
-          intel: s.intel, approved: s.approved, wSched: s.wSched,
-          tenderGone: s.tenderGone, tenderSent: s.tenderSent, disputeFiled: s.disputeFiled,
-          everAsked: s.everAsked, detClaimFiled: s.detClaimFiled, osdFiled: s.osdFiled
-        }));
-      } catch (e) {}
 
       // ----- Reviews: month tabs (document review, generated monthly) -----
       var M = s.revMonth;
