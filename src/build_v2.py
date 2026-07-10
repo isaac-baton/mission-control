@@ -164,6 +164,135 @@ applied.append("tile chevrons (2)")
 
 markup = markup[:s0] + strip + markup[s1:]
 
+# T11b — agent tiles get a "See all actions" affordance opening the audit-log
+# side panel (one per agent; the meta line becomes a meta + action row).
+SEE_ALL = (
+    '<button data-log="{key}" onClick="{{{{ openAgLog }}}}" '
+    'style="background:none;border:0;padding:0;font-family:inherit;font-size:11.5px;'
+    'font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">See all actions →</button>'
+)
+for key, meta in (
+    ("agEta", "Last action · Today 6:04 AM"),
+    ("agDock", "Last action · Today 5:58 AM"),
+    ("agAudit", "Last run · Jul 1 · 214 lines"),
+    ("agBh", "Draft waiting · MEM → DAL"),
+):
+    sub(f"see-all-actions {key}",
+        f'<div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">{meta}</div>',
+        f'<div style="font-size:11.5px;color:#A9AAAC;margin-top:6px">{meta} · '
+        + SEE_ALL.format(key=key) + '</div>')
+
+# T11a2 — the document-style review ships as THE reviews screen (judge verdict:
+# a review is an artifact customers forward, not a second dashboard). The old
+# tile-grid reviews section is removed wholesale; the replacement binds to the
+# same isReviews route, so the rail is unchanged.
+_rs = markup.find('<div data-screen-label="Reviews"')
+assert _rs > 0, "old reviews screen not found"
+_rs = markup.rfind('<sc-if', 0, _rs)
+_re = markup.find('<div data-screen-label="Risk radar"', _rs)
+_re = markup.rfind('<sc-if', 0, _re)
+assert 10000 < (_re - _rs) < 16000, f"old reviews slice looks wrong ({_re - _rs} chars)"
+markup = markup[:_rs] + markup[_re:]
+applied.append("old reviews screen removed (1)")
+
+reviews2 = (V2 / "reviews2.html").read_text(encoding="utf-8")
+RISK_SCREEN_ANCHOR = '<sc-if value="{{ isRisk }}" hint-placeholder-val="{{ false }}"><div data-screen-label="Risk radar"'
+sub("document review screen insert",
+    RISK_SCREEN_ANCHOR,
+    reviews2 + '\n        ' + RISK_SCREEN_ANCHOR)
+
+# T11a3 — board gains its third late load, SBG-31252 (GPS-offline unit): the
+# Network "No location" copy references it, and an exec will ask to see it.
+# Clone the SBG-31241 late row and adapt fields; bindings r18St/r18Ord are
+# computed in ComponentV2.
+_r41 = markup.find('<div data-ref="SBG-31241" onClick="{{ openLoad }}"')
+_r42 = markup.find('<div data-ref="SBG-31242" onClick="{{ openLoad }}"', _r41)
+assert 0 < _r41 < _r42, "31241 row not found"
+row = markup[_r41:_r42]
+_wb = row.find('data-l="SBG-31241"')
+if _wb >= 0:
+    _wb0 = row.rfind('<button', 0, _wb)
+    _wb1 = row.find('</button>', _wb) + len('</button>')
+    row = row[:_wb0] + row[_wb1:]
+for old, new in (
+    ('SBG-31241', 'SBG-31252'), ('884210332', '884210395'),
+    ('Atlanta DC-03', 'Memphis DC-02'), ('Savannah corridor', 'Jonesboro loop'),
+    ('Savannah, GA', 'Jonesboro, AR'),
+    ('4:15 PM ET · Jul 7', 'Driver-reported 3:40 PM CT'), ('3m ago', '48m ago'),
+    ('{{ r1St }}', '{{ r18St }}'), ('{{ r1Ord }}', '{{ r18Ord }}'),
+):
+    assert old in row, f"row field {old!r} not found"
+    row = row.replace(old, new)
+_r53 = markup.find('<div data-ref="SBG-31253" onClick="{{ openLoad }}"')
+assert _r53 > 0, "31253 row not found"
+markup = markup[:_r53] + row + markup[_r53:]
+applied.append("board row SBG-31252 (1)")
+
+# T11a4 — backhaul tile footer follows the in-log tender approval; paused
+# semantics get a one-line definition (paused = analysis only).
+sub("backhaul tile footer states",
+    'Draft waiting · MEM → DAL · <button data-log="agBh"',
+    '<sc-if value="{{ bhDraftWaiting }}">Draft waiting · MEM → DAL</sc-if>'
+    '<sc-if value="{{ bhTenderSent }}"><span style="color:#1F7A61">Tender sent today · awaiting carrier response</span></sc-if>'
+    ' · <button data-log="agBh"')
+sub("paused semantics",
+    'Drafts tenders for approved empty lanes. Never sends without your approval.</div>',
+    'Drafts tenders for approved empty lanes. Paused = analysis only; nothing sends without your approval.</div>')
+
+# T11a5 — value ledger on the agents screen: what Intelligence returned.
+LEDGER = (
+    '<div data-intel-only="" style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 18px;margin:14px 0 4px">'
+    '<span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Intelligence this month</span>'
+    '<span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerDisputed }}</span>'
+    '<span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>'
+    '<span style="font-size:13px;color:#1D1D20;font-weight:600">{{ ledgerStorm }}</span>'
+    '<span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>'
+    '<span style="font-size:13px;color:#1D1D20;font-weight:600">≈ $458K/yr identified in backhaul</span>'
+    '</div>')
+sub("agents value ledger",
+    'nothing ships without your decision on cost-bearing changes</div>',
+    'nothing ships without your decision on cost-bearing changes</div>' + LEDGER)
+
+# T11a6 — Risk radar: the "if you do nothing" counterfactual under the plan
+# card. Reframes Approve as economics (judge frontier idea #3) and fills the
+# page's empty lower half. The plan-cost figure is the live {{ planCostLabel }}
+# binding, so Adjust updates the comparison too.
+COUNTERFACTUAL = (
+    '\n            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px">'
+    '<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px">'
+    '<div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>'
+    '<span style="font-size:13px;font-weight:600;color:#44464B">If you do nothing</span></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#655102">6</b></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Est. exposure — redelivery + detention</span><b style="font-weight:600;color:#655102">≈ $9.8K</b></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#655102">▼ ≈ 2.2 pts</b></div>'
+    '</div>'
+    '<div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px">'
+    '<div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>'
+    '<span style="font-size:13px;font-weight:600;color:#1D1D20">With the plan</span>'
+    '<sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#1F7A61">0 — deliveries unaffected</b></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Cost to run the plan</span><b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b></div>'
+    '<div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#1F7A61">holds at 96.2%</b></div>'
+    '</div></div>'
+    '<div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week\'s load values · Sources · Load records · Invoice SBG-2026-06</div>')
+sub("risk counterfactual",
+    'nothing is committed until you approve.</div>\n              </div>\n              </sc-if>\n            </div>',
+    'nothing is committed until you approve.</div>\n              </div>\n              </sc-if>\n            </div>'
+    + COUNTERFACTUAL)
+
+# T11a7 — once the plan is approved it is locked (adjOpen is forced closed),
+# so the Adjust button would be a dead click; render it only pre-approval.
+ADJUST_BTN = '<button style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" onClick="{{ adjToggle }}" style-hover="background:#F5F6F6">Adjust</button>'
+sub("adjust hidden when locked",
+    ADJUST_BTN,
+    '<sc-if value="{{ notApproved }}">' + ADJUST_BTN + '</sc-if>')
+
+# T11b2 — the audit-log side panel itself, mounted inside the agents route
+agent_log = (V2 / "agent-log.html").read_text(encoding="utf-8")
+sub("agent log panel insert",
+    '<div data-screen-label="AI agents" style="padding:24px 24px 140px">',
+    '<div data-screen-label="AI agents" style="padding:24px 24px 140px">\n' + agent_log)
+
 # T11c — Ask panel: the suggestion pills float in a fixed block over the
 # thread; with three long pills wrapping to two rows that block is ~150px
 # tall, so the thread needs more bottom clearance than the design's 130px or

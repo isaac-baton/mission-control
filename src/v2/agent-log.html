@@ -1,0 +1,72 @@
+<sc-if value="{{ agLogOpen }}">
+          <div data-screen-label="Agent actions log" style="position:fixed;top:48px;right:0;bottom:0;width:440px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <sc-if value="{{ agLogIsEta }}"><span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span></sc-if>
+              <sc-if value="{{ agLogIsDock }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span></sc-if>
+              <sc-if value="{{ agLogIsAudit }}"><span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span></sc-if>
+              <sc-if value="{{ agLogIsBh }}"><span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span></sc-if>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">{{ agLogTitle }}</span>
+                  <sc-if value="{{ agLogStatusOn }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
+                  <sc-if value="{{ agLogStatusOff }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Paused</span></sc-if>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">{{ agLogSummary }}</div>
+              </div>
+              <button onClick="{{ closeAgLog }}" aria-label="Close actions log" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+
+            <!-- Guardrails -->
+            <div style="padding:12px 18px;border-bottom:1px solid #E3E4E5;background:#FAFAFA">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:4px">Guardrails</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.5">{{ agLogGuard }}</div>
+            </div>
+
+            <!-- Entries -->
+            <div style="flex:1;overflow:auto;padding:6px 18px 12px">
+              <sc-for list="{{ agLogEntries }}" as="en">
+                <div style="padding:13px 0;border-bottom:1px solid #F0F0F1">
+                  <div style="display:flex;align-items:flex-start;gap:8px">
+                    <div style="flex:1;min-width:0">
+                      <div style="font-size:13px;font-weight:600;color:#1D1D20;line-height:1.4">{{ en.title }}</div>
+                      <div style="font-size:12.5px;color:#303235;line-height:1.5;margin-top:3px">{{ en.d }}</div>
+                    </div>
+                    <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;flex:none;{{ en.cs }}">{{ en.chip }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+                    <span style="font-size:11.5px;color:#A9AAAC">{{ en.t }}</span>
+                    <span style="width:3px;height:3px;border-radius:50%;background:#C5C6C7"></span>
+                    <span style="font-size:11.5px;color:#696B6F">{{ en.who }}</span>
+                  </div>
+                  <sc-if value="{{ en.act }}">
+                  <div style="margin-top:9px">
+                    <button data-k="{{ en.act }}" onClick="{{ agLogAction }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:7px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit">{{ en.actLabel }}</button>
+                  </div>
+                  </sc-if>
+                  <sc-if value="{{ en.exp }}">
+                  <div style="margin-top:8px">
+                    <button onClick="{{ toggleNotice }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">{{ noticeToggleLabel }}</button>
+                    <sc-if value="{{ stormNoticeOpen }}">
+                    <div style="border:1px solid #E3E4E5;border-radius:8px;background:#FAFAFA;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
+                      <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Receiver notice · sent to 6 locations</div>
+                      <div style="font-size:12px;color:#696B6F;margin-top:7px">To: Receiving — Tampa Retail Group · +5 more</div>
+                      <div style="font-size:12px;color:#696B6F;margin-top:2px">From: RyderShare, on behalf of Summit Beverage Group</div>
+                      <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Delivery update — Thursday, Jul 9 (weather plan)</div>
+                      <div style="font-size:12.5px;color:#303235;line-height:1.6;margin-top:5px">Ahead of Thursday's Gulf storm, your Summit Beverage deliveries are pre-staged to protect the schedule. Your delivery windows are unchanged, and live tracking stays current in RyderShare.</div>
+                      <div style="font-size:11px;color:#A9AAAC;margin-top:9px">Sent by ETA &amp; notifications · Logged &amp; reversible · Replies go to your Ryder team</div>
+                    </div>
+                    </sc-if>
+                  </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+
+            <!-- Footer -->
+            <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <div style="font-size:11.5px;color:#696B6F;line-height:1.5">Every action is logged and reversible. Your approvals and edits tune this agent's guardrails.</div>
+            </div>
+          </div>
+          </sc-if>

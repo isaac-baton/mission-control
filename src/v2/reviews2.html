@@ -1,0 +1,150 @@
+<sc-if value="{{ isReviews }}"><div data-screen-label="Reviews (document)" style="padding:20px 24px 140px">
+          <div style="max-width:880px;margin:0 auto">
+
+            <!-- Viewer toolbar (app chrome, outside the document) -->
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:0 4px">
+              <div style="display:flex;align-items:center;gap:2px">
+                <button data-m="jun" onClick="{{ pickMonth }}" style="background:none;border:0;font-family:inherit;cursor:pointer;padding:8px 12px;font-size:13px;{{ revTabJunSt }}">June 2026</button>
+                <button data-m="may" onClick="{{ pickMonth }}" style="background:none;border:0;font-family:inherit;cursor:pointer;padding:8px 12px;font-size:13px;{{ revTabMaySt }}" style-hover="color:#303235">May</button>
+                <button data-m="apr" onClick="{{ pickMonth }}" style="background:none;border:0;font-family:inherit;cursor:pointer;padding:8px 12px;font-size:13px;{{ revTabAprSt }}" style-hover="color:#303235">April</button>
+              </div>
+              <div style="display:flex;gap:8px">
+                <button style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>Share</button>
+                <button style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>Download PDF</button>
+              </div>
+            </div>
+
+            <!-- The document -->
+            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:44px 52px;margin-top:14px">
+
+              <!-- Report header -->
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Business review</div>
+                <span style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:11.5px;font-weight:500;background:#ECF4F9;color:#276A92"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>{{ revGenerated }}</span>
+              </div>
+              <div style="font-size:27px;font-weight:600;color:#1D1D20;letter-spacing:-0.01em;margin-top:10px">Summit Beverage Group</div>
+              <div style="font-size:13px;color:#696B6F;margin-top:5px">{{ revMeta }}</div>
+
+              <!-- Executive summary as document prose -->
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Executive summary</div>
+                <sc-if value="{{ revJun }}">
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">June was Summit Beverage Group's strongest service month of 2026: <b style="font-weight:600;color:#1D1D20">96.2% on-time delivery</b> against a 95% target, on record peak volume of <b style="font-weight:600;color:#1D1D20">1,187 loads</b>, with <b style="font-weight:600;color:#1D1D20">no preventable safety incidents</b>. Total invoice rose <b style="font-weight:600;color:#1D1D20">8.0% to $1.84M</b> — planned seasonal volume and the flex routes approved in April explain 79% of the increase, and nothing ran off-contract. Fuel exposure stayed moderate as the DOE index rose $0.19/gal. The largest open opportunities: backhaul monetization (<b style="font-weight:600;color:#1D1D20">≈ $458K/yr gross</b>) and Orlando unload windows (<b style="font-weight:600;color:#1D1D20">≈ $132K/yr</b>).</div>
+                </sc-if>
+                <sc-if value="{{ revMay }}">
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">May held steady while April's flex-route decision moved toward launch: <b style="font-weight:600;color:#1D1D20">94.1% on-time</b> on 1,142 loads, and the invoice rose <b style="font-weight:600;color:#1D1D20">1.0% to $1.706M</b> on early-season volume. Accessorials eased $9.2K as dock coaching at Tampa took hold. Empty miles held at <b style="font-weight:600;color:#1D1D20">19.0%</b> — the first backhaul lane analysis started this month. Eleven disputes carried at a 4.8-day average resolution.</div>
+                </sc-if>
+                <sc-if value="{{ revApr }}">
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">April was the seasonal ramp: <b style="font-weight:600;color:#1D1D20">93.8% on-time</b> on 1,098 loads with one preventable incident (coaching completed May 2). The invoice eased <b style="font-weight:600;color:#1D1D20">0.8% to $1.689M</b> as spring volume normalized. This review recommended adding <b style="font-weight:600;color:#1D1D20">two seasonal flex routes</b> ahead of peak — approved April 28, live June 1.</div>
+                </sc-if>
+              </div>
+
+              <!-- Invoice bridge: the review's hero -->
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                  <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ revBridgeTitle }}</div>
+                  <div style="font-size:12px;color:#696B6F">{{ revBridgeCaption }}</div>
+                </div>
+                <sc-if value="{{ revJun }}">
+                <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both;margin-top:14px" viewBox="0 0 760 300">
+                  <line x1="24" y1="250" x2="736" y2="250" stroke="#E3E4E5" stroke-width="1"></line>
+                  <rect x="32" y="194.2" width="76" height="55.8" fill="#303235"></rect>
+                  <rect x="156" y="124.4" width="76" height="69.8" fill="#307CA7"></rect>
+                  <rect x="280" y="85.8" width="76" height="38.6" fill="#307CA7"></rect>
+                  <rect x="404" y="67" width="76" height="18.8" fill="#307CA7"></rect>
+                  <rect x="528" y="57.7" width="76" height="9.3" fill="#307CA7"></rect>
+                  <rect x="652" y="57.7" width="76" height="192.3" fill="#303235"></rect>
+                  <g stroke="#C5C6C7" stroke-width="1" stroke-dasharray="3 3"><line x1="108" y1="194.2" x2="156" y2="194.2"></line><line x1="232" y1="124.4" x2="280" y2="124.4"></line><line x1="356" y1="85.8" x2="404" y2="85.8"></line><line x1="480" y1="67" x2="528" y2="67"></line><line x1="604" y1="57.7" x2="652" y2="57.7"></line></g>
+                  <g fill="#303235" font-size="12" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="186" font-weight="600">$1.706M</text><text x="194" y="116">+$69.8K</text><text x="318" y="78">+$38.6K</text><text x="442" y="59">+$18.8K</text><text x="566" y="50">+$9.3K</text><text x="690" y="50" font-weight="600">$1.842M</text></g>
+                  <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="272">May</text><text x="194" y="272">Volume</text><text x="318" y="272">Seasonal flex routes</text><text x="442" y="272">Accessorials</text><text x="566" y="272">Fuel surcharge</text><text x="690" y="272">June</text></g>
+                </svg>
+                </sc-if>
+                <sc-if value="{{ revMay }}">
+                <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both;margin-top:14px" viewBox="0 0 760 300">
+                  <line x1="24" y1="250" x2="736" y2="250" stroke="#E3E4E5" stroke-width="1"></line>
+                  <rect x="32" y="190" width="76" height="60" fill="#303235"></rect>
+                  <rect x="187" y="147" width="76" height="43" fill="#307CA7"></rect>
+                  <rect x="342" y="147" width="76" height="18" fill="#A9AAAC"></rect>
+                  <rect x="497" y="155" width="76" height="10" fill="#307CA7"></rect>
+                  <rect x="652" y="155" width="76" height="95" fill="#303235"></rect>
+                  <g stroke="#C5C6C7" stroke-width="1" stroke-dasharray="3 3"><line x1="108" y1="190" x2="187" y2="190"></line><line x1="263" y1="147" x2="342" y2="147"></line><line x1="418" y1="165" x2="497" y2="165"></line><line x1="573" y1="155" x2="652" y2="155"></line></g>
+                  <g fill="#303235" font-size="12" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="182" font-weight="600">$1.689M</text><text x="225" y="139">+$21.4K</text><text x="380" y="139">−$9.2K</text><text x="535" y="147">+$4.8K</text><text x="690" y="147" font-weight="600">$1.706M</text></g>
+                  <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="272">April</text><text x="225" y="272">Volume</text><text x="380" y="272">Accessorials</text><text x="535" y="272">Fuel surcharge</text><text x="690" y="272">May</text></g>
+                </svg>
+                </sc-if>
+                <sc-if value="{{ revApr }}">
+                <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both;margin-top:14px" viewBox="0 0 760 300">
+                  <line x1="24" y1="250" x2="736" y2="250" stroke="#E3E4E5" stroke-width="1"></line>
+                  <rect x="32" y="186" width="76" height="64" fill="#303235"></rect>
+                  <rect x="187" y="186" width="76" height="37" fill="#A9AAAC"></rect>
+                  <rect x="342" y="217" width="76" height="6" fill="#307CA7"></rect>
+                  <rect x="497" y="212.5" width="76" height="4.5" fill="#307CA7"></rect>
+                  <rect x="652" y="212.5" width="76" height="37.5" fill="#303235"></rect>
+                  <g stroke="#C5C6C7" stroke-width="1" stroke-dasharray="3 3"><line x1="108" y1="186" x2="187" y2="186"></line><line x1="263" y1="223" x2="342" y2="223"></line><line x1="418" y1="217" x2="497" y2="217"></line><line x1="573" y1="212.5" x2="652" y2="212.5"></line></g>
+                  <g fill="#303235" font-size="12" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="178" font-weight="600">$1.702M</text><text x="225" y="178">−$18.3K</text><text x="380" y="209">+$3.1K</text><text x="535" y="204">+$2.2K</text><text x="690" y="204" font-weight="600">$1.689M</text></g>
+                  <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="272">March</text><text x="225" y="272">Volume</text><text x="380" y="272">Accessorials</text><text x="535" y="272">Fuel surcharge</text><text x="690" y="272">April</text></g>
+                </svg>
+                </sc-if>
+              </div>
+
+              <!-- Scorecard: compact strip, not tiles -->
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ revScoreTitle }}</div>
+                <div style="display:grid;grid-template-columns:repeat(8,1fr);border-top:1px solid #F0F0F1;border-bottom:1px solid #F0F0F1;margin-top:10px">
+                  <div style="padding:12px 10px 12px 0"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">On-time</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scOtd }}</div><div style="font-size:11px;color:#1F7A61;margin-top:2px">{{ scOtdD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Cost/stop</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scCost }}</div><div style="font-size:11px;color:#655102;margin-top:2px">{{ scCostD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Loads</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scLoads }}</div><div style="font-size:11px;color:#696B6F;margin-top:2px">{{ scLoadsD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Safety</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scSafety }}</div><div style="font-size:11px;color:#696B6F;margin-top:2px">{{ scSafetyD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Fuel</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scFuel }}</div><div style="font-size:11px;color:#696B6F;margin-top:2px">{{ scFuelD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Empty miles</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scEmpty }}</div><div style="font-size:11px;color:#1F7A61;margin-top:2px">{{ scEmptyD }}</div></div>
+                  <div style="padding:12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Billing</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scBilling }}</div><div style="font-size:11px;color:#696B6F;margin-top:2px">accuracy</div></div>
+                  <div style="padding:12px 0 12px 10px;border-left:1px solid #F0F0F1"><div style="font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Disputes</div><div style="font-size:17px;font-weight:600;color:#1D1D20;margin-top:4px;font-variant-numeric:tabular-nums">{{ scDisputes }}</div><div style="font-size:11px;color:#696B6F;margin-top:2px">{{ scDisputesD }}</div></div>
+                </div>
+              </div>
+
+              <!-- Recommendations: full list for the current month, adoption trail for history -->
+              <sc-if value="{{ revJun }}">
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommendations</div>
+                <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #F0F0F1;flex-wrap:wrap">
+                  <span style="font-size:14px;font-weight:600;color:#696B6F;min-width:18px;font-variant-numeric:tabular-nums">1</span>
+                  <div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul capacity</div><div style="font-size:13px;color:#696B6F;margin-top:3px">Three return lanes run empty on a regular schedule.</div></div>
+                  <span style="display:inline-block;background:#E8F5F0;color:#1F7A61;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap">≈ $458K/yr gross</span>
+                  <span style="font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Discuss with Marcus Reed →</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #F0F0F1;flex-wrap:wrap">
+                  <span style="font-size:14px;font-weight:600;color:#696B6F;min-width:18px;font-variant-numeric:tabular-nums">2</span>
+                  <div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Orlando unload windows</div><div style="font-size:13px;color:#696B6F;margin-top:3px">Shifting DC-04 windows to 6–10 AM cuts unload-surge accessorials.</div></div>
+                  <span style="display:inline-block;background:#E8F5F0;color:#1F7A61;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap">≈ $132K/yr</span>
+                  <span style="font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Discuss with Marcus Reed →</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px;padding:14px 0;flex-wrap:wrap">
+                  <span style="font-size:14px;font-weight:600;color:#696B6F;min-width:18px;font-variant-numeric:tabular-nums">3</span>
+                  <div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Saturday consolidation</div><div style="font-size:13px;color:#696B6F;margin-top:3px">Atlanta Saturday routes ran at 61% trailer utilization in June.</div></div>
+                  <span style="display:inline-block;background:#E8F5F0;color:#1F7A61;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap">≈ $96K/yr</span>
+                  <span style="font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Discuss with Marcus Reed →</span>
+                </div>
+              </div>
+              </sc-if>
+              <sc-if value="{{ revMay }}">
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">From this review</div>
+                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended holding the two flex routes for a June 1 start and coaching the Tampa dock pattern — <b style="font-weight:600;color:#1D7A61">both adopted</b>. Accessorials fell $9.2K within the month.</div>
+              </div>
+              </sc-if>
+              <sc-if value="{{ revApr }}">
+              <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">From this review</div>
+                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended two seasonal flex routes ahead of peak — <b style="font-weight:600;color:#1D7A61">approved April 28, live June 1</b>. Their planned cost appears in the June bridge as "Seasonal flex routes."</div>
+              </div>
+              </sc-if>
+
+              <!-- Document footer -->
+              <div style="border-top:1px solid #E3E4E5;margin-top:28px;padding-top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                <span style="font-size:11px;color:#696B6F">{{ revSources }}</span>
+                <span style="font-size:11px;color:#A9AAAC">Generated for every account, every month</span>
+              </div>
+            </div>
+
+          </div>
+        </div></sc-if>

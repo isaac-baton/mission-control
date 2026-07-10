@@ -93,5 +93,24 @@ Built by `python3 src/build_v2.py` from the same verbatim design source plus a p
   weather response arrives with Intelligence. No "Concept" chips: it presents as real product.
 - **Map tiles** — the Network stat strip renders as cards (taller, larger icons); the two
   actionable tiles (Running late → filters the load list, At-risk → Risk radar) carry a chevron.
-- **State** — in-memory; reload returns to the un-enabled state (demo reset).
-  `?intel=1` boots straight to enabled for rehearsal.
+- **Agent audit logs** — every agent tile has "See all actions →", opening a side panel with
+  that agent's action history: guardrails up top, then entries with status chips and an
+  attribution line encoding the Vision 2025 agentic patterns — auto-within-guardrails,
+  confidence-threshold escalation ("routed to you"), agent-to-agent handoffs (Risk radar →
+  Dock scheduling), self-healing (silent telematics nudge), and the human feedback loop
+  ("learned from your edit"). Data lives in `AGLOG` in `src/v2/logic.js`.
+- **Reviews as a document** — the business review is a generated artifact (paper frame,
+  provenance chip, month tabs June/May/April with real month data and an adoption trail,
+  compact scorecard, sources footer). Judge-verdict replacement for the old tile-grid screen;
+  `#/reviews2` aliases to `#/reviews`.
+- **State** — enablement and approvals mirror to sessionStorage, so a mid-demo refresh
+  recovers; a fresh tab is a clean rehearsal reset, and `?reset=1` clears explicitly.
+  `?intel=1` boots straight to enabled.
+- **Judge loop (closed 2026-07-10)** — iterated under an independent principal-designer/PM
+  review to **Designer 96 / PM 95** ("no remaining blockers"; bar was 95). That review drove:
+  the board's third late load (SBG-31252, GPS-offline, driver-reported ETA), the
+  "Showing 19 of 267" scope label, real month tabs on Reviews, the risk counterfactual
+  ("If you do nothing / With the plan", live plan cost), the receiver-notice artifact in the
+  ETA log, the agents value ledger (live, carries adjusted plan cost), panel auto-collapse on
+  navigation, Adjust hidden on a locked plan, and the retiring NEW badge. Known deferred item:
+  app-wide keyboard focus-visible coverage (product bar, not demo bar).

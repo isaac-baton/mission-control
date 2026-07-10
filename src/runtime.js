@@ -21,7 +21,10 @@
 (function () {
   'use strict';
 
-  /* ---------- style-hover pseudo-class sheet (mirrors createPseudoSheet) ---------- */
+  /* ---------- style-hover pseudo-class sheet (mirrors createPseudoSheet) ----------
+   * Declarations are stamped !important so authored hover/focus states beat the
+   * element's inline style attribute — without it, any property also present
+   * inline (nearly all of them here) silently never changes on hover. */
   var pseudoEl = null, pseudoCache = Object.create(null), pseudoN = 0;
   function pseudoClass(pseudo, css) {
     var k = pseudo + '|' + css;
@@ -30,7 +33,12 @@
     if (!pseudoEl) { pseudoEl = document.createElement('style'); document.head.appendChild(pseudoEl); }
     var cls = 'scp' + (pseudoN++).toString(36);
     var sel = (pseudo === 'before' || pseudo === 'after') ? '.' + cls + '::' + pseudo : '.' + cls + ':' + pseudo;
-    pseudoEl.sheet.insertRule(sel + '{' + css + '}', pseudoEl.sheet.cssRules.length);
+    var boosted = css.split(';').map(function (d) {
+      d = d.trim();
+      if (!d || d.indexOf('!important') >= 0) return d;
+      return d + ' !important';
+    }).filter(Boolean).join(';');
+    pseudoEl.sheet.insertRule(sel + '{' + boosted + '}', pseudoEl.sheet.cssRules.length);
     pseudoCache[k] = cls;
     return cls;
   }
