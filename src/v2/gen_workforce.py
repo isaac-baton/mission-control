@@ -42,7 +42,6 @@ def backdrop(key):
             f'</defs>'
             f'<rect width="520" height="260" fill="url(#wfa{suf})"/>'
             f'<rect width="520" height="260" fill="url(#wfb{suf})"/>'
-            f'<circle cx="428" cy="34" r="2.5" fill="{hue}" opacity="0.9"/><circle cx="466" cy="58" r="1.5" fill="{hue}" opacity="0.6"/><circle cx="392" cy="70" r="1.8" fill="{hue}" opacity="0.5"/>'
             f'</svg>'
             f'<svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="{hue}" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)">{ICONS[key]}</svg>'
             f'</div>')

@@ -67,6 +67,15 @@ class ComponentV2 extends Component {
     this.ROWS.push(this.R18);
     this.DET['SBG-31252'] = { o: 'Memphis DC-02', oc: 'Memphis, TN', d: 'Jonesboro loop', c2: 'Jonesboro, AR', m: 5, n: 2, eta: 'Driver-reported 3:40 PM CT', up: '48m ago', dep: 'Departed 6:40 AM CT', tr: 'TR-4451' };
 
+    // Canonical phrasings for dynamic-intent pills (the d* ids route through
+    // dynSubmit, not the scripted q* threads).
+    this.CANON.dQueue = 'What’s waiting on my approval?';
+    this.CANON.dDet = 'How is detention being handled?';
+    this.CANON.dAgents = 'What are my agents working on?';
+    this.CANON.dTrack = 'Where are my loads right now?';
+    this.CANON.dValue = 'What have the agents saved me?';
+    this._dynN = {}; // per-intent rotation counters (deterministic, demo-safe)
+
     // Per-agent audit log. The entry mix deliberately encodes the Vision 2025
     // agentic patterns: auto-within-guardrails, confidence-threshold escalation
     // ("routed to you"), agent-to-agent handoffs, self-healing, and the
@@ -482,7 +491,179 @@ class ComponentV2 extends Component {
   submit(text, qid) {
     // First successful ask retires the prompt bar's "New" badge for the session.
     if (!this.state.everAsked) this.setState({ everAsked: true });
-    super.submit(text, qid);
+    // d* ids are dynamic intents (pills on dynamic answers route back here).
+    if (qid && qid.charAt(0) === 'd') { this.dynSubmit(text || this.CANON[qid], qid); return; }
+    if (qid) { super.submit(text, qid); return; }
+    // Scripted answers keep priority — they're the richest bubbles.
+    var v1 = this.routeText(text);
+    // Phrases V1's keyword net would misroute ("bill of lading" → invoice).
+    var t = ' ' + String(text).toLowerCase().replace(/[^a-z0-9\s]+/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
+    if (t.indexOf('bill of lading') >= 0 || t.indexOf(' bol ') >= 0 || t.indexOf('proof of delivery') >= 0) v1 = 'fb';
+    if (v1 !== 'fb') { super.submit(text, v1); return; }
+    this.dynSubmit(text, this.dynRoute(t));
+  }
+
+  // ---- Dynamic ask: intent router over the demo's live state -------------
+  // Tier 1: on-domain intents composed from the same numbers on screen.
+  // Tier 2: conversational catcher — never breaks character, always pivots
+  // back to real data. Unmatched text logs to the console so the bank can
+  // grow from what people actually type.
+  dynRoute(t) {
+    var has = function (w) { return t.indexOf(w) >= 0; };
+    if (/\bsbg\s?\d{3,6}\b/.test(t)) return 'dLoad';
+    if (has('detention') || has('dwell') || has('demurrage') || has('unload') || has('claim')) return 'dDet';
+    if (has('pod') || has('proof of delivery') || has('bill of lading') || has(' bol ') || has('paperwork') || has('document') || has('receipt') || has('shortage') || has('damage') || has('os d')) return 'dDocs';
+    if (has('safety') || has('harsh') || has('braking') || has('accident') || has('crash') || has('telematics') || has('coach') || has('driver')) return 'dSafety';
+    if (has('tender') || has('approv') || has('waiting') || has('queue') || has('pending') || has('sign off') || has('signoff')) return 'dQueue';
+    if (has('agent') || has('autopilot') || has('automat') || has('what can you') || has('help') || has('how do you work')) return 'dAgents';
+    if (has('dock') || has('appointment') || has('slot') || has('schedul')) return 'dDock';
+    if (has('sav') || has('value') || has('roi') || has('worth') || has('recover')) return 'dValue';
+    if (has('review') || has('report') || has('summar') || has('recap')) return 'dReview';
+    if (has('where') || has('track') || has('status') || has('moving') || has('right now')) return 'dTrack';
+    // Tier 2 — conversational.
+    var conv = null;
+    if (has('who are you') || has('what are you') || has('chatgpt') || has(' gpt ') || has('a bot') || has('an ai') || has(' ai ') || has('are you real') || has('your name') || has('claude')) conv = 'dIdentity';
+    else if (has('joke') || has('funny') || has('laugh')) conv = 'dJoke';
+    else if (has('thank') || has('appreciate') || has('good job') || has('great job') || has('well done')) conv = 'dThanks';
+    else if (has('matter') || has('meaning') || has(' life ') || has('love') || has('feel') || has('alive') || has('conscious') || has('dream') || has('lonely') || has(' sad ') || has('happy') || has('purpose') || has('universe')) conv = 'dFeeling';
+    else if (t.length < 26 && (has(' hi ') || has('hello') || has(' hey ') || has('morning') || has('afternoon') || has(' yo ') || has(' sup '))) conv = 'dGreet';
+    else conv = 'dCatch';
+    try { console.info('[RyderShare Intelligence] unscripted ask → ' + conv + ':', t.trim()); } catch (e) {}
+    return conv;
+  }
+
+  // The approval queue is live: items drop off as the session approves them.
+  dynQueueItems() {
+    var s = this.state, items = [];
+    if (!s.tenderSent) items.push('the MEM → DAL tender draft (≈$3.9K/wk gross, credits against your invoice)');
+    if (!s.detClaimFiled) items.push('the $186 Macon detention claim');
+    if (!s.osdFiled) items.push('the $312 OS&D short-shipment claim');
+    items.push('a held ETA notice on the Miami corridor (moved past the 60-minute guardrail)');
+    return items;
+  }
+
+  dynAnswer(id, t) {
+    var s = this.state;
+    var FOOT = 'Generated from your RyderShare data · Jul 7, 2026 · Verify before financial decisions';
+    var OFFFOOT = 'RyderShare Intelligence answers from your fleet records — loads, invoices, telematics';
+    var V = {
+      dLoad: [function () {
+        var m = /\bsbg\s?(\d{3,6})\b/.exec(t), n = m ? m[1] : '';
+        var K = {
+          '31241': 'SBG-31241 is moving — Savannah corridor, ETA 4:15 PM ET (was 3:05; a first-stop dock delay). Downstream stops hold, and the receivers already have the updated window.',
+          '31248': 'SBG-31248 (Miami corridor) shifted 2h 10m — past the 60-minute guardrail, so the ETA agent held the receiver notice for your review instead of sending it.',
+          '31252': 'SBG-31252 is the driver-reported one: the unit’s GPS is offline, so I’m carrying the driver’s 3:40 PM CT ETA on the Jonesboro loop. It shows as your third late-flagged load.',
+          '31253': 'SBG-31253 went quiet for 45 minutes near Tyler, TX this morning; the ETA agent re-polled the unit and the feed came back on its own. The load is on plan.'
+        };
+        if (K[n]) return { text: K[n], foot: FOOT };
+        return { text: 'I don’t see SBG-' + n + ' in your last 90 days of freight — worth checking the reference. Want the loads that need attention instead?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
+      }],
+      dDet: [function () {
+        var claim = s.detClaimFiled ? 'You filed the Macon claim earlier — $186 with telematics evidence attached, and the receiver has acknowledged receipt.' : 'The one that needs you is Macon — a $186 claim sitting ready with telematics evidence attached.';
+        return { text: 'Detention is watched load-by-load: 41 dock stops timed this month, with $1,120 of dwell evidence already handed to Invoice audit. ' + claim, p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
+      }.bind(this), function () {
+        return { text: 'Your dwell outlier is Orlando DC-04 — driver unload time is running near 3× a typical month. The Detention & dwell agent has 41 stops timed and ' + (s.detClaimFiled ? 'the Macon claim you filed is with the receiver.' : 'a $186 Macon claim ready for your sign-off.'), foot: FOOT };
+      }],
+      dDocs: [function () {
+        var osd = s.osdFiled ? 'the $312 OS&D short-shipment claim you filed is with the carrier — they have 30 days to respond.' : 'one OS&D flag — a $312 short-shipment claim drafted and waiting on you.';
+        return { text: 'June cycle: 214 PODs matched to their loads automatically, 2 chased down from receivers, and ' + osd, foot: FOOT };
+      }],
+      dSafety: [function () {
+        return { text: 'Safety is trending the right way: TTM rate 0.4 events per 100K miles, a 61-day clean streak, and 12 events coached in June. Coaching reaches drivers same-day; repeat patterns escalate to your Ryder safety lead instead of sitting in a report.', foot: FOOT };
+      }, function () {
+        return { text: 'The latest coaching event was hard braking on TR-4438 near Orlando on I-4 — the driver completed the module the same day. June closed with zero preventable incidents and the TTM rate trending down at 0.4 per 100K miles.', foot: FOOT };
+      }],
+      dQueue: [function () {
+        var items = this.dynQueueItems();
+        var lead = items.length === 1 ? 'One thing waits on you right now: ' : String(items.length) + ' things wait on you right now: ';
+        return { text: lead + items.join('; ') + '. Each is one click in its agent’s history — nothing moves without you.', foot: FOOT };
+      }.bind(this)],
+      dAgents: [function () {
+        return { text: 'Seven agents work your account: ETA & notifications, Dock scheduling, Invoice audit, Backhaul tender, Detention & dwell, Documents & POD, and Safety coach. This cycle they’ve returned $1,832 across recovered charges and claims — every action logged, anything cost-bearing held for you.', p1: { q: 'dValue', label: this.CANON.dValue }, foot: FOOT };
+      }.bind(this), function () {
+        return { text: 'Ask me about anything the agents touch — where loads are, why an invoice moved, dock slots, claims, driver safety. Seven of them run under one set of guardrails: automatic inside the rails, routed to you the moment money or promises to receivers are involved.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
+      }.bind(this)],
+      dDock: [function () {
+        return { text: 'Dock scheduling ran 17 actions in the last 7 days — 14 slots booked or reshuffled automatically at your DCs, 2 with your approval, and 1 declined on the receiver side (it can’t confirm those without you).', foot: FOOT };
+      }],
+      dValue: [function () {
+        return { text: 'This June cycle the agents returned $1,832: $1,120 recovered by Invoice audit, a $214 duplicate lumper fee disputed, the $186 Macon detention claim, and a $312 OS&D claim. The bigger prize is backhaul — three empty lanes worth ≈$458K/yr gross at market, ≈$320K/yr back to you.', p1: { q: 'q3', label: 'How much is my empty backhaul worth?' }, foot: FOOT };
+      }],
+      dReview: [function () {
+        return { text: 'Your June business review is ready under Reviews — OTD held at 96.2% against the 95% target, cost per stop $248 (up $6 on peak volume), with two watch items: Orlando DC-04 unload time and Thursday’s storm exposure.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: FOOT };
+      }],
+      dTrack: [function () {
+        return { text: 'Two loads are running late right now — SBG-31241 (Savannah corridor, dock delay; receivers already notified) and SBG-31248 (Miami corridor, held for your review) — and SBG-31252 is carrying a driver-reported ETA while its GPS unit is offline. Everything else on the board is on plan.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
+      }],
+      // ---- Tier 2: in character, grounded pivot, never fabricate ----------
+      dIdentity: [function () {
+        return { text: 'I’m the intelligence inside RyderShare — I read your loads, invoices, dock schedules, and telematics, and I only answer from those records. No opinions on anything I can’t cite.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
+      }.bind(this), function () {
+        return { text: 'RyderShare Intelligence — the layer that reads your freight data so you don’t have to. Everything I say traces back to a record you can open.', foot: OFFFOOT };
+      }],
+      dJoke: [function () {
+        return { text: 'My entire personality is invoices and dock schedules. The funniest thing I’ve seen this month is a lumper fee billed twice — I disputed it.', p1: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
+      }, function () {
+        return { text: 'I have exactly one joke and it’s the duplicate lumper fee. Billing found it less funny — the $214 is on its way back.', foot: OFFFOOT };
+      }],
+      dThanks: [function () {
+        var n = this.dynQueueItems().length;
+        return { text: 'Anytime. I’ll flag whatever needs you — right now that’s ' + (n === 1 ? 'one item' : String(n) + ' items') + ' in the approval queue, nothing urgent.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+      }.bind(this), function () {
+        return { text: 'That’s what I’m here for. Every agent action lands in its history, so you can check my work any time.', foot: OFFFOOT };
+      }],
+      dFeeling: [function () {
+        return { text: 'To the fourteen receiving locations that got their deliveries on time this week — you matter a great deal. Anything deeper than that is outside my data, and I try not to speak beyond my records. The freight, though, I can vouch for.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: OFFFOOT };
+      }, function () {
+        return { text: 'That one’s beyond my telemetry. What I can tell you: your fleet ran 96.2% on-time last month, and numbers like that don’t happen without someone at the wheel. Ask me about the someone-at-the-wheel parts.', foot: OFFFOOT };
+      }, function () {
+        return { text: 'I only see freight, so I’d be bluffing if I answered that — and I don’t bluff. Here’s what’s real on my side: two late loads being worked and your approval queue.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+      }.bind(this)],
+      dGreet: [function () {
+        var n = this.dynQueueItems().length;
+        return { text: 'Hi. Quick pulse: two late loads are being handled, and ' + (n === 1 ? 'one item waits' : String(n) + ' items wait') + ' on your approval. Where do you want to start?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+      }.bind(this), function () {
+        return { text: 'Hello — the board is quiet in a good way. Two late loads are being worked by the ETA agent, and everything cost-bearing is parked in your approval queue. Ask away.', foot: OFFFOOT };
+      }],
+      dCatch: [function () {
+        return { text: 'I couldn’t tie that to anything in your freight records, and I’d rather not guess. I’m strongest on loads, invoices, ETAs, dock schedules, and what your agents are doing.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
+      }, function () {
+        return { text: 'That’s outside what your records can answer — and everything I say has to trace to a record. Try me on the freight: where things are, what things cost, what’s waiting on you.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+      }.bind(this), function () {
+        return { text: 'Nothing in your RyderShare data matches that one. If it’s about your fleet, point it at loads, costs, or claims and I’ll have numbers for you.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
+      }.bind(this)]
+    };
+    var variants = V[id] || V.dCatch;
+    var n = this._dynN[id] = (this._dynN[id] || 0) + 1;
+    return variants[(n - 1) % variants.length]();
+  }
+
+  dynSubmit(text, id) {
+    if (this.state.revealing) return;
+    var t = ' ' + String(text).toLowerCase().replace(/[^a-z0-9\s]+/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
+    var f = this.dynAnswer(id, t);
+    var msg = {
+      k: 'a', isDyn: true, sourcesOpen: false,
+      dynText: f.text,
+      hasDyn2: !!f.text2, dynText2: f.text2 || '',
+      hasPills: !!(f.p1 || f.p2),
+      hasP1: !!f.p1, p1Q: f.p1 ? f.p1.q : '', p1Label: f.p1 ? f.p1.label : '',
+      hasP2: !!f.p2, p2Q: f.p2 ? f.p2.q : '', p2Label: f.p2 ? f.p2.label : '',
+      dynFoot: f.foot
+    };
+    var rm = this.rm();
+    var self = this;
+    this.setState(function (s) {
+      return { thread: s.thread.concat([{ k: 'u', isUser: true, text: text }, { k: 't', isTyping: true }]), revealing: true };
+    }, function () { self.scrollThread(); });
+    // Typing delay scales with answer length — instant essays feel canned.
+    var d1 = rm ? 30 : Math.min(1900, 500 + f.text.length * 4);
+    this.t(function () {
+      self.setState(function (s) {
+        return { thread: s.thread.slice(0, -1).concat([msg]) };
+      }, function () { self.scrollThread(); });
+    }, d1);
+    this.t(function () { self.setState({ revealing: false }); }, d1 + (rm ? 30 : 700));
   }
 
   enableIntel() {

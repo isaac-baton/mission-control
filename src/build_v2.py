@@ -353,6 +353,29 @@ sub("agent log panel insert",
     '<!-- S0a docked prompt bar -->',
     agent_log + '\n      <!-- S0a docked prompt bar -->')
 
+# T11b3 — dynamic ask answers: one generic bubble template renders any
+# intent-engine answer (logic.js dynSubmit); styling mirrors the fb bubble.
+_pill = ('padding:7px 13px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;'
+         'font-size:12.5px;color:#303235;cursor:pointer;font-family:inherit')
+DYN_BUBBLE = (
+    '<sc-if value="{{ msg.isDyn }}">\n'
+    '                <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">\n'
+    '                  <div style="animation:rev .2s ease both;font-size:13.5px;color:#303235;line-height:1.6">{{ msg.dynText }}</div>\n'
+    '                  <sc-if value="{{ msg.hasDyn2 }}"><div style="animation:rev .2s ease both;animation-delay:.18s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:10px">{{ msg.dynText2 }}</div></sc-if>\n'
+    '                  <sc-if value="{{ msg.hasPills }}">\n'
+    '                  <div style="animation:rev .2s ease both;animation-delay:.26s;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">\n'
+    f'                    <sc-if value="{{{{ msg.hasP1 }}}}"><button data-q="{{{{ msg.p1Q }}}}" onClick="{{{{ askQ }}}}" style="{_pill}" style-hover="background:#F5F6F6">{{{{ msg.p1Label }}}}</button></sc-if>\n'
+    f'                    <sc-if value="{{{{ msg.hasP2 }}}}"><button data-q="{{{{ msg.p2Q }}}}" onClick="{{{{ askQ }}}}" style="{_pill}" style-hover="background:#F5F6F6">{{{{ msg.p2Label }}}}</button></sc-if>\n'
+    '                  </div>\n'
+    '                  </sc-if>\n'
+    '                  <div style="animation:rev .2s ease both;animation-delay:.4s;font-size:11px;color:#696B6F;margin-top:14px;padding-top:12px;border-top:1px solid #ECEDED">{{ msg.dynFoot }}</div>\n'
+    '                </div>\n'
+    '                </sc-if>\n'
+    '                ')
+sub("dynamic answer bubble insert",
+    '<sc-if value="{{ msg.isFB }}">',
+    DYN_BUBBLE + '<sc-if value="{{ msg.isFB }}">')
+
 # T11c — Ask panel: the suggestion pills float in a fixed block over the
 # thread; with three long pills wrapping to two rows that block is ~150px
 # tall, so the thread needs more bottom clearance than the design's 130px or
@@ -437,7 +460,7 @@ out = f"""<!DOCTYPE html>
 <script>
 {logic_src}
 {v2_logic}
-window.__dcBoot(ComponentV2, {json.dumps(props)});
+window.__app = window.__dcBoot(ComponentV2, {json.dumps(props)});
 </script>
 </body>
 </html>
