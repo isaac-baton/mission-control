@@ -54,3 +54,49 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 [data-aglog][data-ptheme="dark"] [style*="border:1px solid #E3E4E5"]{border-color:#26272C !important}
 [data-aglog][data-ptheme="dark"] [style*="color:#307CA7"]{color:#5AC8FA !important}
 [data-aglog][data-ptheme="dark"] button[aria-label="Close actions log"]:hover{background:rgba(255,255,255,0.08) !important}
+
+/* The Ask panel + its docked pills/input follow the dark theme on the Agents
+   tab (self-bound data-ptheme — the mounts live outside the themed root).
+   Answer cards, chips, charts, and pills all carry light-mode inline tokens;
+   each token remaps here. Order matters: the generic background:#fff rule
+   runs before the panel-root and button rules that refine it. */
+[data-aask][data-ptheme="dark"] [style*="background:#fff"]{background:#17181C !important}
+[data-aask][data-ptheme="dark"] button[style*="background:#fff"]{background:rgba(255,255,255,0.07) !important;border-color:rgba(255,255,255,0.16) !important;color:#E8EAED !important}
+[data-aask][data-ptheme="dark"][data-screen-label]{background:#141519 !important;border-left:1px solid #26272C !important;box-shadow:-12px 0 32px rgba(0,0,0,0.55) !important}
+[data-aask][data-ptheme="dark"] [style*="border-bottom:1px solid #E3E4E5"]{background:#141519 !important;border-bottom-color:#26272C !important}
+[data-aask][data-ptheme="dark"] [style*="border:1px solid #E3E4E5"]{border-color:#26272C !important}
+[data-aask][data-ptheme="dark"] [style*="border-right:1px solid #ECEDED"]{border-right-color:#232429 !important}
+[data-aask][data-ptheme="dark"] [style*="border-bottom:1px solid #ECEDED"]{border-bottom-color:#232429 !important}
+[data-aask][data-ptheme="dark"] [style*="border-top:1px solid #ECEDED"]{border-top-color:#232429 !important}
+[data-aask][data-ptheme="dark"] [style*="color:#1D1D20"]{color:#F4F5F7 !important}
+[data-aask][data-ptheme="dark"] [style*="color:#303235"]{color:#C4C8CF !important}
+[data-aask][data-ptheme="dark"] [style*="color:#44464B"]{color:#C4C8CF !important}
+[data-aask][data-ptheme="dark"] [style*="color:#696B6F"]{color:#8A8F98 !important}
+[data-aask][data-ptheme="dark"] [style*="color:#A9AAAC"]{color:#6E7278 !important}
+[data-aask][data-ptheme="dark"] [style*="color:#307CA7"]{color:#5AC8FA !important}
+[data-aask][data-ptheme="dark"] [style*="background:#F5F6F6"]{background:rgba(255,255,255,0.09) !important;color:#F4F5F7 !important}
+[data-aask][data-ptheme="dark"] [style*="background:#A9AAAC"]{background:#6E7278 !important}
+[data-aask][data-ptheme="dark"] [style*="background:#FAFAFA"]{background:#101114 !important}
+[data-aask][data-ptheme="dark"] button[style*="background:#1D1D20"]{background:#F4F5F7 !important;color:#141519 !important}
+[data-aask][data-ptheme="dark"] [style*="background:#FEF9E6"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
+[data-aask][data-ptheme="dark"] [style*="background:#E8F5F0"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
+[data-aask][data-ptheme="dark"] [style*="background:#ECF4F9"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
+[data-aask][data-ptheme="dark"] svg[stroke="#696B6F"]{stroke:#8A8F98}
+[data-aask][data-ptheme="dark"] svg[stroke="#44464B"]{stroke:#C4C8CF}
+[data-aask][data-ptheme="dark"] g[stroke="#ECEDED"]{stroke:#26272C}
+[data-aask][data-ptheme="dark"] g[fill="#696B6F"]{fill:#8A8F98}
+/* Chart marks: ink-colored bars/labels flip light; muted strokes lift. */
+[data-aask][data-ptheme="dark"] rect[fill="#303235"]{fill:#C4C8CF}
+[data-aask][data-ptheme="dark"] text[fill="#303235"]{fill:#C4C8CF}
+[data-aask][data-ptheme="dark"] text[fill="#696B6F"]{fill:#8A8F98}
+[data-aask][data-ptheme="dark"] text[fill="#A9AAAC"]{fill:#6E7278}
+[data-aask][data-ptheme="dark"] g[stroke="#E3E4E5"],[data-aask][data-ptheme="dark"] line[stroke="#E3E4E5"]{stroke:#26272C}
+[data-aask][data-ptheme="dark"] svg[stroke="#A9AAAC"]{stroke:#6E7278}
+[data-aask][data-ptheme="dark"] svg[stroke="#C5C6C7"]{stroke:#7A7F87}
+[data-aask][data-ptheme="dark"] [data-pbar]{background:#17181C !important;border-color:#26272C !important}
+[data-aask][data-ptheme="dark"] [data-pbar] input{color:#F4F5F7 !important}
+/* Stamped light hovers (style-hover compiles to .scpN:hover !important) lose
+   to these higher-specificity dark equivalents. */
+[data-aask][data-ptheme="dark"] button[style*="border-radius:999px"]:hover{background:rgba(255,255,255,0.14) !important}
+[data-aask][data-ptheme="dark"] button[aria-label="Back"]:hover{background:rgba(255,255,255,0.08) !important}
+[data-aask][data-ptheme="dark"] [style*="padding:9px 12px"]:hover{background:rgba(255,255,255,0.06) !important}

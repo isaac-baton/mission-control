@@ -376,6 +376,16 @@ sub("dynamic answer bubble insert",
     '<sc-if value="{{ msg.isFB }}">',
     DYN_BUBBLE + '<sc-if value="{{ msg.isFB }}">')
 
+# T11b4 — the Ask panel and its docked pills/input follow the dark theme on
+# the Agents tab. Both mounts are fixed furniture outside the themed root, so
+# they self-bind the theme the same way the audit panel does.
+sub("ask panel theme binding",
+    '<div data-screen-label="Ask RyderShare" style="',
+    '<div data-screen-label="Ask RyderShare" data-aask="" data-ptheme="{{ pageTheme }}" style="')
+sub("ask dock theme binding",
+    '<div style="position:fixed;right:12px;bottom:12px;width:596px;max-width:calc(92vw - 24px);z-index:26">',
+    '<div data-aask="" data-ptheme="{{ pageTheme }}" style="position:fixed;right:12px;bottom:12px;width:596px;max-width:calc(92vw - 24px);z-index:26">')
+
 # T11c — Ask panel: the suggestion pills float in a fixed block over the
 # thread; with three long pills wrapping to two rows that block is ~150px
 # tall, so the thread needs more bottom clearance than the design's 130px or
