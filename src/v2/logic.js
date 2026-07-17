@@ -56,6 +56,11 @@ class ComponentV2 extends Component {
     this.state.agDwell = true;       // Detention & dwell agent
     this.state.agDocs = true;        // Documents & POD agent
     this.state.agSafety = true;      // Safety coach agent
+    this.state.agFlex = true;        // Adaptive capacity agent
+    this.state.flexLockDone = false; // scenario A: 2-lane rate lock approved
+    this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
+    this.state.flexAOpen = false;    // market-watch card details expanded
+    this.state.flexBOpen = false;
     this.state.riskExpanded = false; // approved incident details re-expand
     this.state.wfOpen = null;        // workforce showroom: which agent's history is open
     this.state.detClaimFiled = false; // in-log approval: Macon detention claim
@@ -74,6 +79,7 @@ class ComponentV2 extends Component {
     this.CANON.dAgents = 'What are my agents working on?';
     this.CANON.dTrack = 'Where are my loads right now?';
     this.CANON.dValue = 'What have the agents saved me?';
+    this.CANON.dFlex = 'What is the spot market doing to my rates?';
     this._dynN = {}; // per-intent rotation counters (deterministic, demo-safe)
 
     // Per-agent audit log. The entry mix deliberately encodes the Vision 2025
@@ -169,6 +175,18 @@ class ComponentV2 extends Component {
           { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts on two runs in one week — human review, not automation.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
           { t: 'Wed Jul 1 · 6:00 AM', title: 'June closed with zero preventable incidents', d: 'Clean streak at 61 days; TTM rate 0.4/100K mi, trending down.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'May 2 · 3:00 PM', title: 'Closed the April incident review', d: 'Coaching plan completed; the April business review carries the record.', chip: 'Closed', cs: GREY, who: 'Approved by your Ryder team' }
+        ]
+      },
+      agFlex: {
+        title: 'Adaptive capacity',
+        summary: 'Jul watch · 14 lanes monitored · 3 flagged · 2 moves awaiting you',
+        guard: 'Auto: lane-level rate watch against live tender data. Needs you: every flex move — dual sign-off with your Ryder account team before any load changes mode.',
+        entries: [
+          { t: 'Today · 7:10 AM', title: 'Drafted the 2-lane rate lock', d: 'MEM → BNA and ATL → CLT spot up 14% since April; contracted $2.11/mi vs ≈$2.38/mi spot. Recommendation routed for your dual sign-off.', chip: 'Awaiting you', cs: AMBER, who: 'Routed to you — cost-bearing' },
+          { t: 'Thu Jul 2 · 4:20 PM', title: 'Cleared Dallas → Austin for flex', d: 'Eligibility passed: 2 stops, dry van, flexible windows, carrier OTD 96.4%. Spot ≈$1.87/mi against $2.14/mi cost-to-serve.', chip: 'Cleared', cs: GREEN, who: 'Auto · analysis only' },
+          { t: 'Wed Jul 1 · 6:00 AM', title: 'Re-priced 14 lanes against spot', d: 'Weekly sweep on live tender and rate data — 11 lanes within band, 3 flagged for review.', chip: 'Analyzed', cs: GREY, who: 'Auto · analysis only' },
+          { t: 'Mon Jun 29 · 8:40 AM', title: 'Pulled 2 loads back from brokerage', d: 'The Nashville lane firmed 9% in two weeks; loads returned to dedicated at contract rate before the exposure grew.', chip: 'Reverted', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Fri Jun 26 · 3:05 PM', title: 'Learned from your override', d: 'You held the Waco lane on dedicated despite favorable spot — driver familiarity at that receiver matters. The lane is now exempt from flex analysis.', chip: 'Learned', cs: BLUE, who: 'From your decision · feedback loop' }
         ]
       }
     };
@@ -340,6 +358,24 @@ class ComponentV2 extends Component {
       v.wfDwellSum = self.entriesFor('agDwell').summary;
       v.wfDocsSum = self.entriesFor('agDocs').summary;
       v.wfSafetySum = self.entriesFor('agSafety').summary;
+      v.wfFlexSum = self.entriesFor('agFlex').summary;
+
+      // Market watch (Autopilot): the two adaptive-capacity scenarios.
+      v.flexLockDone = s.flexLockDone;
+      v.flexLockPending = !s.flexLockDone;
+      v.flexOutDone = s.flexOutDone;
+      v.flexOutPending = !s.flexOutDone;
+      v.flexAOpen = s.flexAOpen;
+      v.flexBOpen = s.flexBOpen;
+      v.flexALabel = s.flexAOpen ? 'Hide details' : 'Review & lock rates →';
+      v.flexBLabel = s.flexBOpen ? 'Hide details' : 'Review & flex →';
+      v.flexToggle = function (e) {
+        var f = e.currentTarget.dataset.f;
+        if (f === 'a') self.setState({ flexAOpen: !self.state.flexAOpen });
+        else self.setState({ flexBOpen: !self.state.flexBOpen });
+      };
+      v.flexLock = function () { self.setState({ flexLockDone: true, flexAOpen: false }); };
+      v.flexOut = function () { self.setState({ flexOutDone: true, flexBOpen: false }); };
 
       // Right-side meta per agent row: when it last acted — live, so a
       // session approval reads "Just now".
@@ -382,9 +418,10 @@ class ComponentV2 extends Component {
       v.agLogIsDwell = s.agLog === 'agDwell';
       v.agLogIsDocs = s.agLog === 'agDocs';
       v.agLogIsSafety = s.agLog === 'agSafety';
+      v.agLogIsFlex = s.agLog === 'agFlex';
       var swOn2 = 'background:#34A081', swOff2 = 'background:#C5C6C7';
       var knOn2 = 'transform:translateX(14px)', knOff2 = 'transform:translateX(0)';
-      ['agDwell', 'agDocs', 'agSafety'].forEach(function (k2) {
+      ['agDwell', 'agDocs', 'agSafety', 'agFlex'].forEach(function (k2) {
         var on = !!s[k2];
         v[k2 + 'On'] = on; v[k2 + 'Off'] = !on;
         v[k2 + 'Track'] = on ? swOn2 : swOff2;
@@ -464,6 +501,17 @@ class ComponentV2 extends Component {
       });
       summary = 'June cycle · 214 PODs matched · 1 OS&D claim filed today';
     }
+    if (key === 'agFlex') {
+      if (s.flexLockDone) {
+        entries = entries.filter(function (en) { return en.title !== 'Drafted the 2-lane rate lock'; });
+        entries = [{ t: 'Just now', title: 'Locked dedicated rates on 2 lanes', d: 'MEM → BNA and ATL → CLT at $2.11/mi for 12 months; first tenders shift Monday. Your Ryder account team is countersigning.', chip: 'Locked', cs: GREEN2, who: 'Approved by you' }].concat(entries);
+      }
+      if (s.flexOutDone) {
+        entries = [{ t: 'Just now', title: 'Flexed Dallas → Austin to brokerage', d: '4 loads/wk at ≈$1.87/mi against $2.14/mi cost-to-serve; weekly re-check armed — loads return when the lane firms.', chip: 'Flexed', cs: GREEN2, who: 'Approved by you' }].concat(entries);
+      }
+      var moves = (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1);
+      summary = 'Jul watch · 14 lanes monitored · ' + (moves === 0 ? 'both moves approved this session' : moves === 1 ? '1 move awaiting you' : '2 moves awaiting you') + ' · ≈$74K/yr identified';
+    }
     return { entries: entries, summary: summary };
   }
 
@@ -511,6 +559,7 @@ class ComponentV2 extends Component {
   dynRoute(t) {
     var has = function (w) { return t.indexOf(w) >= 0; };
     if (/\bsbg\s?\d{3,6}\b/.test(t)) return 'dLoad';
+    if (has('spot') || has('adaptive') || has('flex') || has('rate lock') || has('lock in') || has('brokerage') || has('market rate') || has('stabiliz') || has('dedicated')) return 'dFlex';
     if (has('detention') || has('dwell') || has('demurrage') || has('unload') || has('claim')) return 'dDet';
     if (has('pod') || has('proof of delivery') || has('bill of lading') || has(' bol ') || has('paperwork') || has('document') || has('receipt') || has('shortage') || has('damage') || has('os d')) return 'dDocs';
     if (has('safety') || has('harsh') || has('braking') || has('accident') || has('crash') || has('telematics') || has('coach') || has('driver')) return 'dSafety';
@@ -536,6 +585,8 @@ class ComponentV2 extends Component {
   dynQueueItems() {
     var s = this.state, items = [];
     if (!s.tenderSent) items.push('the MEM → DAL tender draft (≈$3.9K/wk gross, credits against your invoice)');
+    if (!s.flexLockDone) items.push('the 2-lane rate lock (≈$3.4K/mo below today’s spot, held for 12 months)');
+    if (!s.flexOutDone) items.push('the Dallas → Austin flex to brokerage (≈$2.2K/mo while the lane stays soft)');
     if (!s.detClaimFiled) items.push('the $186 Macon detention claim');
     if (!s.osdFiled) items.push('the $312 OS&D short-shipment claim');
     items.push('a held ETA notice on the Miami corridor (moved past the 60-minute guardrail)');
@@ -558,6 +609,16 @@ class ComponentV2 extends Component {
         if (K[n]) return { text: K[n], foot: FOOT };
         return { text: 'I don’t see SBG-' + n + ' in your last 90 days of freight — worth checking the reference. Want the loads that need attention instead?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
       }],
+      dFlex: [function () {
+        var a = s.flexLockDone, b = s.flexOutDone;
+        if (a && b) return { text: 'Both flex moves are done this session: 2 overflow lanes locked into dedicated at $2.11/mi for 12 months, and Dallas → Austin flexed to brokerage at ≈$1.87/mi with a weekly re-check armed. Adaptive capacity keeps re-pricing all 14 lanes — the next recommendation lands in Autopilot.', foot: FOOT };
+        var parts = [];
+        if (!a) parts.push('spot is up 14% since April, so locking your two overflow lanes into dedicated at $2.11/mi runs ≈$3.4K/mo below today’s market and holds for 12 months');
+        if (!b) parts.push('one dedicated lane — Dallas → Austin — still prices below cost-to-serve, worth ≈$2.2K/mo flexed to brokerage while it stays soft');
+        return { text: 'Adaptive capacity re-prices your 14 lanes against the spot market weekly, in both directions. Right now: ' + parts.join('; and ') + '. ' + (parts.length === 2 ? 'Both moves wait' : 'The move waits') + ' on your dual sign-off in Autopilot.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
+      }.bind(this), function () {
+        return { text: 'Lane-by-lane, not market-by-market: even with spot up 14% since April, lanes move independently — which is why the same week can produce a rate lock on your overflow lanes and a flex-out on Dallas → Austin. Every move needs your dual sign-off, and loads pull back to dedicated the moment a soft lane firms.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: FOOT };
+      }.bind(this)],
       dDet: [function () {
         var claim = s.detClaimFiled ? 'You filed the Macon claim earlier — $186 with telematics evidence attached, and the receiver has acknowledged receipt.' : 'The one that needs you is Macon — a $186 claim sitting ready with telematics evidence attached.';
         return { text: 'Detention is watched load-by-load: 41 dock stops timed this month, with $1,120 of dwell evidence already handed to Invoice audit. ' + claim, p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
@@ -579,9 +640,9 @@ class ComponentV2 extends Component {
         return { text: lead + items.join('; ') + '. Each is one click in its agent’s history — nothing moves without you.', foot: FOOT };
       }.bind(this)],
       dAgents: [function () {
-        return { text: 'Seven agents work your account: ETA & notifications, Dock scheduling, Invoice audit, Backhaul tender, Detention & dwell, Documents & POD, and Safety coach. This cycle they’ve returned $1,832 across recovered charges and claims — every action logged, anything cost-bearing held for you.', p1: { q: 'dValue', label: this.CANON.dValue }, foot: FOOT };
+        return { text: 'Eight agents work your account: ETA & notifications, Dock scheduling, Invoice audit, Backhaul tender, Detention & dwell, Documents & POD, Safety coach, and Adaptive capacity. This cycle they’ve returned $1,832 across recovered charges and claims, with ≈$74K/yr more identified on the rate side — every action logged, anything cost-bearing held for you.', p1: { q: 'dValue', label: this.CANON.dValue }, foot: FOOT };
       }.bind(this), function () {
-        return { text: 'Ask me about anything the agents touch — where loads are, why an invoice moved, dock slots, claims, driver safety. Seven of them run under one set of guardrails: automatic inside the rails, routed to you the moment money or promises to receivers are involved.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
+        return { text: 'Ask me about anything the agents touch — where loads are, why an invoice moved, dock slots, claims, driver safety, spot rates. Eight of them run under one set of guardrails: automatic inside the rails, routed to you the moment money or promises to receivers are involved.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
       }.bind(this)],
       dDock: [function () {
         return { text: 'Dock scheduling ran 17 actions in the last 7 days — 14 slots booked or reshuffled automatically at your DCs, 2 with your approval, and 1 declined on the receiver side (it can’t confirm those without you).', foot: FOOT };

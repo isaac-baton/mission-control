@@ -9,6 +9,68 @@
 
             <!--INCIDENT-->
 
+            <!-- Market watch: adaptive capacity — flex moves in both directions -->
+            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 4px">Market watch — Adaptive capacity</div>
+            <div style="font-size:12.5px;color:#696B6F;margin-bottom:10px">Your contract's flex provision lets eligible loads move between dedicated and brokerage. The agent re-prices every lane weekly, in both directions — analysis that used to take a re-engineering cycle.</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+
+              <!-- Scenario A: rates rising → lock TM/brokerage lanes into dedicated -->
+              <sc-if value="{{ flexLockDone }}">
+              <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">
+                <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span style="font-size:13px;font-weight:500;color:#1F7A61;line-height:1.5">Rates locked — MEM → BNA and ATL → CLT move to dedicated at $2.11/mi. First tenders shift Monday; your Ryder team is countersigning.</span>
+              </div>
+              </sc-if>
+              <sc-if value="{{ flexLockPending }}">
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:14px;font-weight:600;color:#1D1D20;flex:1">Lock in dedicated rates</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Rates rising</span>
+                </div>
+                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px">Spot is up <b style="font-weight:600;color:#1D1D20">14% since April</b>. Your two overflow lanes — MEM → BNA and ATL → CLT, 9 loads/wk — still ride the spot market through brokerage.</div>
+                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:6px">Locking them into dedicated at your contracted <b style="font-weight:600;color:#1D1D20">$2.11/mi</b> (spot ≈ $2.38/mi) runs <b style="font-weight:600;color:#1D1D20">≈$3.4K/mo below today's market</b> — and the rate holds for 12 months.</div>
+                <sc-if value="{{ flexAOpen }}">
+                <div style="border-top:1px solid #ECEDED;margin-top:12px;padding-top:11px;animation:rev .2s ease both">
+                  <div style="font-size:12px;color:#303235;line-height:1.7">Volume consistency 96% over 12 weeks — qualifies for dedicated capacity under the flex provision.<br>Removes ±$38K/quarter of rate exposure from your transportation budget.<br>Service upgrades to Ryder drivers and equipment; receivers keep their windows.</div>
+                  <div style="font-size:11.5px;color:#696B6F;line-height:1.6;margin-top:9px">Dual sign-off: your approval here, then your Ryder account team countersigns before tenders shift. Logged and reversible at renewal.</div>
+                  <button onClick="{{ flexLock }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:11px">Lock dedicated rates</button>
+                </div>
+                </sc-if>
+                <div style="margin-top:11px">
+                  <button data-f="a" onClick="{{ flexToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ flexALabel }}</button>
+                </div>
+              </div>
+              </sc-if>
+
+              <!-- Scenario B: one lane soft → flex eligible dedicated loads to brokerage -->
+              <sc-if value="{{ flexOutDone }}">
+              <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">
+                <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span style="font-size:13px;font-weight:500;color:#1F7A61;line-height:1.5">Dallas → Austin flexing to brokerage at ≈$1.87/mi. Weekly re-check armed — loads return to dedicated the moment the lane firms.</span>
+              </div>
+              </sc-if>
+              <sc-if value="{{ flexOutPending }}">
+              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:14px;font-weight:600;color:#1D1D20;flex:1">One lane prices below dedicated</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#ECF4F9;color:#276A92;white-space:nowrap">Lane soft</span>
+                </div>
+                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px">Even in a rising market, lanes move independently. Dallas → Austin — 4 loads/wk, 2 stops, dry van — prices at <b style="font-weight:600;color:#1D1D20">≈$1.87/mi on the spot market</b> against your <b style="font-weight:600;color:#1D1D20">$2.14/mi</b> dedicated cost-to-serve.</div>
+                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:6px">Flexing it to brokerage saves <b style="font-weight:600;color:#1D1D20">≈$2.2K/mo</b> while the lane stays soft.</div>
+                <sc-if value="{{ flexBOpen }}">
+                <div style="border-top:1px solid #ECEDED;margin-top:12px;padding-top:11px;animation:rev .2s ease both">
+                  <div style="font-size:12px;color:#303235;line-height:1.7">Eligibility passed: 2 stops · dry van · flexible windows · carrier OTD 96.4%.<br>Critical loads never flex — eligibility rules are set in your contract, and this lane clears them.<br>The agent re-checks weekly and pulls loads back to dedicated when the lane firms.</div>
+                  <div style="font-size:11.5px;color:#696B6F;line-height:1.6;margin-top:9px">Dual sign-off: your approval here, then Ryder dedicated ops confirms service requirements before any tender moves.</div>
+                  <button onClick="{{ flexOut }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:11px">Flex to brokerage</button>
+                </div>
+                </sc-if>
+                <div style="margin-top:11px">
+                  <button data-f="b" onClick="{{ flexToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ flexBLabel }}</button>
+                </div>
+              </div>
+              </sc-if>
+            </div>
+
             <!-- Decisions: the queue is the hero -->
             <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Decisions</div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden">
@@ -74,6 +136,7 @@
               <button data-log="agDwell" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDwellOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDwellOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Detention &amp; dwell</button>
               <button data-log="agDocs" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDocsOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDocsOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Documents &amp; POD</button>
               <button data-log="agSafety" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agSafetyOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agSafetyOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Safety coach</button>
+              <button data-log="agFlex" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agFlexOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agFlexOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Adaptive capacity</button>
               <span style="flex:1"></span>
               <button data-nav="workforce" onClick="{{ navTo }}" style="background:none;border:0;padding:6px 4px;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Meet your agents →</button>
             </div>

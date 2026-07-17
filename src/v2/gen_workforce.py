@@ -3,11 +3,11 @@
 from pathlib import Path
 
 # Hues scatter warm/cool across the 2-col grid so no column or diagonal
-# reads as a same-color group: blue|orange / green|purple / yellow|red / cyan.
+# reads as a same-color group: blue|orange / green|purple / yellow|red / cyan|teal.
 HUES = {
  'agEta':   ('#5AC8FA', 'Eta'), 'agDock':  ('#FFB86B', 'Dock'), 'agAudit': ('#4CD9A8', 'Audit'),
  'agBh':    ('#A78BFA', 'Bh'), 'agDwell': ('#FFD84D', 'Dwell'), 'agDocs':  ('#FF5C5C', 'Docs'),
- 'agSafety':('#9BE8FF', 'Safety'),
+ 'agSafety':('#9BE8FF', 'Safety'), 'agFlex': ('#2DD4BF', 'Flex'),
 }
 ICONS = {
  'agEta':   '<path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path>',
@@ -17,6 +17,7 @@ ICONS = {
  'agDwell': '<line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle>',
  'agDocs':  '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="m9 15 2 2 4-4"></path>',
  'agSafety':'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path>',
+ 'agFlex':  '<path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path>',
 }
 META = {
  'agEta':   ('ETA &amp; notifications', 'Sends updated delivery ETAs to receivers automatically; delays over 60 minutes are held for you.', 'Auto: receiver notices for ETA shifts up to 60 minutes. Needs you: bigger shifts and anything cost-bearing.'),
@@ -26,8 +27,9 @@ META = {
  'agDwell': ('Detention &amp; dwell', 'Times every dock hold and assembles claim evidence; filing always waits for your approval.', 'Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.'),
  'agDocs':  ('Documents &amp; POD', 'Chases, matches, and shares paperwork on its own; anything touching an invoice needs you.', 'Auto: chasing, matching, and sharing paperwork. Needs you: anything that changes an invoice or files a claim.'),
  'agSafety':('Safety coach', 'Turns telematics events into driver coaching; repeat patterns escalate to your Ryder safety lead.', 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder’s, reviews stay human.'),
+ 'agFlex':  ('Adaptive capacity', 'Re-prices every lane against the spot market weekly and drafts flex moves in both directions — locking loads into dedicated rates or releasing them to brokerage.', 'Auto: lane-level rate watch and eligibility checks. Needs you: every flex move — dual sign-off with your Ryder account team before any load changes mode.'),
 }
-SUMS = {'agEta':'wfEtaSum','agDock':'wfDockSum','agAudit':'wfAuditSum','agBh':'wfBhSum','agDwell':'wfDwellSum','agDocs':'wfDocsSum','agSafety':'wfSafetySum'}
+SUMS = {'agEta':'wfEtaSum','agDock':'wfDockSum','agAudit':'wfAuditSum','agBh':'wfBhSum','agDwell':'wfDwellSum','agDocs':'wfDocsSum','agSafety':'wfSafetySum','agFlex':'wfFlexSum'}
 
 
 def backdrop(key):
@@ -79,7 +81,7 @@ page = f'''<sc-if value="{{{{ isWorkforce }}}}">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5AC8FA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>
               <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#8A8F98">Your workforce</span>
             </div>
-            <div style="font-size:30px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em;margin-top:12px;line-height:1.2">7 AI agents at your disposal</div>
+            <div style="font-size:30px;font-weight:600;color:#F4F5F7;letter-spacing:-0.01em;margin-top:12px;line-height:1.2">8 AI agents at your disposal</div>
             <div style="font-size:13.5px;color:#8A8F98;margin-top:8px">Every action is logged and reversible · anything cost-bearing waits for you · repeat patterns go to your Ryder team</div>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px">
 {cards}            </div>
