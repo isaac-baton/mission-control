@@ -132,7 +132,7 @@ class ComponentV2 extends Component {
       },
       agBh: {
         title: 'Backhaul tender',
-        summary: 'Draft queue · 1 tender awaiting you · 3 lanes scoped · nothing sends itself',
+        summary: 'Draft queue · 1 tender awaiting you · 3 lanes scoped · sends only on your approval',
         guard: 'Auto: matching, pricing, and lane analysis. Needs you: every tender — nothing sends without your approval.',
         entries: [
           { t: 'Today · 5:45 AM', title: 'Refreshed the MEM → DAL tender draft', d: '3 loads/wk of Ryder-managed freight ≈ $3.9K/wk gross; credits net against your invoice. Expires Friday.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'sendTender', actLabel: 'Approve & send tender' },
@@ -170,11 +170,11 @@ class ComponentV2 extends Component {
       agSafety: {
         title: 'Safety coach',
         summary: 'TTM 0.4/100K mi · 12 events coached in June · 61-day clean streak',
-        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder\u2019s, reviews stay human.',
+        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to your Ryder safety lead, and a person reviews every case.',
         entries: [
           { t: 'Today · 5:40 AM', title: 'Briefed Thursday drivers on the storm corridor', d: 'Start-of-day risk briefing for the 6 storm-plan routes: crosswinds, staging changes, revised windows.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Mon Jul 6 · 2:50 PM', title: 'Assigned self-coaching for hard braking', d: 'TR-4438 on I-4 near Orlando; the driver completed the module the same day.', chip: 'Coached', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts on two runs in one week — human review, not automation.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
+          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts showed up on two runs in one week, so your Ryder safety lead is reviewing it personally.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
           { t: 'Wed Jul 1 · 6:00 AM', title: 'June closed with zero preventable incidents', d: 'Clean streak at 61 days; TTM rate 0.4/100K mi, trending down.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'May 2 · 3:00 PM', title: 'Closed the April incident review', d: 'Coaching plan completed; the April business review carries the record.', chip: 'Closed', cs: GREY, who: 'Approved by your Ryder team' }
         ]
@@ -532,7 +532,7 @@ class ComponentV2 extends Component {
         if (en.act !== 'sendTender') return en;
         return { t: 'Just now', title: 'Sent the MEM \u2192 DAL tender', d: '3 loads/wk \u2248 $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
       });
-      summary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
+      summary = 'Tender sent today · 2 lanes scoped next · sends only on your approval';
     }
     if (key === 'agDwell' && s.detClaimFiled) {
       entries = entries.map(function (en) {
@@ -668,7 +668,7 @@ class ComponentV2 extends Component {
         if (!b) parts.push('one dedicated lane — Dallas → Austin — still prices below cost-to-serve, worth ≈$2.2K/mo flexed to brokerage while it stays soft');
         return { text: 'Adaptive capacity re-prices your 14 lanes against the spot market weekly, in both directions. Right now: ' + parts.join('; and ') + '. ' + (parts.length === 2 ? 'Both moves wait' : 'The move waits') + ' on your dual sign-off in Autopilot.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
       }.bind(this), function () {
-        return { text: 'Lane-by-lane, not market-by-market: even with spot up 14% since April, lanes move independently — which is why the same week can produce a rate lock on your overflow lanes and a flex-out on Dallas → Austin. Every move needs your dual sign-off, and loads pull back to dedicated the moment a soft lane firms.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: FOOT };
+        return { text: 'Lanes move independently of the market, so even with spot up 14% since April the same week can produce a rate lock on your overflow lanes and a flex-out on Dallas → Austin. Every move needs your dual sign-off, and loads pull back to dedicated the moment a soft lane firms.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: FOOT };
       }.bind(this)],
       dDet: [function () {
         var claim = s.detClaimFiled ? 'You filed the Macon claim earlier — $186 with telematics evidence attached, and the receiver has acknowledged receipt.' : 'The one that needs you is Macon — a $186 claim sitting ready with telematics evidence attached.';
@@ -709,7 +709,7 @@ class ComponentV2 extends Component {
       }],
       // ---- Tier 2: in character, grounded pivot, never fabricate ----------
       dIdentity: [function () {
-        return { text: 'I’m the intelligence inside RyderShare — I read your loads, invoices, dock schedules, and telematics, and I only answer from those records. No opinions on anything I can’t cite.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
+        return { text: 'I’m the intelligence inside RyderShare — I read your loads, invoices, dock schedules, and telematics, and I only answer from those records.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
       }.bind(this), function () {
         return { text: 'RyderShare Intelligence — the layer that reads your freight data so you don’t have to. Everything I say traces back to a record you can open.', foot: OFFFOOT };
       }],
@@ -725,11 +725,11 @@ class ComponentV2 extends Component {
         return { text: 'That’s what I’m here for. Every agent action lands in its history, so you can check my work any time.', foot: OFFFOOT };
       }],
       dFeeling: [function () {
-        return { text: 'To the fourteen receiving locations that got their deliveries on time this week — you matter a great deal. Anything deeper than that is outside my data, and I try not to speak beyond my records. The freight, though, I can vouch for.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: OFFFOOT };
+        return { text: 'To the fourteen receiving locations that got their deliveries on time this week — you matter a great deal. Anything deeper than that sits outside my data, but I can vouch for the freight.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: OFFFOOT };
       }, function () {
         return { text: 'That one’s beyond my telemetry. What I can tell you: your fleet ran 96.2% on-time last month, and numbers like that don’t happen without someone at the wheel. Ask me about the someone-at-the-wheel parts.', foot: OFFFOOT };
       }, function () {
-        return { text: 'I only see freight, so I’d be bluffing if I answered that — and I don’t bluff. Here’s what’s real on my side: two late loads being worked and your approval queue.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+        return { text: 'I only see freight, so I can’t answer that one. What I can show you: two late loads being worked and your approval queue.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this)],
       dGreet: [function () {
         var n = this.dynQueueItems().length;
@@ -738,9 +738,9 @@ class ComponentV2 extends Component {
         return { text: 'Hello — the board is quiet in a good way. Two late loads are being worked by the ETA agent, and everything cost-bearing is parked in your approval queue. Ask away.', foot: OFFFOOT };
       }],
       dCatch: [function () {
-        return { text: 'I couldn’t tie that to anything in your freight records, and I’d rather not guess. I’m strongest on loads, invoices, ETAs, dock schedules, and what your agents are doing.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
+        return { text: 'I couldn’t tie that to anything in your freight records. I’m strongest on loads, invoices, ETAs, dock schedules, and what your agents are doing.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
       }, function () {
-        return { text: 'That’s outside what your records can answer — and everything I say has to trace to a record. Try me on the freight: where things are, what things cost, what’s waiting on you.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+        return { text: 'That sits outside what your records can answer. Try me on the freight: where things are, what things cost, and what’s waiting on you.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this), function () {
         return { text: 'Nothing in your RyderShare data matches that one. If it’s about your fleet, point it at loads, costs, or claims and I’ll have numbers for you.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
       }.bind(this)]

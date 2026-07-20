@@ -33,7 +33,7 @@ input:focus{outline:none}
 @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}}
 </style>
 <style>
-/* V2 — Intelligence gating + enable-moment flash */
+/* V2—Intelligence gating + enable-moment flash */
 [data-intel="off"] [data-intel-only]{display:none !important}
 [data-intel="on"] [data-intel-off-only]{display:none !important}
 [data-intel-flash="on"]{position:relative;isolation:isolate}
@@ -71,13 +71,13 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 [data-aglog][data-ptheme="dark"] [style*="border-bottom:1px solid #F0F0F1"]{border-bottom-color:#232429 !important}
 [data-aglog][data-ptheme="dark"] button[data-k]{background:#F4F5F7 !important;color:#141519 !important}
 /* Chips, status badges, and icon tiles carry light-mode inline palettes
-   (GREEN/AMBER/BLUE/GREY in logic.js) — remap each to a translucent dark chip. */
+   (GREEN/AMBER/BLUE/GREY in logic.js)—remap each to a translucent dark chip. */
 [data-aglog][data-ptheme="dark"] [style*="background:#E8F5F0"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
 [data-aglog][data-ptheme="dark"] [style*="background:#FEF9E6"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
 [data-aglog][data-ptheme="dark"] [style*="background:#ECF4F9"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
 [data-aglog][data-ptheme="dark"] [style*="background:#F5F6F6"]{background:rgba(255,255,255,0.08) !important;color:#9BA0A8 !important}
 /* Entry chips get their palette via a {{ en.cs }} binding; the runtime writes
-   bound styles through cssText, which normalizes hex to rgb() — match both. */
+   bound styles through cssText, which normalizes hex to rgb()—match both. */
 [data-aglog][data-ptheme="dark"] [style*="rgb(232, 245, 240)"]{background:rgba(91,220,175,0.14) !important;color:#5BDCAF !important}
 [data-aglog][data-ptheme="dark"] [style*="rgb(254, 249, 230)"]{background:rgba(255,216,77,0.13) !important;color:#FFD84D !important}
 [data-aglog][data-ptheme="dark"] [style*="rgb(236, 244, 249)"]{background:rgba(90,200,250,0.14) !important;color:#7CC8F5 !important}
@@ -91,7 +91,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 [data-aglog][data-ptheme="dark"] button[aria-label="Close actions log"]:hover{background:rgba(255,255,255,0.08) !important}
 
 /* The Ask panel + its docked pills/input follow the dark theme on the Agents
-   tab (self-bound data-ptheme — the mounts live outside the themed root).
+   tab (self-bound data-ptheme—the mounts live outside the themed root).
    Answer cards, chips, charts, and pills all carry light-mode inline tokens;
    each token remaps here. Order matters: the generic background:#fff rule
    runs before the panel-root and button rules that refine it. */
@@ -216,21 +216,21 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
           <div data-intel-off-only="" style="margin-bottom:14px">
           <button data-nav="insights" onClick="{{ navTo }}" data-aiedge="" style="position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;border:1px solid #E3E4E5;border-radius:8px;padding:11px 16px;cursor:pointer;font-family:inherit;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6">
             <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg>
-            <span style="font-size:13px;color:#303235;flex:1"><b style="font-weight:600">New — RyderShare Intelligence.</b> Digests, cited answers, and a storm plan before you ask.</span>
+            <span style="font-size:13px;color:#303235;flex:1"><b style="font-weight:600">New—RyderShare Intelligence.</b> Digests, cited answers, and a storm plan before you ask.</span>
             <span style="font-size:12.5px;font-weight:500;color:#307CA7;white-space:nowrap">See what it finds →</span>
           </button>
           </div>
           <sc-if value="{{ notApproved }}">
           <button data-nav="risk" onClick="{{ navTo }}" data-intel-only="" data-intel-flash="{{ intelFlash }}" style="display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#FEF9E6;border:0;border-left:3px solid #F0C005;border-radius:8px;padding:11px 16px;margin-bottom:14px;cursor:pointer;font-family:inherit">
             <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
-            <span style="font-size:13px;color:#655102;flex:1"><b style="font-weight:600">Heads up:</b> Thursday's Gulf storm puts 6 of this week's loads at risk — RyderShare has a mitigation plan ready.</span>
+            <span style="font-size:13px;color:#655102;flex:1"><b style="font-weight:600">Heads up:</b> Thursday's Gulf storm puts 6 of this week's loads at risk—RyderShare has a mitigation plan ready.</span>
             <span style="font-size:12.5px;font-weight:600;color:#655102;white-space:nowrap">Review plan →</span>
           </button>
           </sc-if>
           <sc-if value="{{ approved }}">
           <div data-intel-only="" style="display:flex;align-items:center;gap:10px;background:#E8F5F0;border-left:3px solid #34A081;border-radius:8px;padding:11px 16px;margin-bottom:14px">
             <svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-            <span style="font-size:13px;color:#1F7A61;flex:1"><b style="font-weight:600">Storm plan active</b> — 6 Thursday loads pre-load Wednesday or reroute via I-75. Marcus Reed and your DCs are notified.</span>
+            <span style="font-size:13px;color:#1F7A61;flex:1"><b style="font-weight:600">Storm plan active</b>—6 Thursday loads pre-load Wednesday or reroute via I-75. Marcus Reed and your DCs are notified.</span>
           </div>
           </sc-if>
           <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:16px">
@@ -670,7 +670,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <div style="font-size:12px;color:#696B6F;margin-top:3px">Last known: Memphis, TN · GPS offline 2h</div>
                 <div style="display:flex;align-items:baseline;gap:8px;margin-top:10px"><span style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Next</span><span style="font-size:13px;color:#303235">Jonesboro retail</span></div>
                 <div style="font-size:13px;font-weight:600;color:#655102;margin-top:4px">Driver-reported: ETA 3:40 PM CT</div>
-                <div style="display:flex;gap:8px;margin-top:10px;background:#FEF9E6;border-radius:6px;padding:8px 10px"><svg style="flex:none;margin-top:1px" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span style="font-size:12px;color:#655102;line-height:1.5">Telematics unit offline — location updates paused. This is why the board counts 3 late loads while the map shows 2.</span></div>
+                <div style="display:flex;gap:8px;margin-top:10px;background:#FEF9E6;border-radius:6px;padding:8px 10px"><svg style="flex:none;margin-top:1px" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span style="font-size:12px;color:#655102;line-height:1.5">Telematics unit offline—location updates paused. This is why the board counts 3 late loads while the map shows 2.</span></div>
               </div>
               </sc-if>
             </div>
@@ -847,7 +847,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               </div>
               <div data-aiglow="card" data-intel-only="" data-intel-flash="{{ intelFlash }}" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 14px">
                 <div style="display:flex;align-items:center;gap:7px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Network brief</span></div>
-                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px"><sc-if value="{{ notApproved }}"><span>2 loads are running late — both first-stop delays, ETAs hold. Thursday's storm puts <b style="font-weight:600">6 loads</b> at risk; a mitigation plan is ready.</span></sc-if><sc-if value="{{ approved }}"><span>Storm plan active — 6 Thursday loads pre-load or reroute. 2 late loads are tracking to updated ETAs.</span></sc-if></div>
+                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px"><sc-if value="{{ notApproved }}"><span>2 loads are running late—both first-stop delays, ETAs hold. Thursday's storm puts <b style="font-weight:600">6 loads</b> at risk; a mitigation plan is ready.</span></sc-if><sc-if value="{{ approved }}"><span>Storm plan active—6 Thursday loads pre-load or reroute. 2 late loads are tracking to updated ETAs.</span></sc-if></div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
                   <button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">At-risk loads</button>
                   <button data-l="SBG-31241" data-intel-only="" onClick="{{ askLate }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">Why late?</button>
@@ -934,12 +934,12 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">RyderShare Intelligence</span>
             </div>
             <div style="font-size:34px;font-weight:600;color:#1D1D20;letter-spacing:-0.01em;margin-top:18px;line-height:1.15">RyderShare already knows your fleet. Now it explains it.</div>
-            <div style="font-size:15px;color:#303235;line-height:1.6;max-width:600px;margin:14px auto 0">RyderShare shows you every load, live. Intelligence reads them — what happened, what it costs, and what to do next — grounded in the records that already run your freight.</div>
+            <div style="font-size:15px;color:#303235;line-height:1.6;max-width:600px;margin:14px auto 0">RyderShare shows you every load, live. Intelligence reads them—what happened, what it costs, and what to do next—grounded in the records that already run your freight.</div>
 
             <sc-if value="{{ actIdle }}">
             <div style="margin-top:28px">
               <button data-aiglow="cta" onClick="{{ enableIntel }}" style="background:#1D1D20;color:#fff;border:0;border-radius:10px;padding:0 26px;height:44px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap">Enable RyderShare Intelligence</button>
-              <div style="font-size:12px;color:#696B6F;margin-top:14px">No setup — it reads the RyderShare data you already have · Preview for Summit Beverage Group</div>
+              <div style="font-size:12px;color:#696B6F;margin-top:14px">No setup—it reads the RyderShare data you already have · Preview for Summit Beverage Group</div>
             </div>
             </sc-if>
 
@@ -959,14 +959,14 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <div style="display:flex;align-items:center;gap:10px;animation:rev .25s ease both">
                     <sc-if value="{{ act2Done }}"><svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
                     <sc-if value="{{ act2Now }}"><span style="flex:none;width:9px;height:9px;margin:3px;border-radius:50%;background:#5AC8FA;animation:dotPulse 1.2s ease infinite"></span></sc-if>
-                    <span style="font-size:13px;color:#303235">Reading June — 1,187 loads · 214 invoice lines · 4 DC feeds</span>
+                    <span style="font-size:13px;color:#303235">Reading June—1,187 loads · 214 invoice lines · 4 DC feeds</span>
                   </div>
                   </sc-if>
                   <sc-if value="{{ act3 }}">
                   <div style="display:flex;align-items:center;gap:10px;animation:rev .25s ease both">
                     <sc-if value="{{ act3Done }}"><svg style="flex:none" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></sc-if>
                     <sc-if value="{{ act3Now }}"><span style="flex:none;width:9px;height:9px;margin:3px;border-radius:50%;background:#5AC8FA;animation:dotPulse 1.2s ease infinite"></span></sc-if>
-                    <span style="font-size:13px;color:#303235">Found 3 opportunities — drafting your digest</span>
+                    <span style="font-size:13px;color:#303235">Found 3 opportunities—drafting your digest</span>
                   </div>
                   </sc-if>
                 </div>
@@ -982,7 +982,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">The digest reads your week first</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">A morning digest of on-time, cost per stop, and the two things worth your attention — written from your live loads and invoices before you sit down.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">A morning digest of on-time, cost per stop, and the two things worth your attention—written from your live loads and invoices before you sit down.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">96.2% on-time, explained · generated 6:02 AM</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -990,7 +990,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Ask anything, get a cited answer</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Why was June 8% higher? What is my empty backhaul worth? Chart-backed answers with sources you can audit — your data, showing its work.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Why was June 8% higher? What is my empty backhaul worth? Chart-backed answers with sources you can audit—your data, showing its work.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Found for SBG: ≈ $458K/yr in empty return lanes</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -998,7 +998,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Your business review, in 42 seconds</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">The monthly review your team assembles by hand — generated for every account, every month, from invoice bridge to open opportunities.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">The monthly review your team assembles by hand—generated for every account, every month, from invoice bridge to open opportunities.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">June review ready Jul 1 · 214 lines audited against contract</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -1006,14 +1006,14 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Ahead of the storm</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">At-risk loads flagged days early, with a recommended plan — pre-loads, reroutes, receiver notices. You approve; it happens.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">At-risk loads flagged days early, with a recommended plan—pre-loads, reroutes, receiver notices. You approve; it happens.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Thursday handled Tuesday · 6 avoided failures for +$1,840</div>
             </div>
           </div>
 
           <!-- Agents -->
           <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:36px 0 6px">A workforce of eight agents</div>
-          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails — every action is logged and reversible, and nothing cost-bearing ships without your decision. Alongside these four: Detention &amp; dwell, Documents &amp; POD, a Safety coach for Ryder’s drivers, and Adaptive capacity, which re-prices every lane against the spot market and flexes loads between dedicated and brokerage.</div>
+          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails—every action is logged and reversible, and nothing cost-bearing ships without your decision. Alongside these four: Detention &amp; dwell, Documents &amp; POD, a Safety coach for Ryder’s drivers, and Adaptive capacity, which re-prices every lane against the spot market and flexes loads between dedicated and brokerage.</div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
               <span style="width:28px;height:28px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
@@ -1040,7 +1040,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
           <!-- Trust -->
           <div data-aiedge="" style="position:relative;overflow:hidden;background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px 24px;margin-top:36px">
             <div style="font-size:15px;font-weight:600;color:#1D1D20">Every answer shows its work</div>
-            <div style="font-size:13px;color:#303235;line-height:1.6;margin-top:8px;max-width:760px">Intelligence reads the same records that run your freight — loads, invoices, telemetry, contracts. Answers cite their sources. Agents keep an audit log. And you stay the approver on anything that costs money.</div>
+            <div style="font-size:13px;color:#303235;line-height:1.6;margin-top:8px;max-width:760px">Intelligence reads the same records that run your freight—loads, invoices, telemetry, contracts. Answers cite their sources. Agents keep an audit log. And you stay the approver on anything that costs money.</div>
           </div>
 
           <!-- Bottom CTA -->
@@ -1068,7 +1068,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <span style="flex:1"></span>
               <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#A9AAAC">Generated 6:02 AM</span>
             </div>
-            <div style="font-size:14px;color:#303235;line-height:1.65;margin-top:12px;max-width:980px">A strong week. On-time delivery held at <b style="font-weight:600;color:#1D1D20">96.2%</b>, comfortably above your 95% target, and cost per stop held near plan at <b style="font-weight:600;color:#1D1D20">$248</b> — up $6 on peak-season volume. Two things worth your attention: driver unload time at <b style="font-weight:600;color:#1D1D20">Orlando DC-04</b> is running nearly 3× a typical month, and <b style="font-weight:600;color:#1D1D20">Thursday's Gulf storm</b> puts 6 loads at risk — a mitigation plan is ready in <a href="#/risk" style="color:#307CA7;font-weight:500;text-decoration:none">Autopilot</a>. Your <b style="font-weight:600;color:#1D1D20">June business review</b> is <a href="#/reviews" style="color:#307CA7;font-weight:500;text-decoration:none">ready to read</a>.</div>
+            <div style="font-size:14px;color:#303235;line-height:1.65;margin-top:12px;max-width:980px">It was a strong week: on-time delivery held at <b style="font-weight:600;color:#1D1D20">96.2%</b>, comfortably above your 95% target, and cost per stop held near plan at <b style="font-weight:600;color:#1D1D20">$248</b>—up $6 on peak-season volume. Two things worth your attention: driver unload time at <b style="font-weight:600;color:#1D1D20">Orlando DC-04</b> is running nearly 3× a typical month, and <b style="font-weight:600;color:#1D1D20">Thursday's Gulf storm</b> puts 6 loads at risk—a mitigation plan is ready in <a href="#/risk" style="color:#307CA7;font-weight:500;text-decoration:none">Autopilot</a>. Your <b style="font-weight:600;color:#1D1D20">June business review</b> is <a href="#/reviews" style="color:#307CA7;font-weight:500;text-decoration:none">ready to read</a>.</div>
             <div style="margin-top:12px">
               <button data-i="-1" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (3)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
               <sc-if value="{{ digestOpen }}">
@@ -1169,7 +1169,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
           <div style="display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 20px;margin-top:16px;flex-wrap:wrap">
             <svg style="flex:none" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
             <span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;flex:none">This week</span>
-            <sc-if value="{{ notApproved }}"><span style="font-size:13.5px;color:#303235;flex:1;min-width:280px">Tropical system, Gulf Coast — Thursday, July 9. <b style="font-weight:600;color:#1D1D20">6 loads at risk.</b> Mitigation plan ready.</span></sc-if>
+            <sc-if value="{{ notApproved }}"><span style="font-size:13.5px;color:#303235;flex:1;min-width:280px">Tropical system, Gulf Coast—Thursday, July 9. <b style="font-weight:600;color:#1D1D20">6 loads at risk.</b> Mitigation plan ready.</span></sc-if>
             <sc-if value="{{ approved }}"><span style="font-size:13.5px;color:#303235;flex:1;min-width:280px"><b style="font-weight:600;color:#1F7A61">Storm plan active.</b> 4 Orlando loads pre-load Wednesday; 2 Atlanta loads reroute via I-75. Receivers notified.</span></sc-if>
             <button data-nav="risk" onClick="{{ navTo }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;flex:none" style-hover="background:#F5F6F6">Review plan</button>
           </div>
@@ -1190,8 +1190,8 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <sc-if value="{{ msg.isTyping }}"><div style="display:flex;gap:5px;padding:14px 4px;align-items:center"><span style="width:6px;height:6px;border-radius:50%;background:#A9AAAC;animation:dotPulse 1s infinite;animation-delay:0s"></span><span style="width:6px;height:6px;border-radius:50%;background:#A9AAAC;animation:dotPulse 1s infinite;animation-delay:.15s"></span><span style="width:6px;height:6px;border-radius:50%;background:#A9AAAC;animation:dotPulse 1s infinite;animation-delay:.3s"></span></div></sc-if>
                 <sc-if value="{{ msg.isQL }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">First-stop dock congestion at the origin put this load about 70 minutes behind — the updated ETA holds.</div>
-                  <div style="animation:rev .2s ease both;animation-delay:.22s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">The trailer left its origin DC on schedule, but the first retail stop's dock released it <b style="font-weight:600">~70 minutes late</b>. The driver is back on route; the remaining stops absorb the delay with <b style="font-weight:600">no appointment misses expected</b>. The receiver was notified automatically with the updated ETA — no action needed from you.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">First-stop dock congestion at the origin put this load about 70 minutes behind—the updated ETA holds.</div>
+                  <div style="animation:rev .2s ease both;animation-delay:.22s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">The trailer left its origin DC on schedule, but the first retail stop's dock released it <b style="font-weight:600">~70 minutes late</b>. The driver is back on route; the remaining stops absorb the delay with <b style="font-weight:600">no appointment misses expected</b>. The receiver was notified automatically with the updated ETA—no action needed from you.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.44s">
                     <div style="margin-top:14px">
                       <button data-i="{{ $index }}" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (2)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -1212,7 +1212,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ1 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">June was your strongest service month of 2026 — 96.2% on-time on record volume.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">June was your strongest service month of 2026—96.2% on-time on record volume.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s">
                     <div style="display:flex;gap:0;margin-top:16px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
                       <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">On-time</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:3px;font-variant-numeric:tabular-nums">96.2%</div><div style="font-size:11px;color:#1F7A61;margin-top:2px">▲ 2.1 pts</div></div>
@@ -1243,7 +1243,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                       <sc-if value="{{ tipQ1 }}"><div style="position:absolute;pointer-events:none;transform:translate(-50%,calc(-100% - 12px));background:#303235;color:#fff;font-size:11px;padding:6px 8px;border-radius:4px;white-space:nowrap;z-index:5;{{ tipStyle }}">{{ tipLabel }}</div></sc-if>
                     </div>
                   </div>
-                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:16px">On-time delivery met or beat your <b style="font-weight:600">95%</b> target for the fifth straight week, helped by better dwell-time estimates at Memphis and April's dispatch change. Of <b style="font-weight:600">12</b> missed stops, <b style="font-weight:600">9</b> have documented causes — dock congestion at two Tampa retailers accounts for most. <b style="font-weight:600">No preventable safety incidents</b> in June; the trailing rate is <b style="font-weight:600">0.4 per 100K miles</b>, ahead of plan. Cost per stop rose <b style="font-weight:600">$6</b> on peak volume, in line with your seasonal plan.</div>
+                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:16px">On-time delivery met or beat your <b style="font-weight:600">95%</b> target for the fifth straight week, helped by better dwell-time estimates at Memphis and April's dispatch change. Of <b style="font-weight:600">12</b> missed stops, <b style="font-weight:600">9</b> have documented causes—dock congestion at two Tampa retailers accounts for most. <b style="font-weight:600">No preventable safety incidents</b> in June; the trailing rate is <b style="font-weight:600">0.4 per 100K miles</b>, ahead of plan. Cost per stop rose <b style="font-weight:600">$6</b> on peak volume, in line with your seasonal plan.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.66s">
                     <div style="margin-top:14px">
                       <button data-i="{{ $index }}" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (3)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -1265,7 +1265,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ2 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Your June invoice rose $136.5K (8.0%) — 79% of it is the planned seasonal volume and flex capacity approved in April.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Your June invoice rose $136.5K (8.0%)—79% of it is the planned seasonal volume and flex capacity approved in April.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;margin-top:14px">
                     <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both" viewBox="0 0 760 300">
                       <line x1="24" y1="250" x2="736" y2="250" stroke="#E3E4E5" stroke-width="1"></line>
@@ -1280,7 +1280,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                       <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="middle"><text x="70" y="272">May</text><text x="194" y="272">Volume</text><text x="318" y="272">Seasonal flex</text><text x="442" y="272">Accessorials</text><text x="566" y="272">Fuel surcharge</text><text x="690" y="272">June</text></g>
                     </svg>
                   </div>
-                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">Volume added <b style="font-weight:600">45 loads</b> over May at summer peak, and the <b style="font-weight:600">two flex routes</b> added June 1 carried their planned fixed cost. Accessorials ran <b style="font-weight:600">$18.8K</b> — half of it driver unload surge at <b style="font-weight:600">Orlando DC-04</b> (11 events vs. a typical 4). The fuel surcharge added <b style="font-weight:600">$9.3K</b> as the DOE index rose <b style="font-weight:600">$0.19/gal</b>. Nothing ran off-contract; the one avoidable item is Orlando unload windows — worth <b style="font-weight:600">≈ $132K/yr</b>.</div>
+                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">Volume added <b style="font-weight:600">45 loads</b> over May at summer peak, and the <b style="font-weight:600">two flex routes</b> added June 1 carried their planned fixed cost. Accessorials ran <b style="font-weight:600">$18.8K</b>—half of it driver unload surge at <b style="font-weight:600">Orlando DC-04</b> (11 events vs. a typical 4). The fuel surcharge added <b style="font-weight:600">$9.3K</b> as the DOE index rose <b style="font-weight:600">$0.19/gal</b>. Nothing ran off-contract; the one avoidable item is Orlando unload windows—worth <b style="font-weight:600">≈ $132K/yr</b>.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.66s">
                     <div style="margin-top:14px">
                       <button data-i="{{ $index }}" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (4)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -1303,7 +1303,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ3 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">About $8.8K a week — ≈ $458K a year gross — on three return lanes that run empty today.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">About $8.8K a week—≈ $458K a year gross—on three return lanes that run empty today.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
                     <table style="width:100%;border-collapse:collapse">
                       <thead><tr><th style="text-align:left;padding:9px 14px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Lane</th><th style="text-align:right;padding:9px 14px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Empty mi/wk</th><th style="text-align:right;padding:9px 14px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Est. value</th></tr></thead>
@@ -1314,7 +1314,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                       </tbody>
                     </table>
                   </div>
-                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px"><b style="font-weight:600">18.4%</b> of your fleet miles ran empty in June, mostly on your inter-DC transfer and inbound legs. Three return lanes are consistent enough to match against Ryder-managed network freight — an estimated <b style="font-weight:600">$458K/yr gross</b> at current market rates (≈ <b style="font-weight:600">$2.05/mi</b> blended), roughly <b style="font-weight:600">$320K/yr to SBG</b> under a typical revenue share. Lanes enroll individually; <b style="font-weight:600">MEM → DAL alone is 44%</b> of the opportunity.</div>
+                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px"><b style="font-weight:600">18.4%</b> of your fleet miles ran empty in June, mostly on your inter-DC transfer and inbound legs. Three return lanes are consistent enough to match against Ryder-managed network freight—an estimated <b style="font-weight:600">$458K/yr gross</b> at current market rates (≈ <b style="font-weight:600">$2.05/mi</b> blended), roughly <b style="font-weight:600">$320K/yr to SBG</b> under a typical revenue share. Lanes enroll individually; <b style="font-weight:600">MEM → DAL alone is 44%</b> of the opportunity.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.66s">
                     <div style="margin-top:14px">
                       <button data-i="{{ $index }}" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (3)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -1336,7 +1336,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ4 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">6 loads are at risk Thursday from the Gulf storm — a mitigation plan is ready.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">6 loads are at risk Thursday from the Gulf storm—a mitigation plan is ready.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
                     <table style="width:100%;border-collapse:collapse">
                       <thead><tr><th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Load</th><th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Route</th><th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Scheduled</th><th style="text-align:left;padding:9px 12px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Risk</th></tr></thead>
@@ -1372,9 +1372,9 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ5 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Lane by lane, starting where the money is — no contract restructuring to begin.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Lane by lane, starting where the money is—no contract restructuring to begin.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
-                    <div style="display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid #E3E4E5;align-items:baseline"><span style="font-size:13px;font-weight:600;color:#696B6F;min-width:16px;font-variant-numeric:tabular-nums">1</span><span style="font-size:13px;color:#303235;line-height:1.5">Opt in per lane — <b style="font-weight:600">MEM → DAL</b> first (44% of the opportunity)</span></div>
+                    <div style="display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid #E3E4E5;align-items:baseline"><span style="font-size:13px;font-weight:600;color:#696B6F;min-width:16px;font-variant-numeric:tabular-nums">1</span><span style="font-size:13px;color:#303235;line-height:1.5">Opt in per lane—<b style="font-weight:600">MEM → DAL</b> first (44% of the opportunity)</span></div>
                     <div style="display:flex;gap:12px;padding:11px 14px;border-bottom:1px solid #E3E4E5;align-items:baseline"><span style="font-size:13px;font-weight:600;color:#696B6F;min-width:16px;font-variant-numeric:tabular-nums">2</span><span style="font-size:13px;color:#303235;line-height:1.5">Ryder's network desk matches your empty legs against Ryder-managed freight; you approve standing schedules</span></div>
                     <div style="display:flex;gap:12px;padding:11px 14px;align-items:baseline"><span style="font-size:13px;font-weight:600;color:#696B6F;min-width:16px;font-variant-numeric:tabular-nums">3</span><span style="font-size:13px;color:#303235;line-height:1.5">Credits net against your monthly invoice under a per-lane revenue-share rider</span></div>
                   </div>
@@ -1399,7 +1399,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isQ6 }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Yes — three Saturday Atlanta routes ran at 61% average trailer utilization in June; two could carry the volume.</div>
+                  <div style="animation:rev .2s ease both;font-size:15px;font-weight:600;color:#1D1D20;line-height:1.45">Yes—three Saturday Atlanta routes ran at 61% average trailer utilization in June; two could carry the volume.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
                     <table style="width:100%;border-collapse:collapse">
                       <thead><tr><th style="text-align:left;padding:9px 14px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Route</th><th style="text-align:right;padding:9px 14px;font-size:10.5px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Trailer utilization</th></tr></thead>
@@ -1411,7 +1411,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                       </tbody>
                     </table>
                   </div>
-                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">All Saturday stops fit a two-route plan within existing <b style="font-weight:600">6 AM–2 PM</b> delivery windows, releasing one tractor and crew per Saturday — <b style="font-weight:600">≈ $8K/mo, ≈ $96K/yr</b>. Service risk is low: the modeled plan keeps every stop inside its current window.</div>
+                  <div style="animation:rev .2s ease both;animation-delay:.44s;font-size:13.5px;color:#303235;line-height:1.6;margin-top:14px">All Saturday stops fit a two-route plan within existing <b style="font-weight:600">6 AM–2 PM</b> delivery windows, releasing one tractor and crew per Saturday—<b style="font-weight:600">≈ $8K/mo, ≈ $96K/yr</b>. Service risk is low: the modeled plan keeps every stop inside its current window.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.66s">
                     <div style="margin-top:14px">
                       <button data-i="{{ $index }}" onClick="{{ toggleSrc }}" style="display:inline-flex;align-items:center;gap:5px;background:none;border:0;padding:0;font-family:inherit;font-size:12px;font-weight:500;color:#307CA7;cursor:pointer">Sources (2)<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
@@ -1445,7 +1445,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 </sc-if>
                 <sc-if value="{{ msg.isFB }}">
                 <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px;margin:16px 0">
-                  <div style="animation:rev .2s ease both;font-size:13.5px;color:#303235;line-height:1.6">In the live product this would be answered from your RyderShare data. This prototype scripts a handful of questions — try one of these.</div>
+                  <div style="animation:rev .2s ease both;font-size:13.5px;color:#303235;line-height:1.6">In the live product this would be answered from your RyderShare data. This prototype scripts a handful of questions—try one of these.</div>
                   <div style="animation:rev .2s ease both;animation-delay:.22s;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px">
                     <button data-q="q1" onClick="{{ askQ }}" style="padding:7px 13px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:12.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">How did my fleet perform last month?</button>
                     <button data-q="q2" onClick="{{ askQ }}" style="padding:7px 13px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:12.5px;color:#303235;cursor:pointer;font-family:inherit" style-hover="background:#F5F6F6">Why was my June invoice 8% higher than May?</button>
@@ -1469,10 +1469,10 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
             <div style="text-align:center">
               <div style="font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Autopilot · overnight → this morning</div>
               <sc-if value="{{ notAllClear }}">
-              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">Your agents worked. <span style="color:#307CA7">{{ todoCount }}</span> {{ feedThingWord }} need{{ feedVerbS }} you.</div>
+              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">Your agents worked overnight—<span style="color:#307CA7">{{ todoCount }}</span> {{ feedThingWord }} need{{ feedVerbS }} you.</div>
               </sc-if>
               <sc-if value="{{ allClear }}">
-              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">All clear — <span style="color:#1F7A61">5 handled</span> this morning.</div>
+              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">All clear—you handled <span style="color:#1F7A61">all 5</span> this morning.</div>
               </sc-if>
               <div style="font-size:13px;color:#696B6F;margin-top:10px"><button onClick="{{ openRoster }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;color:#307CA7;cursor:pointer">8 agents on shift</button> · every action logged and reversible · nothing cost-bearing ships without you</div>
             </div>
@@ -1482,8 +1482,8 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
                 <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Storm exposure</div>
                 <div style="font-size:24px;font-weight:650;color:#1D1D20;margin-top:8px">$9.8K <span style="font-size:14px;color:#B45309">→ $0</span></div>
-                <sc-if value="{{ notApproved }}"><div style="font-size:11.5px;color:#B45309;margin-top:6px">● plan staged — needs you</div></sc-if>
-                <sc-if value="{{ approved }}"><div style="font-size:11.5px;color:#1F7A61;margin-top:6px">● plan active — receivers notified</div></sc-if>
+                <sc-if value="{{ notApproved }}"><div style="font-size:11.5px;color:#B45309;margin-top:6px">● plan staged—needs you</div></sc-if>
+                <sc-if value="{{ approved }}"><div style="font-size:11.5px;color:#1F7A61;margin-top:6px">● plan active—receivers notified</div></sc-if>
               </div>
               <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
                 <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Market upside</div>
@@ -1511,7 +1511,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:04 AM · ETA &amp; notifications</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pushed an updated ETA to 2 receivers on the Savannah corridor — dock delay absorbed, downstream stops hold.</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pushed an updated ETA to 2 receivers on the Savannah corridor; the dock delay is absorbed and downstream stops hold.</div>
               </div>
 
               <!-- Storm decision -->
@@ -1519,7 +1519,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #F0C005"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Autopilot</div>
                 <div style="background:#fff;border:1px solid #ECEDEE;border-left:3px solid #F0C005;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:20px 24px;margin-top:8px">
-                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:15.5px;font-weight:600;color:#1D1D20">Storm plan — 6 loads Thursday</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:15.5px;font-weight:600;color:#1D1D20">Storm plan—6 loads Thursday</span></div>
                   <div style="font-size:13px;color:#696B6F;margin-top:9px;line-height:1.65">Pre-load 4 Orlando loads, reroute 2 Atlanta via I-75 · customer deliveries unaffected · <b style="color:#1D1D20;font-weight:600">$9.8K exposure → $0</b> at {{ planCostLabel }}</div>
                   <div style="display:flex;gap:10px;margin-top:16px"><button onClick="{{ approve }}" style="font-family:inherit;background:#1D1D20;color:#fff;border:0;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer">Approve plan</button><button data-f="s" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:9px 16px;font-size:13px;cursor:pointer" style-hover="background:#F5F6F6">Review details</button></div>
                 </div>
@@ -1528,7 +1528,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <sc-if value="{{ approved }}">
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Autopilot</div>
-                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified. <button data-f="s" onClick="{{ openFlexPanel }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Show details</button></div>
+                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Storm plan active—6 loads covered · {{ planCostLabel }} · receivers notified. <button data-f="s" onClick="{{ openFlexPanel }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Show details</button></div>
               </div>
               </sc-if>
 
@@ -1537,7 +1537,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #B48A09"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
                 <div style="background:#fff;border:1px solid #ECEDEE;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:18px 24px;margin-top:8px">
-                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Spot is up 14% — lock 2 lanes into dedicated</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Spot is up 14%—lock 2 lanes into dedicated</span></div>
                   <div style="font-size:13px;color:#696B6F;margin-top:8px;line-height:1.65">MEM → BNA + ATL → CLT at your contracted $2.11/mi · <b style="color:#1D1D20;font-weight:600">≈$3.4K/mo below market</b>, held 12 months</div>
                   <div style="margin-top:13px"><button data-f="a" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:8px 15px;font-size:12.5px;font-weight:500;cursor:pointer" style-hover="background:#F5F6F6">Review &amp; lock →</button></div>
                 </div>
@@ -1546,7 +1546,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <sc-if value="{{ flexLockDone }}">
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
-                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Rates locked — 2 lanes move to dedicated at $2.11/mi. Your Ryder team is countersigning.</div>
+                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Rates locked—2 lanes move to dedicated at $2.11/mi. Your Ryder team is countersigning.</div>
               </div>
               </sc-if>
 
@@ -1555,7 +1555,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#ECF4F9;border:2.5px solid #307CA7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
                 <div style="background:#fff;border:1px solid #ECEDEE;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:18px 24px;margin-top:8px">
-                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#ECF4F9;color:#276A92;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Dallas → Austin prices below dedicated — flex it out</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#ECF4F9;color:#276A92;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Dallas → Austin prices below dedicated—flex it out</span></div>
                   <div style="font-size:13px;color:#696B6F;margin-top:8px;line-height:1.65">$1.87 spot vs $2.14 cost-to-serve · <b style="color:#1D1D20;font-weight:600">≈$2.2K/mo</b> · loads return when the lane firms</div>
                   <div style="margin-top:13px"><button data-f="b" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:8px 15px;font-size:12.5px;font-weight:500;cursor:pointer" style-hover="background:#F5F6F6">Review &amp; flex →</button></div>
                 </div>
@@ -1576,33 +1576,33 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Backhaul tender</b> · ≈$3.9K/wk · expires Fri <button data-q="q5" onClick="{{ askQ }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Review →</button> <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;color:#A9AAAC;cursor:pointer;margin-left:6px">Dismiss</button></div>
                   </sc-if>
                   <sc-if value="{{ tenderSentR }}">
-                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Tender sent — MEM → DAL to the network desk</div>
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Tender sent—MEM → DAL to the network desk</div>
                   </sc-if>
                   <sc-if value="{{ tenderDismissedR }}">
-                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#696B6F">Tender dismissed — the agent re-scouts next cycle</div>
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#696B6F">Tender dismissed—the agent re-scouts next cycle</div>
                   </sc-if>
                   <sc-if value="{{ wNotSched }}">
                   <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Trailer 4482</b> · Sat service window <button onClick="{{ wSchedule }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Schedule →</button></div>
                   </sc-if>
                   <sc-if value="{{ wSched }}">
-                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Trailer 4482 scheduled — Sat Jul 12 · Orlando DC-04</div>
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Trailer 4482 scheduled—Sat Jul 12 · Orlando DC-04</div>
                   </sc-if>
                 </div>
               </div>
 
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">5:52 AM · ETA &amp; notifications</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">A telematics unit went quiet near Tyler, TX — re-polled it and the feed came back on its own. Load on plan.</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">A telematics unit went quiet near Tyler, TX, so the agent re-polled it and the feed came back on its own; the load is on plan.</div>
               </div>
 
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">5:40 AM · Safety coach</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Briefed Thursday's drivers on the storm corridor — crosswinds, staging changes, revised windows.</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Briefed Thursday's drivers on the storm corridor—crosswinds, staging changes, revised windows.</div>
               </div>
 
               <div style="position:relative;margin-bottom:38px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">Watching this week</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6"><b style="color:#1D1D20;font-weight:600">Tampa docks</b> — 9 of 12 June misses trace here, recurs Fri PM · <b style="color:#1D1D20;font-weight:600">Atlanta Saturday</b> — two-route plan holds 40 min HOS margin</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6"><b style="color:#1D1D20;font-weight:600">Tampa docks</b>—9 of 12 June misses trace here, recurs Fri PM · <b style="color:#1D1D20;font-weight:600">Atlanta Saturday</b>—two-route plan holds 40 min HOS margin</div>
                 <div style="display:flex;gap:8px;margin-top:10px"><button data-q="q1" onClick="{{ askQ }}" style="padding:5px 12px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Tampa dock misses</button><button data-q="q6" onClick="{{ askQ }}" style="padding:5px 12px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Saturday consolidation</button></div>
               </div>
 
@@ -1615,12 +1615,12 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 
               <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">Dock scheduling</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Reshuffled 3 dock slots at Orlando DC-04 around the pre-load window — receivers confirmed, no route impact.</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Reshuffled 3 dock slots at Orlando DC-04 around the pre-load window—receivers confirmed, no route impact.</div>
               </div>
 
               <div style="position:relative;margin-bottom:38px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                 <div style="font-size:11.5px;color:#A9AAAC">Adaptive capacity</div>
-                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Re-priced all <b style="color:#1D1D20;font-weight:600">14 lanes</b> against the spot market — 11 within band, 3 flagged, 2 staged above for your sign-off.</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Re-priced all <b style="color:#1D1D20;font-weight:600">14 lanes</b> against the spot market—11 within band, 3 flagged, 2 staged above for your sign-off.</div>
               </div>
 
               <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
@@ -1653,19 +1653,19 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:#E9EAEB"></div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Mon Jul 6 · ETA &amp; notifications</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Answered a receiver's ETA query from the live plan in 40 seconds — Savannah receiving, tomorrow's window.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Answered a receiver's ETA query from the live plan in 40 seconds—Savannah receiving, tomorrow's window.</div>
                   </div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #B48A09"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Thu Jul 2 · Safety coach</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Routed a repeat following-distance pattern to your Ryder safety lead — human review, not automation.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Routed a repeat following-distance pattern to your Ryder safety lead, who is reviewing it personally.</div>
                   </div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Thu Jul 2 · Adaptive capacity</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Cleared Dallas → Austin for flex — 2 stops, dry van, flexible windows, carrier OTD 96.4%.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Cleared Dallas → Austin for flex—2 stops, dry van, flexible windows, carrier OTD 96.4%.</div>
                   </div>
                   <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Wed Jul 1 · Adaptive capacity</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Weekly sweep re-priced 14 lanes against spot — 11 within band, 3 flagged for review.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Weekly sweep re-priced 14 lanes against spot—11 within band, 3 flagged for review.</div>
                   </div>
                 </div>
               </div>
@@ -1676,19 +1676,19 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:#E9EAEB"></div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Mon Jun 29 · Adaptive capacity</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pulled 2 loads back from brokerage — the Nashville lane firmed 9% in two weeks; returned to dedicated at contract rate.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pulled 2 loads back from brokerage—the Nashville lane firmed 9% in two weeks; returned to dedicated at contract rate.</div>
                   </div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#ECF4F9;border:2.5px solid #307CA7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">Fri Jun 26 · Adaptive capacity</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Learned from your override — the Waco lane stays on dedicated for driver familiarity; now exempt from flex analysis.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Learned from your override—the Waco lane stays on dedicated for driver familiarity; now exempt from flex analysis.</div>
                   </div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">June cycle · Invoice audit</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Audited 214 invoice lines against contract rates — $1,120 recovered, one $214 duplicate lumper fee disputed.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Audited 214 invoice lines against contract rates—$1,120 recovered, one $214 duplicate lumper fee disputed.</div>
                   </div>
                   <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">June cycle · Safety coach</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">June closed with zero preventable incidents — clean streak at 61 days, TTM rate 0.4/100K mi and trending down.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">June closed with zero preventable incidents—clean streak at 61 days, TTM rate 0.4/100K mi and trending down.</div>
                   </div>
                 </div>
               </div>
@@ -1699,14 +1699,14 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:linear-gradient(#E9EAEB, transparent)"></div>
                   <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">May 2 · Safety coach</div>
-                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Closed the April incident review — coaching plan completed; the April business review carries the record.</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Closed the April incident review—coaching plan completed; the April business review carries the record.</div>
                   </div>
                   <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
                     <div style="font-size:11.5px;color:#A9AAAC">May · Documents &amp; POD</div>
                     <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">198 PODs matched · 3 chased from receivers · zero claims carried into June.</div>
                   </div>
                 </div>
-                <div style="font-size:12px;color:#696B6F;margin-top:22px;padding-left:40px">Earlier months live in your business reviews — <button data-nav="reviews" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;color:#307CA7;cursor:pointer">open Reviews →</button></div>
+                <div style="font-size:12px;color:#696B6F;margin-top:22px;padding-left:40px">Earlier months live in your business reviews—<button data-nav="reviews" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;color:#307CA7;cursor:pointer">open Reviews →</button></div>
               </div>
             </div>
             </sc-if>
@@ -1773,7 +1773,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <button data-a="agAudit" onClick="{{ agToggle }}" aria-label="Toggle Invoice audit" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agAuditTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agAuditKnob }}"></span></button>
               </div>
               <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Audits every invoice line against contract rates; drafts disputes that file on your approval.</div>
-              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: line-by-line checks against contract rates. Needs you: filing disputes — anything cost-bearing.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: line-by-line checks against contract rates. Needs you: filing disputes—anything cost-bearing.</div>
               <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
                 <span style="font-size:12px;color:#4CD9A8;font-variant-numeric:tabular-nums">{{ wfAuditSum }}</span>
                 <span style="flex:1"></span>
@@ -1790,8 +1790,8 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="flex:1"></span>
                 <button data-a="agBh" onClick="{{ agToggle }}" aria-label="Toggle Backhaul tender" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agBhTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agBhKnob }}"></span></button>
               </div>
-              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Scouts empty lanes and drafts tenders — analysis is automatic, nothing sends without you.</div>
-              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: matching, pricing, and lane analysis. Needs you: every tender — nothing sends without your approval.</div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Scouts empty lanes and drafts tenders; the analysis runs automatically and every tender waits for your approval.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: matching, pricing, and lane analysis. Needs you: every tender—nothing sends without your approval.</div>
               <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
                 <span style="font-size:12px;color:#A78BFA;font-variant-numeric:tabular-nums">{{ wfBhSum }}</span>
                 <span style="flex:1"></span>
@@ -1809,7 +1809,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <button data-a="agDwell" onClick="{{ agToggle }}" aria-label="Toggle Detention &amp; dwell" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agDwellTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agDwellKnob }}"></span></button>
               </div>
               <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Times every dock hold and assembles claim evidence; filing always waits for your approval.</div>
-              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: dwell timing and evidence assembly. Needs you: filing any claim—cost-bearing.</div>
               <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
                 <span style="font-size:12px;color:#FFD84D;font-variant-numeric:tabular-nums">{{ wfDwellSum }}</span>
                 <span style="flex:1"></span>
@@ -1845,7 +1845,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <button data-a="agSafety" onClick="{{ agToggle }}" aria-label="Toggle Safety coach" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agSafetyTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agSafetyKnob }}"></span></button>
               </div>
               <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Turns telematics events into driver coaching; repeat patterns escalate to your Ryder safety lead.</div>
-              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder’s, reviews stay human.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: micro-coaching for minor events. Escalates: repeated patterns go to your Ryder safety lead, and a person reviews every case.</div>
               <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
                 <span style="font-size:12px;color:#9BE8FF;font-variant-numeric:tabular-nums">{{ wfSafetySum }}</span>
                 <span style="flex:1"></span>
@@ -1862,8 +1862,8 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="flex:1"></span>
                 <button data-a="agFlex" onClick="{{ agToggle }}" aria-label="Toggle Adaptive capacity" style="width:34px;height:20px;border-radius:999px;border:0;cursor:pointer;position:relative;transition:background .15s ease;flex:none;{{ agFlexTrack }}"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.4);transition:transform .15s ease;{{ agFlexKnob }}"></span></button>
               </div>
-              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Re-prices every lane against the spot market weekly and drafts flex moves in both directions — locking loads into dedicated rates or releasing them to brokerage.</div>
-              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: lane-level rate watch and eligibility checks. Needs you: every flex move — dual sign-off with your Ryder account team before any load changes mode.</div>
+              <div style="position:relative;font-size:13.5px;color:#C4C8CF;line-height:1.6">Re-prices every lane against the spot market weekly and drafts flex moves in both directions—locking loads into dedicated rates or releasing them to brokerage.</div>
+              <div style="position:relative;font-size:12px;color:#82868E;line-height:1.55">Auto: lane-level rate watch and eligibility checks. Needs you: every flex move—dual sign-off with your Ryder account team before any load changes mode.</div>
               <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:2px;flex-wrap:wrap">
                 <span style="font-size:12px;color:#2DD4BF;font-variant-numeric:tabular-nums">{{ wfFlexSum }}</span>
                 <span style="flex:1"></span>
@@ -1871,7 +1871,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               </div>
             </div>
             </div>
-            <div style="font-size:11.5px;color:#5C6066;margin-top:26px">Agents run on the records that already run your freight — loads, invoices, telematics, contracts. Tune any guardrail with your Ryder team.</div>
+            <div style="font-size:11.5px;color:#5C6066;margin-top:26px">Agents run on the records that already run your freight—loads, invoices, telematics, contracts. Tune any guardrail with your Ryder team.</div>
           </div>
         </div>
         </sc-if>
@@ -1907,13 +1907,13 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
                 <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Executive summary</div>
                 <sc-if value="{{ revJun }}">
-                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">June was Summit Beverage Group's strongest service month of 2026: <b style="font-weight:600;color:#1D1D20">96.2% on-time delivery</b> against a 95% target, on record peak volume of <b style="font-weight:600;color:#1D1D20">1,187 loads</b>, with <b style="font-weight:600;color:#1D1D20">no preventable safety incidents</b>. Total invoice rose <b style="font-weight:600;color:#1D1D20">8.0% to $1.84M</b> — planned seasonal volume and the flex routes approved in April explain 79% of the increase, and nothing ran off-contract. Fuel exposure stayed moderate as the DOE index rose $0.19/gal. The largest open opportunities: backhaul monetization (<b style="font-weight:600;color:#1D1D20">≈ $458K/yr gross</b>) and Orlando unload windows (<b style="font-weight:600;color:#1D1D20">≈ $132K/yr</b>).</div>
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">June was Summit Beverage Group's strongest service month of 2026: <b style="font-weight:600;color:#1D1D20">96.2% on-time delivery</b> against a 95% target, on record peak volume of <b style="font-weight:600;color:#1D1D20">1,187 loads</b>, with <b style="font-weight:600;color:#1D1D20">no preventable safety incidents</b>. Total invoice rose <b style="font-weight:600;color:#1D1D20">8.0% to $1.84M</b>—planned seasonal volume and the flex routes approved in April explain 79% of the increase, and nothing ran off-contract. Fuel exposure stayed moderate as the DOE index rose $0.19/gal. The largest open opportunities: backhaul monetization (<b style="font-weight:600;color:#1D1D20">≈ $458K/yr gross</b>) and Orlando unload windows (<b style="font-weight:600;color:#1D1D20">≈ $132K/yr</b>).</div>
                 </sc-if>
                 <sc-if value="{{ revMay }}">
-                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">May held steady while April's flex-route decision moved toward launch: <b style="font-weight:600;color:#1D1D20">94.1% on-time</b> on 1,142 loads, and the invoice rose <b style="font-weight:600;color:#1D1D20">1.0% to $1.706M</b> on early-season volume. Accessorials eased $9.2K as dock coaching at Tampa took hold. Empty miles held at <b style="font-weight:600;color:#1D1D20">19.0%</b> — the first backhaul lane analysis started this month. Eleven disputes carried at a 4.8-day average resolution.</div>
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">May held steady while April's flex-route decision moved toward launch: <b style="font-weight:600;color:#1D1D20">94.1% on-time</b> on 1,142 loads, and the invoice rose <b style="font-weight:600;color:#1D1D20">1.0% to $1.706M</b> on early-season volume. Accessorials eased $9.2K as dock coaching at Tampa took hold. Empty miles held at <b style="font-weight:600;color:#1D1D20">19.0%</b>—the first backhaul lane analysis started this month. Eleven disputes carried at a 4.8-day average resolution.</div>
                 </sc-if>
                 <sc-if value="{{ revApr }}">
-                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">April was the seasonal ramp: <b style="font-weight:600;color:#1D1D20">93.8% on-time</b> on 1,098 loads with one preventable incident (coaching completed May 2). The invoice eased <b style="font-weight:600;color:#1D1D20">0.8% to $1.689M</b> as spring volume normalized. This review recommended adding <b style="font-weight:600;color:#1D1D20">two seasonal flex routes</b> ahead of peak — approved April 28, live June 1.</div>
+                <div style="font-size:14.5px;color:#303235;line-height:1.75;margin-top:10px">April was the seasonal ramp: <b style="font-weight:600;color:#1D1D20">93.8% on-time</b> on 1,098 loads with one preventable incident (coaching completed May 2). The invoice eased <b style="font-weight:600;color:#1D1D20">0.8% to $1.689M</b> as spring volume normalized. This review recommended adding <b style="font-weight:600;color:#1D1D20">two seasonal flex routes</b> ahead of peak—approved April 28, live June 1.</div>
                 </sc-if>
               </div>
 
@@ -2007,13 +2007,13 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <sc-if value="{{ revMay }}">
               <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
                 <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">From this review</div>
-                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended holding the two flex routes for a June 1 start and coaching the Tampa dock pattern — <b style="font-weight:600;color:#1D7A61">both adopted</b>. Accessorials fell $9.2K within the month.</div>
+                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended holding the two flex routes for a June 1 start and coaching the Tampa dock pattern—<b style="font-weight:600;color:#1D7A61">both adopted</b>. Accessorials fell $9.2K within the month.</div>
               </div>
               </sc-if>
               <sc-if value="{{ revApr }}">
               <div style="border-top:1px solid #E3E4E5;margin-top:24px;padding-top:20px">
                 <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">From this review</div>
-                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended two seasonal flex routes ahead of peak — <b style="font-weight:600;color:#1D7A61">approved April 28, live June 1</b>. Their planned cost appears in the June bridge as "Seasonal flex routes."</div>
+                <div style="font-size:13.5px;color:#303235;line-height:1.65;margin-top:8px">Recommended two seasonal flex routes ahead of peak—<b style="font-weight:600;color:#1D7A61">approved April 28, live June 1</b>. Their planned cost appears in the June bridge as "Seasonal flex routes."</div>
               </div>
               </sc-if>
 
@@ -2084,9 +2084,9 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                     <sc-if value="{{ stormNoticeOpen }}">
                     <div style="border:1px solid #E3E4E5;border-radius:8px;background:#FAFAFA;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
                       <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Receiver notice · sent to 6 locations</div>
-                      <div style="font-size:12px;color:#696B6F;margin-top:7px">To: Receiving — Tampa Retail Group · +5 more</div>
+                      <div style="font-size:12px;color:#696B6F;margin-top:7px">To: Receiving—Tampa Retail Group · +5 more</div>
                       <div style="font-size:12px;color:#696B6F;margin-top:2px">From: RyderShare, on behalf of Summit Beverage Group</div>
-                      <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Delivery update — Thursday, Jul 9 (weather plan)</div>
+                      <div style="font-size:13px;font-weight:600;color:#1D1D20;margin-top:9px">Delivery update—Thursday, Jul 9 (weather plan)</div>
                       <div style="font-size:12.5px;color:#303235;line-height:1.6;margin-top:5px">Ahead of Thursday's Gulf storm, your Summit Beverage deliveries are pre-staged to protect the schedule. Your delivery windows are unchanged, and live tracking stays current in RyderShare.</div>
                       <div style="font-size:11px;color:#A9AAAC;margin-top:9px">Sent by ETA &amp; notifications · Logged &amp; reversible · Replies go to your Ryder team</div>
                     </div>
@@ -2132,12 +2132,12 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
                 <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Spot today</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.38/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">↑14% since Apr</div></div>
                 <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Contracted</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.11/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">held 12 months</div></div>
-                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Exposure removed</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">±$38K/qtr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">budget stabilized</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Exposure removed</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">±$38K/qtr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">steadier budget</div></div>
               </div>
               <div style="margin-top:14px">
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Volume consistency 96% over 12 weeks — qualifies under the flex provision</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Volume consistency 96% over 12 weeks—qualifies under the flex provision</span></div>
                 <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Receivers keep their windows; service moves to Ryder drivers</span></div>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — your Ryder account team countersigns before tenders shift</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off—your Ryder account team countersigns before tenders shift</span></div>
               </div>
             </div>
             <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
@@ -2177,9 +2177,9 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Saves</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">≈$2.2K/mo</div><div style="font-size:11px;color:#696B6F;margin-top:1px">while the lane is soft</div></div>
               </div>
               <div style="margin-top:14px">
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Eligibility passed — 2 stops · dry van · flexible windows · carrier OTD 96.4%</span></div>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Auto-return — the agent re-checks weekly and pulls loads back when the lane firms</span></div>
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — Ryder dedicated ops confirms service before any tender moves</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Eligibility passed—2 stops · dry van · flexible windows · carrier OTD 96.4%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Auto-return—the agent re-checks weekly and pulls loads back when the lane firms</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off—Ryder dedicated ops confirms service before any tender moves</span></div>
               </div>
             </div>
             <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
@@ -2194,7 +2194,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
               <div style="flex:1;min-width:0">
                 <div style="display:flex;align-items:center;gap:8px">
-                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Storm plan — 6 loads Thursday</span>
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Storm plan—6 loads Thursday</span>
                   <sc-if value="{{ notApproved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">NWS 041</span></sc-if>
                   <sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
                 </div>
@@ -2205,7 +2205,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
             <div style="flex:1;overflow:auto;padding:14px 18px">
               <div style="display:flex;align-items:flex-start;gap:10px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:11px 14px">
                 <svg style="flex:none;margin-top:1px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
-                <span style="font-size:12.5px;color:#655102;line-height:1.5">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
+                <span style="font-size:12.5px;color:#655102;line-height:1.5">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high—NWS advisory 041.</span>
               </div>
               <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">Recommended plan</div>
               <div style="font-size:12.5px;color:#303235;line-height:1.6">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
@@ -2223,7 +2223,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
                   <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
                 </div>
-                <div style="font-size:11.5px;color:#696B6F;margin-top:10px">Adjustments update the plan summary and cost estimate — nothing is committed until you approve.</div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:10px">Adjustments update the plan summary and cost estimate—nothing is committed until you approve.</div>
               </div>
               </sc-if>
               </sc-if>
@@ -2258,7 +2258,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
               <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Notifies 6 receivers on approval · logged and reversible</div>
               </sc-if>
               <sc-if value="{{ approved }}">
-              <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:6px;background:#E8F5F0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61">Plan active — 6 loads covered · receivers notified</span></div>
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:6px;background:#E8F5F0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61">Plan active—6 loads covered · receivers notified</span></div>
               </sc-if>
             </div>
           </div>
@@ -2347,7 +2347,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
       <div style="position:absolute;left:50%;bottom:20px;transform:translateX(-50%);width:720px;max-width:calc(100% - 48px);z-index:10">
         <div data-pbar data-aiglow="{{ glowMode }}" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid transparent;border-radius:24px;height:48px;padding:0 8px 0 16px;box-shadow:0 1px 3px rgba(0,0,0,0.15)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
-          <input data-b="0" value="{{ p0 }}" onChange="{{ pIn }}" onKeyDown="{{ pKey }}" style="flex:1;border:0;background:none;font-size:13px;color:#1D1D20;font-family:inherit;min-width:0" placeholder="Ask anything about your fleet — try &quot;Why was my June invoice higher?&quot;">
+          <input data-b="0" value="{{ p0 }}" onChange="{{ pIn }}" onKeyDown="{{ pKey }}" style="flex:1;border:0;background:none;font-size:13px;color:#1D1D20;font-family:inherit;min-width:0" placeholder="Ask anything about your fleet—try &quot;Why was my June invoice higher?&quot;">
           <sc-if value="{{ p0Emp }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;line-height:16px;background:#FEF9E6;color:#655102">New</span></sc-if>
           <sc-if value="{{ p0Has }}"><button data-b="0" onClick="{{ pGo }}" aria-label="Submit question" style="width:32px;height:32px;border-radius:50%;background:#303235;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#1D1D20"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg></button></sc-if>
         </div>
@@ -2364,7 +2364,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
         </div>
         <div data-pbar data-aiglow="{{ glowMode }}" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid transparent;border-radius:24px;height:48px;padding:0 8px 0 16px;box-shadow:0 1px 3px rgba(0,0,0,0.15)">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#307CA7" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
-          <input data-b="2" value="{{ p2 }}" onChange="{{ pIn }}" onKeyDown="{{ pKey }}" style="flex:1;border:0;background:none;font-size:13px;color:#1D1D20;font-family:inherit;min-width:0" placeholder="Ask anything about your fleet — try &quot;Why was my June invoice higher?&quot;">
+          <input data-b="2" value="{{ p2 }}" onChange="{{ pIn }}" onKeyDown="{{ pKey }}" style="flex:1;border:0;background:none;font-size:13px;color:#1D1D20;font-family:inherit;min-width:0" placeholder="Ask anything about your fleet—try &quot;Why was my June invoice higher?&quot;">
           <sc-if value="{{ p2Emp }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;line-height:16px;background:#FEF9E6;color:#655102">New</span></sc-if>
           <sc-if value="{{ p2Has }}"><button data-b="2" onClick="{{ pGo }}" aria-label="Submit question" style="width:32px;height:32px;border-radius:50%;background:#303235;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:#1D1D20"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg></button></sc-if>
         </div>
@@ -2375,7 +2375,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
       <sc-if value="{{ toastOn }}">
       <div style="position:absolute;top:16px;right:16px;z-index:50;display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 16px;width:380px;max-width:calc(100% - 32px);animation:toastIn .2s ease both">
         <svg style="flex:none;margin-top:1px" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-        <div style="font-size:13px;color:#1D1D20;line-height:1.5">Plan approved — 6 loads updated. Marcus Reed and your Orlando and Atlanta DCs have been notified.</div>
+        <div style="font-size:13px;color:#1D1D20;line-height:1.5">Plan approved—6 loads updated. Marcus Reed and your Orlando and Atlanta DCs have been notified.</div>
       </div>
       </sc-if>
 
@@ -2386,7 +2386,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 </div>
 </x-dc>
 <script>
-/* dc-lite — a dependency-free standalone runtime for Claude Design dc templates.
+/* dc-lite—a dependency-free standalone runtime for Claude Design dc templates.
  *
  * Replaces the design-preview stack (support.js + React + ReactDOM + Babel from
  * unpkg) so the prototype runs from file:// with zero network requests, per the
@@ -2411,7 +2411,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 
   /* ---------- style-hover pseudo-class sheet (mirrors createPseudoSheet) ----------
    * Declarations are stamped !important so authored hover/focus states beat the
-   * element's inline style attribute — without it, any property also present
+   * element's inline style attribute—without it, any property also present
    * inline (nearly all of them here) silently never changes on hover. */
   var pseudoEl = null, pseudoCache = Object.create(null), pseudoN = 0;
   function pseudoClass(pseudo, css) {
@@ -2431,7 +2431,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
     return cls;
   }
 
-  /* ---------- {{ expr }} resolution — identifier dot-paths, $index, true/false ---------- */
+  /* ---------- {{ expr }} resolution—identifier dot-paths, $index, true/false ---------- */
   function resolve(scope, expr) {
     expr = expr.trim();
     if (expr === 'true') return true;
@@ -2646,7 +2646,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
   }
   // Index-keyed reconciliation, matching React's behavior for unkeyed lists:
   // existing instances keep their DOM (their bindings re-evaluate against the
-  // item now at that index — nested sc-ifs mount/unmount as needed), new
+  // item now at that index—nested sc-ifs mount/unmount as needed), new
   // indexes append fresh instances, extras are removed from the end. This is
   // what keeps the chat thread stable when a message is added: old bubbles
   // are untouched and only the new ones run their entrance animations.
@@ -2814,7 +2814,7 @@ class Component extends DCLogic {
       'SBG-31243': { o: 'Memphis DC-02', oc: 'Memphis, TN', d: 'Nashville retail', c2: 'Nashville, TN', m: 6, n: 1, eta: '3:05 PM CT · Jul 7', up: '6m ago', dep: 'Departed 6:20 AM CT', tr: 'TR-4434' },
       'SBG-31244': { o: 'Orlando DC-04', oc: 'Orlando, FL', d: 'Jacksonville run', c2: 'Jacksonville, FL', m: 6, n: 0, eta: '3:30 PM ET · Jul 7', up: '15m ago', dep: 'Load-out in progress', tr: 'TR-4435' },
       'SBG-31245': { o: 'Atlanta DC-03', oc: 'Atlanta, GA', d: 'Macon/Columbus', c2: 'Macon, GA', m: 6, n: 0, eta: '4:10 PM ET · Jul 7', up: '21m ago', dep: 'Load-out in progress', tr: 'TR-4436' },
-      'SBG-31246': { o: 'Dallas DC-01', oc: 'Dallas, TX', d: 'Austin corridor', c2: 'Austin, TX', m: 9, n: 0, eta: 'Appointment 6:00 AM CT · Jul 8', up: '34m ago', dep: 'Scheduled — appointment Jul 8', tr: 'TR-4443' },
+      'SBG-31246': { o: 'Dallas DC-01', oc: 'Dallas, TX', d: 'Austin corridor', c2: 'Austin, TX', m: 9, n: 0, eta: 'Appointment 6:00 AM CT · Jul 8', up: '34m ago', dep: 'Scheduled—appointment Jul 8', tr: 'TR-4443' },
       'SBG-31247': { o: 'Memphis DC-02', oc: 'Memphis, TN', d: 'Little Rock loop', c2: 'Little Rock, AR', m: 6, n: 4, eta: '2:20 PM CT · Jul 7', up: '9m ago', dep: 'Departed 5:45 AM CT', tr: 'TR-4437' },
       'SBG-31248': { o: 'Orlando DC-04', oc: 'Orlando, FL', d: 'Miami corridor', c2: 'Miami, FL', m: 9, n: 6, eta: '5:45 PM ET · Jul 7', up: '5m ago', dep: 'Departed 4:55 AM ET', tr: 'TR-4438', wg: true },
       'SBG-31249': { o: 'Atlanta DC-03', oc: 'Atlanta, GA', d: 'Athens retail', c2: 'Athens, GA', m: 5, n: 5, eta: 'Delivered 11:32 AM ET', up: '1h ago', dep: 'Departed 6:30 AM ET', tr: 'TR-4440' },
@@ -3053,13 +3053,13 @@ class Component extends DCLogic {
         v.lPctSt = 'width:' + Math.round(100 * D.n / D.m) + '%;height:4px;background:' + (lLate ? '#F0C005' : '#307CA7') + ';border-radius:2px';
         var stops = [];
         var greyM = 'color:#696B6F';
-        if (lPlan) stops.push({ pend: true, t: 'Origin load-out — ' + D.o, m: D.dep, ms: greyM });
-        else if (lDisp) stops.push({ now: true, t: 'Origin load-out — ' + D.o, m: D.dep, ms: 'color:#276A92;font-weight:500' });
-        else stops.push({ done: true, t: 'Origin load-out — ' + D.o, m: D.dep, ms: greyM });
+        if (lPlan) stops.push({ pend: true, t: 'Origin load-out—' + D.o, m: D.dep, ms: greyM });
+        else if (lDisp) stops.push({ now: true, t: 'Origin load-out—' + D.o, m: D.dep, ms: 'color:#276A92;font-weight:500' });
+        else stops.push({ done: true, t: 'Origin load-out—' + D.o, m: D.dep, ms: greyM });
         for (var si = 1; si <= D.m; si++) {
-          if (!lPlan && !lDisp && si <= D.n) stops.push({ done: true, t: 'Retail stop ' + si + ' — ' + D.c2, m: 'Completed', ms: greyM });
-          else if (!lPlan && !lDisp && !lComp && si === D.n + 1) stops.push({ now: true, t: 'Retail stop ' + si + ' — ' + D.c2, m: 'En route · ETA ' + D.eta, ms: lLate ? 'color:#655102;font-weight:500' : 'color:#303235;font-weight:500' });
-          else stops.push({ pend: true, t: 'Retail stop ' + si + ' — ' + D.c2, m: 'Scheduled', ms: greyM });
+          if (!lPlan && !lDisp && si <= D.n) stops.push({ done: true, t: 'Retail stop ' + si + '—' + D.c2, m: 'Completed', ms: greyM });
+          else if (!lPlan && !lDisp && !lComp && si === D.n + 1) stops.push({ now: true, t: 'Retail stop ' + si + '—' + D.c2, m: 'En route · ETA ' + D.eta, ms: lLate ? 'color:#655102;font-weight:500' : 'color:#303235;font-weight:500' });
+          else stops.push({ pend: true, t: 'Retail stop ' + si + '—' + D.c2, m: 'Scheduled', ms: greyM });
         }
         v.lStops = stops;
       } else { v.lStops = []; }
@@ -3317,7 +3317,7 @@ class Component extends DCLogic {
   }
 }
 
-/* V2 — RyderShare Intelligence onboarding layer.
+/* V2—RyderShare Intelligence onboarding layer.
  *
  * Extends the verbatim V1 Component. Pre-enable, the product is "RyderShare
  * today": no AI surfaces (CSS-gated via [data-intel]), the AI rail routes are
@@ -3347,14 +3347,14 @@ class ComponentV2 extends Component {
       try { history.replaceState(null, '', '#/workforce'); } catch (e) {}
     }
     // Risk radar merged into Autopilot (the agents route): every old entry
-    // point — cold loads, hash changes, in-app nav — lands on the merged tab.
+    // point—cold loads, hash changes, in-app nav—lands on the merged tab.
     if (this.state.route === 'risk') {
       this.state.route = 'agents';
       try { history.replaceState(null, '', '#/agents'); } catch (e) {}
     }
     this.state.revMonth = 'jun'; // reviews month tabs: 'jun' | 'may' | 'apr'
 
-    // A reload is a clean rehearsal reset — nothing persists across refreshes.
+    // A reload is a clean rehearsal reset—nothing persists across refreshes.
     // ?intel=1 is the one deep-link override for booting straight into enabled.
     var startOn = props.startEnabled === true;
     try {
@@ -3380,13 +3380,13 @@ class ComponentV2 extends Component {
     this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
     this.state.flexPanel = null;     // 'a'|'b'|'s': which decision panel is open
     this.state.agRoster = false;     // agents-on-shift roster panel
-    this.state.briefOpen = null;     // (legacy accordion key — harmless)
+    this.state.briefOpen = null;     // (legacy accordion key—harmless)
     this.state.tlHist = false;       // feed history: collapsed on every load
     this.state.riskExpanded = false; // approved incident details re-expand
     this.state.wfOpen = null;        // workforce showroom: which agent's history is open
     this.state.detClaimFiled = false; // in-log approval: Macon detention claim
     this.state.osdFiled = false;      // in-log approval: OS&D short-shipment claim
-    // SBG-31252 — the board's third late load (GPS-offline unit, driver-reported
+    // SBG-31252—the board's third late load (GPS-offline unit, driver-reported
     // ETA). The Network "No location" tab reconciles the map's 2 late pins with
     // the board's 3; this row is the one an exec would ask to see.
     this.R18 = { ref: 'SBG-31252', ry: '884210395', st: 'STARTED', late: true, dc: 'DC-02', ds: 'AR', cc: 'CC-110', eta: 'today' };
@@ -3415,10 +3415,10 @@ class ComponentV2 extends Component {
         summary: 'Last 7 days · 23 actions · 19 auto · 3 approved by you · 1 routed to you',
         guard: 'Auto: receiver notices for ETA shifts up to 60 minutes. Needs you: bigger shifts and anything cost-bearing.',
         entries: [
-          { t: 'Today · 6:04 AM', title: 'Pushed updated ETA to 2 receivers', d: 'SBG-31241 Savannah corridor — ETA 4:15 PM ET (was 3:05). First-stop dock delay; downstream stops hold.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Today · 6:04 AM', title: 'Pushed updated ETA to 2 receivers', d: 'SBG-31241 Savannah corridor—ETA 4:15 PM ET (was 3:05). First-stop dock delay; downstream stops hold.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Today · 5:52 AM', title: 'Nudged a silent telematics feed', d: 'SBG-31253 went 45 minutes without a ping near Tyler, TX. Re-polled the unit; updates resumed.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
           { t: 'Mon Jul 6 · 4:41 PM', title: 'Answered a receiver ETA query', d: 'Savannah receiving asked for tomorrow\u2019s window; replied from the live plan in 40 seconds.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Mon Jul 6 · 9:15 AM', title: 'Held a notification for review', d: 'SBG-31248 Miami corridor ETA moved 2h 10m — beyond the 60-minute guardrail, so nothing went out without you.', chip: 'Escalated', cs: AMBER, who: 'Routed to you — over guardrail' },
+          { t: 'Mon Jul 6 · 9:15 AM', title: 'Held a notification for review', d: 'SBG-31248 Miami corridor ETA moved 2h 10m—beyond the 60-minute guardrail, so nothing went out without you.', chip: 'Escalated', cs: AMBER, who: 'Routed to you—over guardrail' },
           { t: 'Sun Jul 5 · 6:00 PM', title: 'Sent the weekly receiver digest', d: 'On-time summary and this week’s appointment windows to 14 receiving locations.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Fri Jul 3 · 3:22 PM', title: 'Updated the delay-notice template', d: 'You shortened the delay-reason wording on Thursday; the edit now applies to every notice.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
         ]
@@ -3430,7 +3430,7 @@ class ComponentV2 extends Component {
         entries: [
           { t: 'Today · 5:58 AM', title: 'Confirmed storm pre-load dock slots', d: 'Orlando DC-04, Wednesday 6:00–7:00 PM for the 4 pre-load candidates in the storm plan.', chip: 'Confirmed', cs: GREEN, who: 'Handed off from Risk radar' },
           { t: 'Today · 5:30 AM', title: 'Moved a congested receiver window', d: 'Tampa retail #2 backs up Friday afternoons; shifted Friday 1:40 PM to 3:10 PM before it bit.', chip: 'Confirmed', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Mon Jul 6 · 2:05 PM', title: 'Requested an earlier unload window', d: 'SBG-31248 Miami corridor — asked the receiver for 5:00 PM, cutting an estimated 35-minute wait.', chip: 'Pending', cs: AMBER, who: 'Auto · awaiting receiver' },
+          { t: 'Mon Jul 6 · 2:05 PM', title: 'Requested an earlier unload window', d: 'SBG-31248 Miami corridor—asked the receiver for 5:00 PM, cutting an estimated 35-minute wait.', chip: 'Pending', cs: AMBER, who: 'Auto · awaiting receiver' },
           { t: 'Mon Jul 6 · 8:12 AM', title: 'Flagged recurring Friday congestion', d: '9 of 12 June missed stops trace to two Tampa docks. Pattern sent to your weekly digest.', chip: 'Flagged', cs: BLUE, who: 'Sent to Insights' },
           { t: 'Thu Jul 2 · 4:44 PM', title: 'Receiver declined a proposed swap', d: 'Macon receiver kept its 9:00 AM window over the proposed 7:00 AM. Your Ryder team follows up.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
           { t: 'Wed Jul 1 · 7:30 AM', title: 'Booked the week’s dock slots', d: '11 slots across 4 DCs for the week of Jul 6, matched to planned load-out times.', chip: 'Confirmed', cs: GREEN, who: 'Auto · within guardrails' }
@@ -3439,10 +3439,10 @@ class ComponentV2 extends Component {
       agAudit: {
         title: 'Invoice audit',
         summary: 'June cycle · 214 lines audited · 1 dispute drafted · $1,120 recovered',
-        guard: 'Auto: line-by-line checks against contract rates. Needs you: filing disputes — anything cost-bearing.',
+        guard: 'Auto: line-by-line checks against contract rates. Needs you: filing disputes—anything cost-bearing.',
         entries: [
-          { t: 'Wed Jul 1 · 6:14 AM', title: 'Verified fuel surcharge against DOE', d: 'June surcharge +$9.3K tracks the index at $3.68/gal — within the contract formula.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Wed Jul 1 · 6:12 AM', title: 'Explained the accessorial variance', d: '$18.8K — half is the driver-unload surge at Orlando DC-04 (11 events vs. a typical 4).', chip: 'Flagged', cs: AMBER, who: 'Sent to Insights' },
+          { t: 'Wed Jul 1 · 6:14 AM', title: 'Verified fuel surcharge against DOE', d: 'June surcharge +$9.3K tracks the index at $3.68/gal—within the contract formula.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
+          { t: 'Wed Jul 1 · 6:12 AM', title: 'Explained the accessorial variance', d: '$18.8K—half is the driver-unload surge at Orlando DC-04 (11 events vs. a typical 4).', chip: 'Flagged', cs: AMBER, who: 'Sent to Insights' },
           { t: 'Wed Jul 1 · 6:12 AM', title: 'Audited the June invoice', d: '214 line items against rate schedule C. Nothing ran off-contract.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Tue Jun 30 · 5:02 PM', title: 'Drafted a duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214). The dispute files when you approve it.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileDispute', actLabel: 'Approve & file dispute' },
           { t: 'Fri Jun 26 · 9:40 AM', title: 'Closed two detention disputes', d: 'Carrier credits applied; $1,120 recovered on the June invoice.', chip: 'Recovered', cs: GREEN, who: 'Approved by you' },
@@ -3451,24 +3451,24 @@ class ComponentV2 extends Component {
       },
       agBh: {
         title: 'Backhaul tender',
-        summary: 'Draft queue · 1 tender awaiting you · 3 lanes scoped · nothing sends itself',
-        guard: 'Auto: matching, pricing, and lane analysis. Needs you: every tender — nothing sends without your approval.',
+        summary: 'Draft queue · 1 tender awaiting you · 3 lanes scoped · sends only on your approval',
+        guard: 'Auto: matching, pricing, and lane analysis. Needs you: every tender—nothing sends without your approval.',
         entries: [
           { t: 'Today · 5:45 AM', title: 'Refreshed the MEM → DAL tender draft', d: '3 loads/wk of Ryder-managed freight ≈ $3.9K/wk gross; credits net against your invoice. Expires Friday.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'sendTender', actLabel: 'Approve & send tender' },
           { t: 'Mon Jul 6 · 11:20 AM', title: 'Matched network freight to your lane', d: 'MEM → DAL runs 1,860 empty mi/wk; matched against 3 candidate shippers on Ryder’s network desk.', chip: 'Matched', cs: BLUE, who: 'Auto · analysis only' },
           { t: 'Sun Jul 5 · 6:30 PM', title: 'Re-priced the lane at market', d: 'Blended rate held at ≈ $2.05/mi; weekly value unchanged.', chip: 'Updated', cs: GREY, who: 'Auto · analysis only' },
           { t: 'Thu Jul 2 · 3:15 PM', title: 'Scoped the ATL → MEM return lane', d: '1,410 empty mi/wk ≈ $2.9K/wk gross; queued behind MEM → DAL in the opportunity list.', chip: 'Scoped', cs: BLUE, who: 'Auto · analysis only' },
           { t: 'Wed Jul 1 · 10:00 AM', title: 'Sized the full backhaul opportunity', d: 'Three lanes ≈ $458K/yr gross at market; a typical revenue share returns ≈ $320K/yr to SBG.', chip: 'Sized', cs: BLUE, who: 'Sent to Insights' },
-          { t: 'Tue Jun 30 · 2:20 PM', title: 'Prepared the enrollment brief', d: 'Per-lane steps and the revenue-share model, ready for your review — lanes enroll one at a time.', chip: 'Ready', cs: GREY, who: 'Awaiting your approval' }
+          { t: 'Tue Jun 30 · 2:20 PM', title: 'Prepared the enrollment brief', d: 'Per-lane steps and the revenue-share model, ready for your review—lanes enroll one at a time.', chip: 'Ready', cs: GREY, who: 'Awaiting your approval' }
         ]
       },
       agDwell: {
         title: 'Detention & dwell',
         summary: 'June · 41 dock stops timed · $1,120 in evidence handed to Invoice audit · 1 claim ready',
-        guard: 'Auto: dwell timing and evidence assembly. Needs you: filing any claim — cost-bearing.',
+        guard: 'Auto: dwell timing and evidence assembly. Needs you: filing any claim—cost-bearing.',
         entries: [
-          { t: 'Today · 7:15 AM', title: 'Timed a 96-minute dock hold', d: 'SBG-31248 Miami receiver held the trailer 36 minutes past free time; evidence pack assembled — geofence stamps + BOL times.', chip: 'Assembled', cs: BLUE, who: 'Auto · within guardrails' },
-          { t: 'Mon Jul 6 · 6:10 PM', title: 'Draft detention claim ready — Macon', d: '$186 for 47 minutes over free time on Jul 2; receiver signature and telematics attached. Files when you approve.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileDetention', actLabel: 'Approve & file claim' },
+          { t: 'Today · 7:15 AM', title: 'Timed a 96-minute dock hold', d: 'SBG-31248 Miami receiver held the trailer 36 minutes past free time; evidence pack assembled—geofence stamps + BOL times.', chip: 'Assembled', cs: BLUE, who: 'Auto · within guardrails' },
+          { t: 'Mon Jul 6 · 6:10 PM', title: 'Draft detention claim ready—Macon', d: '$186 for 47 minutes over free time on Jul 2; receiver signature and telematics attached. Files when you approve.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileDetention', actLabel: 'Approve & file claim' },
           { t: 'Fri Jul 3 · 4:30 PM', title: 'Flagged Tampa retail #2 as chronic', d: 'Fourth consecutive Friday over free time; pattern sent to your weekly digest and Dock scheduling.', chip: 'Flagged', cs: BLUE, who: 'Sent to Insights' },
           { t: 'Wed Jul 1 · 6:12 AM', title: 'Handed detention evidence to Invoice audit', d: 'Two May holds documented; $1,120 in carrier credits filed with the June invoice.', chip: 'Recovered', cs: GREEN, who: 'Handed off to Invoice audit' },
           { t: 'Tue Jun 30 · 3:05 PM', title: 'Learned your free-time terms', d: 'You corrected the Macon contract to 60 minutes; all future timing uses it.', chip: 'Learned', cs: BLUE, who: 'From your edit · feedback loop' }
@@ -3483,17 +3483,17 @@ class ComponentV2 extends Component {
           { t: 'Mon Jul 6 · 4:41 PM', title: 'Shared the POD pack with Athens retail', d: 'Consignee requested proof of delivery for SBG-31249; sent from the repository with the BOL attached.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Fri Jul 3 · 11:40 AM', title: 'Chased two missing PODs', d: 'TR-4440 and TR-4442 drivers nudged; both documents in by 5 PM, billing unblocked.', chip: 'Resolved', cs: GREEN, who: 'Auto · self-healing' },
           { t: 'Thu Jul 2 · 9:05 AM', title: 'Drafted an OS&D claim from a POD notation', d: 'Two cases short noted on SBG-31249; $312 claim drafted with photos and BOL line refs.', chip: 'Draft', cs: AMBER, who: 'Awaiting your approval', act: 'fileOsd', actLabel: 'Approve & file OS&D claim' },
-          { t: 'Wed Jul 1 · 6:12 AM', title: '3-way matched the June invoice', d: '214 lines against BOLs and PODs for Invoice audit — zero unmatched.', chip: 'Clean', cs: GREEN, who: 'Handed off to Invoice audit' }
+          { t: 'Wed Jul 1 · 6:12 AM', title: '3-way matched the June invoice', d: '214 lines against BOLs and PODs for Invoice audit—zero unmatched.', chip: 'Clean', cs: GREEN, who: 'Handed off to Invoice audit' }
         ]
       },
       agSafety: {
         title: 'Safety coach',
         summary: 'TTM 0.4/100K mi · 12 events coached in June · 61-day clean streak',
-        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to the Ryder safety lead — drivers are Ryder\u2019s, reviews stay human.',
+        guard: 'Auto: micro-coaching for minor events. Escalates: repeated patterns go to your Ryder safety lead, and a person reviews every case.',
         entries: [
           { t: 'Today · 5:40 AM', title: 'Briefed Thursday drivers on the storm corridor', d: 'Start-of-day risk briefing for the 6 storm-plan routes: crosswinds, staging changes, revised windows.', chip: 'Sent', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'Mon Jul 6 · 2:50 PM', title: 'Assigned self-coaching for hard braking', d: 'TR-4438 on I-4 near Orlando; the driver completed the module the same day.', chip: 'Coached', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts on two runs in one week — human review, not automation.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
+          { t: 'Thu Jul 2 · 10:15 AM', title: 'Routed a repeat pattern to the Ryder safety lead', d: 'Following-distance alerts showed up on two runs in one week, so your Ryder safety lead is reviewing it personally.', chip: 'Escalated', cs: AMBER, who: 'Routed to your Ryder team' },
           { t: 'Wed Jul 1 · 6:00 AM', title: 'June closed with zero preventable incidents', d: 'Clean streak at 61 days; TTM rate 0.4/100K mi, trending down.', chip: 'Clean', cs: GREEN, who: 'Auto · within guardrails' },
           { t: 'May 2 · 3:00 PM', title: 'Closed the April incident review', d: 'Coaching plan completed; the April business review carries the record.', chip: 'Closed', cs: GREY, who: 'Approved by your Ryder team' }
         ]
@@ -3501,13 +3501,13 @@ class ComponentV2 extends Component {
       agFlex: {
         title: 'Adaptive capacity',
         summary: 'Jul watch · 14 lanes monitored · 3 flagged · 2 moves awaiting you',
-        guard: 'Auto: lane-level rate watch against live tender data. Needs you: every flex move — dual sign-off with your Ryder account team before any load changes mode.',
+        guard: 'Auto: lane-level rate watch against live tender data. Needs you: every flex move—dual sign-off with your Ryder account team before any load changes mode.',
         entries: [
-          { t: 'Today · 7:10 AM', title: 'Drafted the 2-lane rate lock', d: 'MEM → BNA and ATL → CLT spot up 14% since April; contracted $2.11/mi vs ≈$2.38/mi spot. Recommendation routed for your dual sign-off.', chip: 'Awaiting you', cs: AMBER, who: 'Routed to you — cost-bearing' },
+          { t: 'Today · 7:10 AM', title: 'Drafted the 2-lane rate lock', d: 'MEM → BNA and ATL → CLT spot up 14% since April; contracted $2.11/mi vs ≈$2.38/mi spot. Recommendation routed for your dual sign-off.', chip: 'Awaiting you', cs: AMBER, who: 'Routed to you—cost-bearing' },
           { t: 'Thu Jul 2 · 4:20 PM', title: 'Cleared Dallas → Austin for flex', d: 'Eligibility passed: 2 stops, dry van, flexible windows, carrier OTD 96.4%. Spot ≈$1.87/mi against $2.14/mi cost-to-serve.', chip: 'Cleared', cs: GREEN, who: 'Auto · analysis only' },
-          { t: 'Wed Jul 1 · 6:00 AM', title: 'Re-priced 14 lanes against spot', d: 'Weekly sweep on live tender and rate data — 11 lanes within band, 3 flagged for review.', chip: 'Analyzed', cs: GREY, who: 'Auto · analysis only' },
+          { t: 'Wed Jul 1 · 6:00 AM', title: 'Re-priced 14 lanes against spot', d: 'Weekly sweep on live tender and rate data—11 lanes within band, 3 flagged for review.', chip: 'Analyzed', cs: GREY, who: 'Auto · analysis only' },
           { t: 'Mon Jun 29 · 8:40 AM', title: 'Pulled 2 loads back from brokerage', d: 'The Nashville lane firmed 9% in two weeks; loads returned to dedicated at contract rate before the exposure grew.', chip: 'Reverted', cs: GREEN, who: 'Auto · within guardrails' },
-          { t: 'Fri Jun 26 · 3:05 PM', title: 'Learned from your override', d: 'You held the Waco lane on dedicated despite favorable spot — driver familiarity at that receiver matters. The lane is now exempt from flex analysis.', chip: 'Learned', cs: BLUE, who: 'From your decision · feedback loop' }
+          { t: 'Fri Jun 26 · 3:05 PM', title: 'Learned from your override', d: 'You held the Waco lane on dedicated despite favorable spot—driver familiarity at that receiver matters. The lane is now exempt from flex analysis.', chip: 'Learned', cs: BLUE, who: 'From your decision · feedback loop' }
         ]
       }
     };
@@ -3575,15 +3575,15 @@ class ComponentV2 extends Component {
       v.pickMonth = function (e) { self.setState({ revMonth: e.currentTarget.dataset.m }); };
       var REV = {
         jun: { gen: 'Generated Jul 1, 2026 · 42 seconds', meta: 'June 2026 · Prepared for Dana Whitfield · Data through Jun 30, 2026',
-               bt: 'Invoice bridge — May to June', bc: 'May $1.706M → June $1.842M · +$136.5K (+8.0%)', st: 'June scorecard',
+               bt: 'Invoice bridge—May to June', bc: 'May $1.706M → June $1.842M · +$136.5K (+8.0%)', st: 'June scorecard',
                src: 'Prepared by RyderShare Intelligence · Sources: Invoice SBG-2026-06 · Load records Jun 1–30 · Contract SBG-DTS-2024',
                sc: ['96.2%', '▲ 2.1 pts', '$248', '▲ $6', '1,187', 'June total', '0', 'preventable', '$180K', '$3.68/gal', '18.4%', '▼ 0.6 pt', '99.2%', '9', '4.2-day avg'] },
         may: { gen: 'Generated Jun 1, 2026 · 38 seconds', meta: 'May 2026 · Prepared for Dana Whitfield · Data through May 31, 2026',
-               bt: 'Invoice bridge — April to May', bc: 'April $1.689M → May $1.706M · +$17.0K (+1.0%)', st: 'May scorecard',
+               bt: 'Invoice bridge—April to May', bc: 'April $1.689M → May $1.706M · +$17.0K (+1.0%)', st: 'May scorecard',
                src: 'Prepared by RyderShare Intelligence · Sources: Invoice SBG-2026-05 · Load records May 1–31 · Contract SBG-DTS-2024',
                sc: ['94.1%', '▲ 0.3 pts', '$242', '▲ $2', '1,142', 'May total', '0', 'preventable', '$168K', '$3.49/gal', '19.0%', '▼ 0.2 pt', '99.1%', '11', '4.8-day avg'] },
         apr: { gen: 'Generated May 1, 2026 · 41 seconds', meta: 'April 2026 · Prepared for Dana Whitfield · Data through Apr 30, 2026',
-               bt: 'Invoice bridge — March to April', bc: 'March $1.702M → April $1.689M · −$13.0K (−0.8%)', st: 'April scorecard',
+               bt: 'Invoice bridge—March to April', bc: 'March $1.702M → April $1.689M · −$13.0K (−0.8%)', st: 'April scorecard',
                src: 'Prepared by RyderShare Intelligence · Sources: Invoice SBG-2026-04 · Load records Apr 1–30 · Contract SBG-DTS-2024',
                sc: ['93.8%', '▼ 0.4 pts', '$240', '▲ $1', '1,098', 'April total', '1', '0.5/100K TTM', '$161K', '$3.42/gal', '19.2%', '▲ 0.1 pt', '98.9%', '8', '5.1-day avg'] }
       };
@@ -3688,7 +3688,7 @@ class ComponentV2 extends Component {
       v.flexOutPending = !s.flexOutDone;
       // Needs-you stream: the H1 count covers all five queue items (storm,
       // both market moves, tender, trailer). One arithmetic, never
-      // hand-decremented — a stale count against a draining queue is an
+      // hand-decremented—a stale count against a draining queue is an
       // on-stage credibility bug.
       var needs = (s.approved ? 0 : 1) + (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1) + (s.tenderGone ? 0 : 1) + (s.wSched ? 0 : 1);
       v.todoCount = needs;
@@ -3710,7 +3710,7 @@ class ComponentV2 extends Component {
       v.stormApprove = function () { baseApprove(); self.setState({ flexPanel: null }); };
       v.adjLinkLabel = s.adjOpen ? 'Hide adjustments' : 'Adjust the plan';
       // Agent roster panel (rail drill-down); an open audit log covers it, and
-      // closing the log falls back to the roster — free back-navigation.
+      // closing the log falls back to the roster—free back-navigation.
       v.rosterPanel = !!s.agRoster && !s.agLog;
       v.openRoster = function () { self.setState({ agRoster: true }); };
       v.closeRoster = function () { self.setState({ agRoster: false }); };
@@ -3743,7 +3743,7 @@ class ComponentV2 extends Component {
         try { document.querySelector('[data-briefing]').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e2) {}
       };
 
-      // Right-side meta per agent row: when it last acted — live, so a
+      // Right-side meta per agent row: when it last acted—live, so a
       // session approval reads "Just now".
       v.agEtaMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 6:04 AM';
       v.agDockMeta = s.approved ? 'Last action · Just now' : 'Last action · Today 5:58 AM';
@@ -3752,7 +3752,7 @@ class ComponentV2 extends Component {
       v.agDwellMeta = s.detClaimFiled ? 'Last action · Just now' : 'Last action · Today 7:15 AM';
       v.agDocsMeta = s.osdFiled ? 'Last action · Just now' : 'Last action · Today 6:20 AM';
       v.agSafetyMeta = 'Last action · Today 5:40 AM';
-      // Toggles sit inside clickable agent rows — don't let the tap bubble
+      // Toggles sit inside clickable agent rows—don't let the tap bubble
       // into the row's open-log handler.
       var baseTog = v.agToggle;
       v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); };
@@ -3772,8 +3772,8 @@ class ComponentV2 extends Component {
       v.act3 = s.actStep >= 3; v.act3Done = false;         v.act3Now = s.actStep === 3;
       v.enableIntel = function () { self.enableIntel(); };
       // Agent actions log (audit trail side panel on the AI agents screen).
-      // The log is live: approvals taken this session — the storm plan, the
-      // trailer service, in-log approvals — appear as "Just now" entries, so
+      // The log is live: approvals taken this session—the storm plan, the
+      // trailer service, in-log approvals—appear as "Just now" entries, so
       // the audit trail visibly reacts to what the user just did.
       var L = s.agLog ? self.AGLOG[s.agLog] : null;
       v.agLogOpen = !!L && (s.route === 'agents' || s.route === 'workforce');
@@ -3824,34 +3824,34 @@ class ComponentV2 extends Component {
   }
 
   // One source of truth for an agent's audit entries + summary, including the
-  // live session variants — used by the side panel and the workforce showroom.
+  // live session variants—used by the side panel and the workforce showroom.
   entriesFor(key) {
     var s = this.state;
     var L = this.AGLOG[key];
     var GREEN2 = 'background:#E8F5F0;color:#1F7A61';
     var entries = L.entries, summary = L.summary;
     if (key === 'agEta' && s.approved) {
-      entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar — approved by you', exp: 1 }].concat(entries);
+      entries = [{ t: 'Just now', title: 'Sent storm-plan notices to 6 receivers', d: 'Thursday pre-loads and reroutes confirmed to every affected receiving location, per the plan you approved.', chip: 'Sent', cs: GREEN2, who: 'Handed off from Risk radar—approved by you', exp: 1 }].concat(entries);
     }
     if (key === 'agDock') {
       var pre = [];
-      if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04 — no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
+      if (s.wSched) pre.push({ t: 'Just now', title: 'Scheduled trailer 4482 service', d: 'Preventive service booked for the open Saturday window at Orlando DC-04—no route impact.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
       if (s.approved) pre.push({ t: 'Just now', title: 'Locked Wednesday pre-load slots', d: '4 storm-plan loads staged at Orlando DC-04, 6:00–7:00 PM, per the plan you approved.', chip: 'Confirmed', cs: GREEN2, who: 'Approved by you' });
       entries = pre.concat(entries);
     }
     if (key === 'agAudit' && s.disputeFiled) {
       entries = entries.map(function (en) {
         if (en.act !== 'fileDispute') return en;
-        return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214) — dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
+        return { t: 'Just now', title: 'Filed the duplicate-fee dispute', d: 'Lumper fee billed twice on SBG-31228 ($214)—dispute submitted to carrier billing.', chip: 'Filed', cs: GREEN2, who: 'Approved by you' };
       });
       summary = 'June cycle · 214 lines audited · 1 dispute filed today · $1,120 recovered';
     }
     if (key === 'agBh' && s.tenderSent) {
       entries = entries.map(function (en) {
         if (en.act !== 'sendTender') return en;
-        return { t: 'Just now', title: 'Sent the MEM \u2192 DAL tender', d: '3 loads/wk \u2248 $3.9K/wk gross — tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
+        return { t: 'Just now', title: 'Sent the MEM \u2192 DAL tender', d: '3 loads/wk \u2248 $3.9K/wk gross—tender sent to the Ryder network desk; credits net against your invoice.', chip: 'Sent', cs: GREEN2, who: 'Approved by you' };
       });
-      summary = 'Tender sent today · 2 lanes scoped next · nothing sends itself';
+      summary = 'Tender sent today · 2 lanes scoped next · sends only on your approval';
     }
     if (key === 'agDwell' && s.detClaimFiled) {
       entries = entries.map(function (en) {
@@ -3873,7 +3873,7 @@ class ComponentV2 extends Component {
         entries = [{ t: 'Just now', title: 'Locked dedicated rates on 2 lanes', d: 'MEM → BNA and ATL → CLT at $2.11/mi for 12 months; first tenders shift Monday. Your Ryder account team is countersigning.', chip: 'Locked', cs: GREEN2, who: 'Approved by you' }].concat(entries);
       }
       if (s.flexOutDone) {
-        entries = [{ t: 'Just now', title: 'Flexed Dallas → Austin to brokerage', d: '4 loads/wk at ≈$1.87/mi against $2.14/mi cost-to-serve; weekly re-check armed — loads return when the lane firms.', chip: 'Flexed', cs: GREEN2, who: 'Approved by you' }].concat(entries);
+        entries = [{ t: 'Just now', title: 'Flexed Dallas → Austin to brokerage', d: '4 loads/wk at ≈$1.87/mi against $2.14/mi cost-to-serve; weekly re-check armed—loads return when the lane firms.', chip: 'Flexed', cs: GREEN2, who: 'Approved by you' }].concat(entries);
       }
       var moves = (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1);
       summary = 'Jul watch · 14 lanes monitored · ' + (moves === 0 ? 'both moves approved this session' : moves === 1 ? '1 move awaiting you' : '2 moves awaiting you') + ' · ≈$74K/yr identified';
@@ -3889,7 +3889,7 @@ class ComponentV2 extends Component {
   setRoute(r) {
     // Route changes collapse open overlays (detail panel, ask slide-over, map
     // popup, actions log) so the next screen arrives clean; the ask thread
-    // itself is preserved — only the panel closes.
+    // itself is preserved—only the panel closes.
     if (r !== this.state.route) {
       var patch = {};
       if (this.state.agLog) patch.agLog = null;
@@ -3912,7 +3912,7 @@ class ComponentV2 extends Component {
     // d* ids are dynamic intents (pills on dynamic answers route back here).
     if (qid && qid.charAt(0) === 'd') { this.dynSubmit(text || this.CANON[qid], qid); return; }
     if (qid) { super.submit(text, qid); return; }
-    // Scripted answers keep priority — they're the richest bubbles.
+    // Scripted answers keep priority—they're the richest bubbles.
     var v1 = this.routeText(text);
     // Phrases V1's keyword net would misroute ("bill of lading" → invoice).
     var t = ' ' + String(text).toLowerCase().replace(/[^a-z0-9\s]+/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
@@ -3923,7 +3923,7 @@ class ComponentV2 extends Component {
 
   // ---- Dynamic ask: intent router over the demo's live state -------------
   // Tier 1: on-domain intents composed from the same numbers on screen.
-  // Tier 2: conversational catcher — never breaks character, always pivots
+  // Tier 2: conversational catcher—never breaks character, always pivots
   // back to real data. Unmatched text logs to the console so the bank can
   // grow from what people actually type.
   dynRoute(t) {
@@ -3939,7 +3939,7 @@ class ComponentV2 extends Component {
     if (has('sav') || has('value') || has('roi') || has('worth') || has('recover')) return 'dValue';
     if (has('review') || has('report') || has('summar') || has('recap')) return 'dReview';
     if (has('where') || has('track') || has('status') || has('moving') || has('right now')) return 'dTrack';
-    // Tier 2 — conversational.
+    // Tier 2—conversational.
     var conv = null;
     if (has('who are you') || has('what are you') || has('chatgpt') || has(' gpt ') || has('a bot') || has('an ai') || has(' ai ') || has('are you real') || has('your name') || has('claude')) conv = 'dIdentity';
     else if (has('joke') || has('funny') || has('laugh')) conv = 'dJoke';
@@ -3966,100 +3966,100 @@ class ComponentV2 extends Component {
   dynAnswer(id, t) {
     var s = this.state;
     var FOOT = 'Generated from your RyderShare data · Jul 7, 2026 · Verify before financial decisions';
-    var OFFFOOT = 'RyderShare Intelligence answers from your fleet records — loads, invoices, telematics';
+    var OFFFOOT = 'RyderShare Intelligence answers from your fleet records—loads, invoices, telematics';
     var V = {
       dLoad: [function () {
         var m = /\bsbg\s?(\d{3,6})\b/.exec(t), n = m ? m[1] : '';
         var K = {
-          '31241': 'SBG-31241 is moving — Savannah corridor, ETA 4:15 PM ET (was 3:05; a first-stop dock delay). Downstream stops hold, and the receivers already have the updated window.',
-          '31248': 'SBG-31248 (Miami corridor) shifted 2h 10m — past the 60-minute guardrail, so the ETA agent held the receiver notice for your review instead of sending it.',
+          '31241': 'SBG-31241 is moving—Savannah corridor, ETA 4:15 PM ET (was 3:05; a first-stop dock delay). Downstream stops hold, and the receivers already have the updated window.',
+          '31248': 'SBG-31248 (Miami corridor) shifted 2h 10m—past the 60-minute guardrail, so the ETA agent held the receiver notice for your review instead of sending it.',
           '31252': 'SBG-31252 is the driver-reported one: the unit’s GPS is offline, so I’m carrying the driver’s 3:40 PM CT ETA on the Jonesboro loop. It shows as your third late-flagged load.',
           '31253': 'SBG-31253 went quiet for 45 minutes near Tyler, TX this morning; the ETA agent re-polled the unit and the feed came back on its own. The load is on plan.'
         };
         if (K[n]) return { text: K[n], foot: FOOT };
-        return { text: 'I don’t see SBG-' + n + ' in your last 90 days of freight — worth checking the reference. Want the loads that need attention instead?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
+        return { text: 'I don’t see SBG-' + n + ' in your last 90 days of freight—worth checking the reference. Want the loads that need attention instead?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
       }],
       dFlex: [function () {
         var a = s.flexLockDone, b = s.flexOutDone;
-        if (a && b) return { text: 'Both flex moves are done this session: 2 overflow lanes locked into dedicated at $2.11/mi for 12 months, and Dallas → Austin flexed to brokerage at ≈$1.87/mi with a weekly re-check armed. Adaptive capacity keeps re-pricing all 14 lanes — the next recommendation lands in Autopilot.', foot: FOOT };
+        if (a && b) return { text: 'Both flex moves are done this session: 2 overflow lanes locked into dedicated at $2.11/mi for 12 months, and Dallas → Austin flexed to brokerage at ≈$1.87/mi with a weekly re-check armed. Adaptive capacity keeps re-pricing all 14 lanes—the next recommendation lands in Autopilot.', foot: FOOT };
         var parts = [];
         if (!a) parts.push('spot is up 14% since April, so locking your two overflow lanes into dedicated at $2.11/mi runs ≈$3.4K/mo below today’s market and holds for 12 months');
-        if (!b) parts.push('one dedicated lane — Dallas → Austin — still prices below cost-to-serve, worth ≈$2.2K/mo flexed to brokerage while it stays soft');
+        if (!b) parts.push('one dedicated lane—Dallas → Austin—still prices below cost-to-serve, worth ≈$2.2K/mo flexed to brokerage while it stays soft');
         return { text: 'Adaptive capacity re-prices your 14 lanes against the spot market weekly, in both directions. Right now: ' + parts.join('; and ') + '. ' + (parts.length === 2 ? 'Both moves wait' : 'The move waits') + ' on your dual sign-off in Autopilot.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
       }.bind(this), function () {
-        return { text: 'Lane-by-lane, not market-by-market: even with spot up 14% since April, lanes move independently — which is why the same week can produce a rate lock on your overflow lanes and a flex-out on Dallas → Austin. Every move needs your dual sign-off, and loads pull back to dedicated the moment a soft lane firms.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: FOOT };
+        return { text: 'Lanes move independently of the market, so even with spot up 14% since April the same week can produce a rate lock on your overflow lanes and a flex-out on Dallas → Austin. Every move needs your dual sign-off, and loads pull back to dedicated the moment a soft lane firms.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: FOOT };
       }.bind(this)],
       dDet: [function () {
-        var claim = s.detClaimFiled ? 'You filed the Macon claim earlier — $186 with telematics evidence attached, and the receiver has acknowledged receipt.' : 'The one that needs you is Macon — a $186 claim sitting ready with telematics evidence attached.';
+        var claim = s.detClaimFiled ? 'You filed the Macon claim earlier—$186 with telematics evidence attached, and the receiver has acknowledged receipt.' : 'The one that needs you is Macon—a $186 claim sitting ready with telematics evidence attached.';
         return { text: 'Detention is watched load-by-load: 41 dock stops timed this month, with $1,120 of dwell evidence already handed to Invoice audit. ' + claim, p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
       }.bind(this), function () {
-        return { text: 'Your dwell outlier is Orlando DC-04 — driver unload time is running near 3× a typical month. The Detention & dwell agent has 41 stops timed and ' + (s.detClaimFiled ? 'the Macon claim you filed is with the receiver.' : 'a $186 Macon claim ready for your sign-off.'), foot: FOOT };
+        return { text: 'Your dwell outlier is Orlando DC-04—driver unload time is running near 3× a typical month. The Detention & dwell agent has 41 stops timed and ' + (s.detClaimFiled ? 'the Macon claim you filed is with the receiver.' : 'a $186 Macon claim ready for your sign-off.'), foot: FOOT };
       }],
       dDocs: [function () {
-        var osd = s.osdFiled ? 'the $312 OS&D short-shipment claim you filed is with the carrier — they have 30 days to respond.' : 'one OS&D flag — a $312 short-shipment claim drafted and waiting on you.';
+        var osd = s.osdFiled ? 'the $312 OS&D short-shipment claim you filed is with the carrier—they have 30 days to respond.' : 'one OS&D flag—a $312 short-shipment claim drafted and waiting on you.';
         return { text: 'June cycle: 214 PODs matched to their loads automatically, 2 chased down from receivers, and ' + osd, foot: FOOT };
       }],
       dSafety: [function () {
         return { text: 'Safety is trending the right way: TTM rate 0.4 events per 100K miles, a 61-day clean streak, and 12 events coached in June. Coaching reaches drivers same-day; repeat patterns escalate to your Ryder safety lead instead of sitting in a report.', foot: FOOT };
       }, function () {
-        return { text: 'The latest coaching event was hard braking on TR-4438 near Orlando on I-4 — the driver completed the module the same day. June closed with zero preventable incidents and the TTM rate trending down at 0.4 per 100K miles.', foot: FOOT };
+        return { text: 'The latest coaching event was hard braking on TR-4438 near Orlando on I-4—the driver completed the module the same day. June closed with zero preventable incidents and the TTM rate trending down at 0.4 per 100K miles.', foot: FOOT };
       }],
       dQueue: [function () {
         var items = this.dynQueueItems();
         var lead = items.length === 1 ? 'One thing waits on you right now: ' : String(items.length) + ' things wait on you right now: ';
-        return { text: lead + items.join('; ') + '. Each is one click in its agent’s history — nothing moves without you.', foot: FOOT };
+        return { text: lead + items.join('; ') + '. Each is one click in its agent’s history—nothing moves without you.', foot: FOOT };
       }.bind(this)],
       dAgents: [function () {
-        return { text: 'Eight agents work your account: ETA & notifications, Dock scheduling, Invoice audit, Backhaul tender, Detention & dwell, Documents & POD, Safety coach, and Adaptive capacity. This cycle they’ve returned $1,832 across recovered charges and claims, with ≈$74K/yr more identified on the rate side — every action logged, anything cost-bearing held for you.', p1: { q: 'dValue', label: this.CANON.dValue }, foot: FOOT };
+        return { text: 'Eight agents work your account: ETA & notifications, Dock scheduling, Invoice audit, Backhaul tender, Detention & dwell, Documents & POD, Safety coach, and Adaptive capacity. This cycle they’ve returned $1,832 across recovered charges and claims, with ≈$74K/yr more identified on the rate side—every action logged, anything cost-bearing held for you.', p1: { q: 'dValue', label: this.CANON.dValue }, foot: FOOT };
       }.bind(this), function () {
-        return { text: 'Ask me about anything the agents touch — where loads are, why an invoice moved, dock slots, claims, driver safety, spot rates. Eight of them run under one set of guardrails: automatic inside the rails, routed to you the moment money or promises to receivers are involved.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
+        return { text: 'Ask me about anything the agents touch—where loads are, why an invoice moved, dock slots, claims, driver safety, spot rates. Eight of them run under one set of guardrails: automatic inside the rails, routed to you the moment money or promises to receivers are involved.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: FOOT };
       }.bind(this)],
       dDock: [function () {
-        return { text: 'Dock scheduling ran 17 actions in the last 7 days — 14 slots booked or reshuffled automatically at your DCs, 2 with your approval, and 1 declined on the receiver side (it can’t confirm those without you).', foot: FOOT };
+        return { text: 'Dock scheduling ran 17 actions in the last 7 days—14 slots booked or reshuffled automatically at your DCs, 2 with your approval, and 1 declined on the receiver side (it can’t confirm those without you).', foot: FOOT };
       }],
       dValue: [function () {
-        return { text: 'This June cycle the agents returned $1,832: $1,120 recovered by Invoice audit, a $214 duplicate lumper fee disputed, the $186 Macon detention claim, and a $312 OS&D claim. The bigger prize is backhaul — three empty lanes worth ≈$458K/yr gross at market, ≈$320K/yr back to you.', p1: { q: 'q3', label: 'How much is my empty backhaul worth?' }, foot: FOOT };
+        return { text: 'This June cycle the agents returned $1,832: $1,120 recovered by Invoice audit, a $214 duplicate lumper fee disputed, the $186 Macon detention claim, and a $312 OS&D claim. The bigger prize is backhaul—three empty lanes worth ≈$458K/yr gross at market, ≈$320K/yr back to you.', p1: { q: 'q3', label: 'How much is my empty backhaul worth?' }, foot: FOOT };
       }],
       dReview: [function () {
-        return { text: 'Your June business review is ready under Reviews — OTD held at 96.2% against the 95% target, cost per stop $248 (up $6 on peak volume), with two watch items: Orlando DC-04 unload time and Thursday’s storm exposure.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: FOOT };
+        return { text: 'Your June business review is ready under Reviews—OTD held at 96.2% against the 95% target, cost per stop $248 (up $6 on peak volume), with two watch items: Orlando DC-04 unload time and Thursday’s storm exposure.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: FOOT };
       }],
       dTrack: [function () {
-        return { text: 'Two loads are running late right now — SBG-31241 (Savannah corridor, dock delay; receivers already notified) and SBG-31248 (Miami corridor, held for your review) — and SBG-31252 is carrying a driver-reported ETA while its GPS unit is offline. Everything else on the board is on plan.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
+        return { text: 'Two loads are running late right now—SBG-31241 (Savannah corridor, dock delay; receivers already notified) and SBG-31248 (Miami corridor, held for your review)—and SBG-31252 is carrying a driver-reported ETA while its GPS unit is offline. Everything else on the board is on plan.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, foot: FOOT };
       }],
       // ---- Tier 2: in character, grounded pivot, never fabricate ----------
       dIdentity: [function () {
-        return { text: 'I’m the intelligence inside RyderShare — I read your loads, invoices, dock schedules, and telematics, and I only answer from those records. No opinions on anything I can’t cite.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
+        return { text: 'I’m the intelligence inside RyderShare—I read your loads, invoices, dock schedules, and telematics, and I only answer from those records.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
       }.bind(this), function () {
-        return { text: 'RyderShare Intelligence — the layer that reads your freight data so you don’t have to. Everything I say traces back to a record you can open.', foot: OFFFOOT };
+        return { text: 'RyderShare Intelligence—the layer that reads your freight data so you don’t have to. Everything I say traces back to a record you can open.', foot: OFFFOOT };
       }],
       dJoke: [function () {
-        return { text: 'My entire personality is invoices and dock schedules. The funniest thing I’ve seen this month is a lumper fee billed twice — I disputed it.', p1: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
+        return { text: 'My entire personality is invoices and dock schedules. The funniest thing I’ve seen this month is a lumper fee billed twice—I disputed it.', p1: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
       }, function () {
-        return { text: 'I have exactly one joke and it’s the duplicate lumper fee. Billing found it less funny — the $214 is on its way back.', foot: OFFFOOT };
+        return { text: 'I have exactly one joke and it’s the duplicate lumper fee. Billing found it less funny—the $214 is on its way back.', foot: OFFFOOT };
       }],
       dThanks: [function () {
         var n = this.dynQueueItems().length;
-        return { text: 'Anytime. I’ll flag whatever needs you — right now that’s ' + (n === 1 ? 'one item' : String(n) + ' items') + ' in the approval queue, nothing urgent.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+        return { text: 'Anytime. I’ll flag whatever needs you—right now that’s ' + (n === 1 ? 'one item' : String(n) + ' items') + ' in the approval queue, nothing urgent.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this), function () {
         return { text: 'That’s what I’m here for. Every agent action lands in its history, so you can check my work any time.', foot: OFFFOOT };
       }],
       dFeeling: [function () {
-        return { text: 'To the fourteen receiving locations that got their deliveries on time this week — you matter a great deal. Anything deeper than that is outside my data, and I try not to speak beyond my records. The freight, though, I can vouch for.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: OFFFOOT };
+        return { text: 'To the fourteen receiving locations that got their deliveries on time this week—you matter a great deal. Anything deeper than that sits outside my data, but I can vouch for the freight.', p1: { q: 'q1', label: 'How did my fleet perform last month?' }, foot: OFFFOOT };
       }, function () {
         return { text: 'That one’s beyond my telemetry. What I can tell you: your fleet ran 96.2% on-time last month, and numbers like that don’t happen without someone at the wheel. Ask me about the someone-at-the-wheel parts.', foot: OFFFOOT };
       }, function () {
-        return { text: 'I only see freight, so I’d be bluffing if I answered that — and I don’t bluff. Here’s what’s real on my side: two late loads being worked and your approval queue.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+        return { text: 'I only see freight, so I can’t answer that one. What I can show you: two late loads being worked and your approval queue.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this)],
       dGreet: [function () {
         var n = this.dynQueueItems().length;
         return { text: 'Hi. Quick pulse: two late loads are being handled, and ' + (n === 1 ? 'one item waits' : String(n) + ' items wait') + ' on your approval. Where do you want to start?', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this), function () {
-        return { text: 'Hello — the board is quiet in a good way. Two late loads are being worked by the ETA agent, and everything cost-bearing is parked in your approval queue. Ask away.', foot: OFFFOOT };
+        return { text: 'Hello—the board is quiet in a good way. Two late loads are being worked by the ETA agent, and everything cost-bearing is parked in your approval queue. Ask away.', foot: OFFFOOT };
       }],
       dCatch: [function () {
-        return { text: 'I couldn’t tie that to anything in your freight records, and I’d rather not guess. I’m strongest on loads, invoices, ETAs, dock schedules, and what your agents are doing.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
+        return { text: 'I couldn’t tie that to anything in your freight records. I’m strongest on loads, invoices, ETAs, dock schedules, and what your agents are doing.', p1: { q: 'q4', label: 'Which loads are at risk this week?' }, p2: { q: 'q2', label: 'Why was my June invoice higher?' }, foot: OFFFOOT };
       }, function () {
-        return { text: 'That’s outside what your records can answer — and everything I say has to trace to a record. Try me on the freight: where things are, what things cost, what’s waiting on you.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
+        return { text: 'That sits outside what your records can answer. Try me on the freight: where things are, what things cost, and what’s waiting on you.', p1: { q: 'dQueue', label: this.CANON.dQueue }, foot: OFFFOOT };
       }.bind(this), function () {
         return { text: 'Nothing in your RyderShare data matches that one. If it’s about your fleet, point it at loads, costs, or claims and I’ll have numbers for you.', p1: { q: 'dAgents', label: this.CANON.dAgents }, foot: OFFFOOT };
       }.bind(this)]
@@ -4087,7 +4087,7 @@ class ComponentV2 extends Component {
     this.setState(function (s) {
       return { thread: s.thread.concat([{ k: 'u', isUser: true, text: text }, { k: 't', isTyping: true }]), revealing: true };
     }, function () { self.scrollThread(); });
-    // Typing delay scales with answer length — instant essays feel canned.
+    // Typing delay scales with answer length—instant essays feel canned.
     var d1 = rm ? 30 : Math.min(1900, 500 + f.text.length * 4);
     this.t(function () {
       self.setState(function (s) {

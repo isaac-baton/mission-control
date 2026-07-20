@@ -304,6 +304,9 @@ sub("rail label Autopilot",
     '<span style="position:relative;font-size:10px;font-weight:500">AI agents</span>',
     '<span style="position:relative;font-size:10px;font-weight:500">Autopilot</span>')
 sub("digest link renamed", '>Risk radar</', '>Autopilot</')
+sub("digest opener de-fragmented",
+    '>A strong week. On-time delivery held at',
+    '>It was a strong week: on-time delivery held at')
 
 # The Workforce showroom is a first-class rail tab ("Agents", bot icon);
 # Autopilot swaps to a gauge — the control-room instrument, not the robot.
@@ -470,6 +473,13 @@ window.__app = window.__dcBoot(ComponentV2, {json.dumps(props)});
 </body>
 </html>
 """
+
+# T-final — Isaac's voice: em dashes are always tight (word—word, never
+# word — word), across every string in the file. Runs last so it covers the
+# verbatim design copy, the patch layers, and the inlined logic alike.
+_dash_n = out.count(' — ')
+out = out.replace(' — ', '—')
+applied.append(f"em dashes tightened ({_dash_n})")
 
 OUT.write_text(out, encoding="utf-8")
 print(f"wrote {OUT.name}: {OUT.stat().st_size:,} bytes")
