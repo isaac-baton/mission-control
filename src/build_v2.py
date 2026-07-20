@@ -474,6 +474,39 @@ window.__app = window.__dcBoot(ComponentV2, {json.dumps(props)});
 </html>
 """
 
+# T12 — Network map, brought up to visibility-platform standard (project44
+# Movement / FourKites conventions): quieter water, land with more contrast,
+# an interstate-corridor layer under the labels, five missing anchor cities,
+# smaller pin-style load markers, and a softer storm overlay.
+sub("map water softened",
+    'background:#D9E7F0;overflow:hidden;min-width:0;cursor:grab',
+    'background:linear-gradient(180deg,#E0E7EE,#D6E0E9);overflow:hidden;min-width:0;cursor:grab')
+sub("map background states restyled",
+    '<g fill="#F1F2F0" stroke="#D5D8DA" stroke-width="1">',
+    '<g fill="#EDEFF0" stroke="#DADDE0" stroke-width="1">')
+sub("map focus states restyled",
+    '<g fill="#F7F8F6" stroke="#DEE0E2" stroke-width="1">',
+    '<g fill="#FAFAF9" stroke="#D4D8DC" stroke-width="1">')
+map_roads = (V2 / "map-roads.html").read_text(encoding="utf-8")
+_lbl = markup.find('style="pointer-events:none;paint-order:stroke;stroke:#F7F8F6;stroke-width:3px">')
+assert _lbl > 0, "state labels group not found"
+_lbl = markup.rfind('<g ', 0, _lbl)
+markup = markup[:_lbl] + map_roads + markup[_lbl:]
+applied.append("interstate corridors + anchor cities injected (1)")
+sub("marker halos resized (blue)",
+    'r="15" fill="rgba(48,124,167,0.14)"', 'r="10.5" fill="rgba(48,124,167,0.16)"', 55)
+sub("marker halos resized (amber)",
+    'r="15" fill="rgba(240,192,5,0.18)"', 'r="10.5" fill="rgba(240,192,5,0.20)"', 5)
+sub("marker cores resized (blue)",
+    'r="11" fill="#307CA7" stroke="#fff" stroke-width="2"', 'r="7" fill="#307CA7" stroke="#fff" stroke-width="1.6"', 55)
+sub("marker cores resized (amber)",
+    'r="11" fill="#F0C005" stroke="#fff" stroke-width="2"', 'r="7" fill="#F0C005" stroke="#fff" stroke-width="1.6"', 5)
+sub("marker heading arrows resized",
+    '"M0,-6.5 L4.5,5.5 L0,3 L-4.5,5.5 Z"', '"M0,-4.2 L2.9,3.6 L0,1.9 L-2.9,3.6 Z"', 60)
+sub("storm overlay softened",
+    'fill="rgba(206,17,38,0.07)" stroke="#DC6B60" stroke-width="1"',
+    'fill="rgba(214,90,60,0.06)" stroke="#E2907F" stroke-width="1.2"')
+
 # T-final — Isaac's voice: em dashes are always tight (word—word, never
 # word — word), across every string in the file. Runs last so it covers the
 # verbatim design copy, the patch layers, and the inlined logic alike.
