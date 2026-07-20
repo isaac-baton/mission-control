@@ -1,0 +1,237 @@
+<sc-if value="{{ flexPanelA }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Rate lock decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Lock in dedicated rates</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Spot ↑14%</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">MEM → BNA + ATL → CLT · 9 loads/wk · brokerage today</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:16px 18px">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:8px">Spot vs your contracted rate · Apr–Jul</div>
+              <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both" viewBox="0 0 520 190">
+                <g stroke="#ECEDED" stroke-width="1"><line x1="46" y1="29" x2="506" y2="29"></line><line x1="46" y1="56" x2="506" y2="56"></line><line x1="46" y1="83" x2="506" y2="83"></line><line x1="46" y1="110" x2="506" y2="110"></line><line x1="46" y1="137" x2="506" y2="137"></line></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="end"><text x="38" y="33">2.40</text><text x="38" y="60">2.30</text><text x="38" y="87">2.20</text><text x="38" y="114">2.10</text><text x="38" y="141">2.00</text></g>
+                <polygon points="130,107 162,104 220,97 278,88 336,74 394,60 452,46 506,35 506,107" fill="rgba(180,138,9,0.10)"></polygon>
+                <line x1="46" y1="107" x2="506" y2="107" stroke="#1D1D20" stroke-width="1.5" stroke-dasharray="5 4"></line>
+                <polyline points="46,113 104,110 162,104 220,97 278,88 336,74 394,60 452,46 506,35" fill="none" stroke="#307CA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="506" cy="35" r="3" fill="#307CA7"></circle>
+                <g font-size="11.5" font-family="Inter, sans-serif" text-anchor="end"><text x="500" y="26" fill="#1D1D20" font-weight="600">Spot $2.38/mi</text><text x="500" y="122" fill="#696B6F">Contracted $2.11/mi</text></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif"><text x="46" y="168">Apr</text><text x="199" y="168" text-anchor="middle">May</text><text x="352" y="168" text-anchor="middle">Jun</text><text x="506" y="168" text-anchor="end">Jul</text></g>
+              </svg>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Spot today</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.38/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">↑14% since Apr</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Contracted</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.11/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">held 12 months</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Exposure removed</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">±$38K/qtr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">budget stabilized</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Volume consistency 96% over 12 weeks — qualifies under the flex provision</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Receivers keep their windows; service moves to Ryder drivers</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — your Ryder account team countersigns before tenders shift</span></div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ flexLock }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Lock dedicated rates</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Logged and reversible at renewal · nothing moves without your sign-off</div>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ flexPanelB }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Flex decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Flex Dallas → Austin to brokerage</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#ECF4F9;color:#276A92">Lane soft</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">4 loads/wk · 2 stops · dry van · dedicated today</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:16px 18px">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:8px">Lane spot vs your dedicated cost-to-serve · Apr–Jul</div>
+              <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both" viewBox="0 0 520 190">
+                <g stroke="#ECEDED" stroke-width="1"><line x1="46" y1="29" x2="506" y2="29"></line><line x1="46" y1="56" x2="506" y2="56"></line><line x1="46" y1="83" x2="506" y2="83"></line><line x1="46" y1="110" x2="506" y2="110"></line><line x1="46" y1="137" x2="506" y2="137"></line></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="end"><text x="38" y="33">2.20</text><text x="38" y="60">2.10</text><text x="38" y="87">2.00</text><text x="38" y="114">1.90</text><text x="38" y="141">1.80</text></g>
+                <polygon points="46,56 104,60 162,68 220,80 278,92 336,100 394,108 452,114 506,118 506,46 46,46" fill="rgba(31,122,97,0.09)"></polygon>
+                <line x1="46" y1="46" x2="506" y2="46" stroke="#1D1D20" stroke-width="1.5" stroke-dasharray="5 4"></line>
+                <polyline points="46,56 104,60 162,68 220,80 278,92 336,100 394,108 452,114 506,118" fill="none" stroke="#307CA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="506" cy="118" r="3" fill="#307CA7"></circle>
+                <g font-size="11.5" font-family="Inter, sans-serif" text-anchor="end"><text x="500" y="40" fill="#696B6F">Cost-to-serve $2.14/mi</text><text x="500" y="133" fill="#1D1D20" font-weight="600">Lane spot $1.87/mi</text></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif"><text x="46" y="168">Apr</text><text x="199" y="168" text-anchor="middle">May</text><text x="352" y="168" text-anchor="middle">Jun</text><text x="506" y="168" text-anchor="end">Jul</text></g>
+              </svg>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Lane spot</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$1.87/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">8-week low</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Cost-to-serve</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.14/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">dedicated</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Saves</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">≈$2.2K/mo</div><div style="font-size:11px;color:#696B6F;margin-top:1px">while the lane is soft</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Eligibility passed — 2 stops · dry van · flexible windows · carrier OTD 96.4%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Auto-return — the agent re-checks weekly and pulls loads back when the lane firms</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — Ryder dedicated ops confirms service before any tender moves</span></div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ flexOut }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Flex to brokerage</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Critical loads never flex · logged and reversible · nothing moves without your sign-off</div>
+            </div>
+          </div>
+          </sc-if>
+<sc-if value="{{ flexPanelS }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Storm plan decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Storm plan — 6 loads Thursday</span>
+                  <sc-if value="{{ notApproved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">NWS 041</span></sc-if>
+                  <sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">Weather · Thursday, Jul 9 · Orlando + Atlanta corridors</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:14px 18px">
+              <div style="display:flex;align-items:flex-start;gap:10px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:11px 14px">
+                <svg style="flex:none;margin-top:1px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
+                <span style="font-size:12.5px;color:#655102;line-height:1.5">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
+              </div>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">Recommended plan</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.6">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
+              <sc-if value="{{ notApproved }}">
+              <div style="margin-top:8px"><button onClick="{{ adjToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ adjLinkLabel }}</button></div>
+              <sc-if value="{{ adjOpen }}">
+              <div style="border:1px solid #ECEDED;border-radius:8px;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Orlando pre-load window · 4 loads</div>
+                <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                  <button data-w="6" onClick="{{ adjPickW }}" style="border:0;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ aw6St }}">Wed 6:00 PM</button>
+                  <button data-w="8" onClick="{{ adjPickW }}" style="border:0;border-left:1px solid #C5C6C7;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ aw8St }}">Wed 8:00 PM (+$310)</button>
+                </div>
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-top:12px">Atlanta reroute · 2 loads</div>
+                <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                  <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
+                  <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:10px">Adjustments update the plan summary and cost estimate — nothing is committed until you approve.</div>
+              </div>
+              </sc-if>
+              </sc-if>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">Affected loads · 6</div>
+              <div style="border:1px solid #ECEDED;border-radius:8px;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31307</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Tampa retail loop · Thu 6:00 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31309</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Jacksonville run · Thu 7:30 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31315</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Miami corridor · Thu 5:15 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31321</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Orlando metro · Thu 8:00 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31288</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATL → Savannah corridor · Thu 9:45 AM</span><span style="color:#303235;flex:none">Reroute via I-75 (+40 min)</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31294</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATL → Macon/Columbus · Thu 10:30 AM</span><span style="color:#303235;flex:none">Reroute via I-75 (+40 min)</span></div>
+              </div>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED">
+                  <div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">If you do nothing</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><span style="font-size:12px;color:#696B6F;flex:1">Service failures Thu</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">6</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">Est. exposure</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">≈ $9.8K</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">On-time next week</span><span style="font-size:12.5px;font-weight:600;color:#B45309">▼ ≈ 2.2 pts</span></div>
+                </div>
+                <div style="flex:1;padding:10px 14px">
+                  <div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">With the plan</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><span style="font-size:12px;color:#696B6F;flex:1">Service failures Thu</span><span style="font-size:12.5px;font-weight:600;color:#1F7A61">0</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">Cost to run the plan</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">{{ planCostLabel }}</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">On-time next week</span><span style="font-size:12.5px;font-weight:600;color:#1F7A61">holds at 96.2%</span></div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week's load values · Sources · Load records · Invoice SBG-2026-06</div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <sc-if value="{{ notApproved }}">
+              <button onClick="{{ stormApprove }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Approve plan</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Notifies 6 receivers on approval · logged and reversible</div>
+              </sc-if>
+              <sc-if value="{{ approved }}">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:6px;background:#E8F5F0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61">Plan active — 6 loads covered · receivers notified</span></div>
+              </sc-if>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ rosterPanel }}">
+          <div data-roster="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Agents on shift" style="position:fixed;top:48px;right:0;bottom:0;width:440px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <div style="flex:1"><span style="font-size:15px;font-weight:600;color:#1D1D20">Agents on shift · 8</span><div style="font-size:11.5px;color:#696B6F;margin-top:2px">Tap an agent for its action history</div></div>
+              <button onClick="{{ closeRoster }}" aria-label="Close roster" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:6px 18px">
+              <button data-log="agEta" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agEtaOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agEtaOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">ETA & notifications</span>
+                <sc-if value="{{ agEtaOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agEtaOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDock" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDockOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDockOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Dock scheduling</span>
+                <sc-if value="{{ agDockOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDockOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agAudit" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agAuditOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agAuditOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Invoice audit</span>
+                <sc-if value="{{ agAuditOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agAuditOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agBh" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agBhOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agBhOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Backhaul tender</span>
+                <sc-if value="{{ agBhOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agBhOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDwell" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDwellOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDwellOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Detention & dwell</span>
+                <sc-if value="{{ agDwellOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDwellOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDocs" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDocsOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDocsOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Documents & POD</span>
+                <sc-if value="{{ agDocsOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDocsOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agSafety" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agSafetyOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agSafetyOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Safety coach</span>
+                <sc-if value="{{ agSafetyOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agSafetyOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agFlex" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agFlexOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agFlexOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Adaptive capacity</span>
+                <sc-if value="{{ agFlexOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agFlexOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              
+            </div>
+            <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button data-nav="workforce" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Meet your agents →</button>
+            </div>
+          </div>
+          </sc-if>

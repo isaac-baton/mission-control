@@ -1462,290 +1462,254 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
         </sc-if>
 
         <sc-if value="{{ isAgents }}">
-        <div data-screen-label="AI agents" style="padding:24px 24px 140px">
-          <div style="max-width:1040px;margin:0 auto">
+        <div data-screen-label="AI agents" style="padding:40px 24px 150px">
+          <div style="width:100%;max-width:1060px;margin:0 auto">
 
             <!-- Header -->
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Autopilot</span><span style="flex:1"></span><span style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#A9AAAC">Updated 6:02 AM</span></div>
-            <div style="font-size:24px;font-weight:600;color:#1D1D20;margin-top:10px;line-height:1.3">Good morning, Dana — you have <span style="color:#307CA7">{{ todoCount }} {{ todoWord }}</span> and <span style="color:#307CA7">4 topics</span>.</div>
-            <div style="font-size:12.5px;color:#696B6F;margin-top:6px">Runs within your guardrails · every action logged and reversible · nothing cost-bearing ships without you</div>
-
-            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Active risk — Thursday, Jul 9<sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;margin-left:10px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;background:#E8F5F0;color:#1F7A61">Plan active</span></sc-if></div><sc-if value="{{ riskCollapsed }}"><div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61;flex:1">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified.</span><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Show details</button></div></sc-if><sc-if value="{{ riskOpen }}"><div><sc-if value="{{ approved }}"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Hide details</button></div></sc-if><div style="display:flex;align-items:flex-start;gap:12px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:14px 18px;margin-top:16px">
-              <svg style="flex:none;margin-top:1px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
-              <span style="font-size:13.5px;color:#655102;line-height:1.55">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
+            <div style="text-align:center">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Autopilot · overnight → this morning</div>
+              <sc-if value="{{ notAllClear }}">
+              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">Your agents worked. <span style="color:#307CA7">{{ todoCount }}</span> {{ feedThingWord }} need{{ feedVerbS }} you.</div>
+              </sc-if>
+              <sc-if value="{{ allClear }}">
+              <div style="font-size:28px;font-weight:650;color:#1D1D20;margin-top:12px;letter-spacing:-0.01em">All clear — <span style="color:#1F7A61">5 handled</span> this morning.</div>
+              </sc-if>
+              <div style="font-size:13px;color:#696B6F;margin-top:10px"><button onClick="{{ openRoster }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;color:#307CA7;cursor:pointer">8 agents on shift</button> · every action logged and reversible · nothing cost-bearing ships without you</div>
             </div>
 
-            <!-- At-risk loads table -->
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden;margin-top:16px">
-              <table style="width:100%;border-collapse:collapse">
-                <thead>
-                  <tr>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Load</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Route</th>
-                    <th style="text-align:right;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Stops</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Scheduled</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Risk</th>
-                    <th style="text-align:left;padding:11px 16px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31307</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Tampa retail loop</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">8</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 6:00 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31309</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Jacksonville run</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 7:30 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31315</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Miami corridor</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">9</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 5:15 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31321</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ORL → Orlando metro</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">7</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 8:00 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Pre-load Wed 6:00 PM</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31288</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Savannah corridor</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">5</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 9:45 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                  <tr style="border-top:1px solid #E3E4E5" style-hover="background:#F5F6F6">
-                    <td style="padding:13px 16px;font-size:13px;font-weight:500;color:#1D1D20;white-space:nowrap">SBG-31294</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235">ATL → Macon/Columbus</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;text-align:right;font-variant-numeric:tabular-nums">6</td>
-                    <td style="padding:13px 16px;font-size:13px;color:#303235;white-space:nowrap">Thu 10:30 AM</td>
-                    <td style="padding:13px 16px"><span style="display:inline-flex;gap:4px"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Weather</span><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#F5F6F6;color:#44464B">Dock</span></span></td>
-                    <td style="padding:13px 16px;white-space:nowrap"><sc-if value="{{ notApproved }}"><span style="font-size:13px;color:#303235">Reroute via I-75 (+40 min)</span></sc-if><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#303235"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Scheduled</span></sc-if></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Plan card -->
-            <div data-aiglow="card" style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px;margin-top:16px">
-              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Recommended plan</div>
-              <div style="font-size:13.5px;color:#303235;line-height:1.6;margin-top:10px;max-width:820px">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
-              <div style="display:flex;gap:10px;margin-top:16px">
-                <sc-if value="{{ notApproved }}"><button onClick="{{ approve }}" style="display:inline-flex;align-items:center;gap:8px;background:#303235;color:#fff;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" style-hover="background:#1D1D20">Approve plan</button></sc-if>
-                <sc-if value="{{ approved }}"><button disabled="{{ true }}" style="display:inline-flex;align-items:center;gap:8px;background:#ECEDED;color:#44464B;border:0;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:default;font-family:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Plan approved</button></sc-if>
-                <sc-if value="{{ notApproved }}"><button style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:9px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" onClick="{{ adjToggle }}" style-hover="background:#F5F6F6">Adjust</button></sc-if>
+            <!-- Analytics -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px">
+              <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
+                <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Storm exposure</div>
+                <div style="font-size:24px;font-weight:650;color:#1D1D20;margin-top:8px">$9.8K <span style="font-size:14px;color:#B45309">→ $0</span></div>
+                <sc-if value="{{ notApproved }}"><div style="font-size:11.5px;color:#B45309;margin-top:6px">● plan staged — needs you</div></sc-if>
+                <sc-if value="{{ approved }}"><div style="font-size:11.5px;color:#1F7A61;margin-top:6px">● plan active — receivers notified</div></sc-if>
               </div>
-              <sc-if value="{{ adjOpen }}">
-              <div style="border-top:1px solid #ECEDED;margin-top:16px;padding-top:14px">
-                <div style="display:flex;gap:28px;flex-wrap:wrap">
-                  <div>
-                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Orlando pre-load window · 4 loads</div>
-                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
-                      <button data-w="6" onClick="{{ adjPickW }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw6St }}">Wed 6:00 PM</button>
-                      <button data-w="8" onClick="{{ adjPickW }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ aw8St }}">Wed 8:00 PM (+$310)</button>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Atlanta reroute · 2 loads</div>
-                    <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
-                      <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
-                      <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:7px 13px;font-size:12.5px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
-                    </div>
-                  </div>
+              <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
+                <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">Market upside</div>
+                <div style="font-size:24px;font-weight:650;color:#1D1D20;margin-top:8px">$5.6K<span style="font-size:14px;color:#696B6F">/mo</span></div>
+                <div style="font-size:11.5px;margin-top:6px;{{ mwPendStyle }}">{{ mwPendLabel }}</div>
+              </div>
+              <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
+                <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">{{ ledgerL1 }}</div>
+                <div style="font-size:24px;font-weight:650;color:#1F7A61;margin-top:8px">{{ ledgerV1 }}</div>
+                <svg width="100%" height="20" viewBox="0 0 120 20" preserveAspectRatio="none" style="margin-top:6px"><polyline points="0,16 20,15 40,12 60,13 80,9 100,6 120,3" fill="none" stroke="#1F7A61" stroke-width="1.5"></polyline></svg>
+              </div>
+              <div style="background:#fff;border:1px solid #ECEDEE;border-radius:14px;padding:18px 20px;box-shadow:0 2px 12px rgba(16,17,20,0.04)">
+                <div style="font-size:10.5px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:#696B6F">On-time · June</div>
+                <div style="font-size:24px;font-weight:650;color:#1D1D20;margin-top:8px">96.2%</div>
+                <svg width="100%" height="20" viewBox="0 0 120 20" preserveAspectRatio="none" style="margin-top:6px"><polyline points="0,11 20,10 40,13 60,9 80,8 100,10 120,5" fill="none" stroke="#307CA7" stroke-width="1.5"></polyline></svg>
+              </div>
+            </div>
+
+            <!-- Feed -->
+            <div style="max-width:780px;margin:0 auto">
+            <div style="position:relative;margin-top:46px;padding-left:40px">
+              <div style="position:absolute;left:13px;top:8px;bottom:0;width:2px;background:linear-gradient(#E3E4E5, #E3E4E5 75%, transparent)"></div>
+
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#A9AAAC;margin-bottom:22px">This morning</div>
+
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:04 AM · ETA &amp; notifications</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pushed an updated ETA to 2 receivers on the Savannah corridor — dock delay absorbed, downstream stops hold.</div>
+              </div>
+
+              <!-- Storm decision -->
+              <sc-if value="{{ notApproved }}">
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #F0C005"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Autopilot</div>
+                <div style="background:#fff;border:1px solid #ECEDEE;border-left:3px solid #F0C005;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:20px 24px;margin-top:8px">
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:15.5px;font-weight:600;color:#1D1D20">Storm plan — 6 loads Thursday</span></div>
+                  <div style="font-size:13px;color:#696B6F;margin-top:9px;line-height:1.65">Pre-load 4 Orlando loads, reroute 2 Atlanta via I-75 · customer deliveries unaffected · <b style="color:#1D1D20;font-weight:600">$9.8K exposure → $0</b> at {{ planCostLabel }}</div>
+                  <div style="display:flex;gap:10px;margin-top:16px"><button onClick="{{ approve }}" style="font-family:inherit;background:#1D1D20;color:#fff;border:0;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:500;cursor:pointer">Approve plan</button><button data-f="s" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:9px 16px;font-size:13px;cursor:pointer" style-hover="background:#F5F6F6">Review details</button></div>
                 </div>
-                <div style="font-size:12px;color:#696B6F;margin-top:12px">Adjustments update the plan summary and cost estimate above — nothing is committed until you approve.</div>
               </div>
               </sc-if>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px"><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg><span style="font-size:13px;font-weight:600;color:#44464B">If you do nothing</span></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#655102">6</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Est. exposure — redelivery + detention</span><b style="font-weight:600;color:#655102">≈ $9.8K</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#655102">▼ ≈ 2.2 pts</b></div></div><div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:18px 22px"><div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg><span style="font-size:13px;font-weight:600;color:#1D1D20">With the plan</span><sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:#303235"><span>Service failures Thursday</span><b style="font-weight:600;color:#1F7A61">0 — deliveries unaffected</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>Cost to run the plan</span><b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b></div><div style="display:flex;justify-content:space-between;gap:12px;margin-top:9px;font-size:13px;color:#303235"><span>On-time next week</span><b style="font-weight:600;color:#1F7A61">holds at 96.2%</b></div></div></div><div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week's load values · Sources · Load records · Invoice SBG-2026-06</div></div></sc-if>
-
-            <!-- Market watch: adaptive capacity — flex moves in both directions -->
-            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 4px">Market watch — Adaptive capacity</div>
-            <div style="font-size:12.5px;color:#696B6F;margin-bottom:10px">Your contract's flex provision lets eligible loads move between dedicated and brokerage. The agent re-prices every lane weekly, in both directions — analysis that used to take a re-engineering cycle.</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
-
-              <!-- Scenario A: rates rising → lock TM/brokerage lanes into dedicated -->
-              <sc-if value="{{ flexLockDone }}">
-              <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">
-                <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span style="font-size:13px;font-weight:500;color:#1F7A61;line-height:1.5">Rates locked — MEM → BNA and ATL → CLT move to dedicated at $2.11/mi. First tenders shift Monday; your Ryder team is countersigning.</span>
+              <sc-if value="{{ approved }}">
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Autopilot</div>
+                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified. <button data-f="s" onClick="{{ openFlexPanel }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Show details</button></div>
               </div>
               </sc-if>
+
+              <!-- Market: rate lock -->
               <sc-if value="{{ flexLockPending }}">
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="font-size:14px;font-weight:600;color:#1D1D20;flex:1">Lock in dedicated rates</span>
-                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Rates rising</span>
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #B48A09"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
+                <div style="background:#fff;border:1px solid #ECEDEE;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:18px 24px;margin-top:8px">
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#FEF9E6;color:#655102;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Spot is up 14% — lock 2 lanes into dedicated</span></div>
+                  <div style="font-size:13px;color:#696B6F;margin-top:8px;line-height:1.65">MEM → BNA + ATL → CLT at your contracted $2.11/mi · <b style="color:#1D1D20;font-weight:600">≈$3.4K/mo below market</b>, held 12 months</div>
+                  <div style="margin-top:13px"><button data-f="a" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:8px 15px;font-size:12.5px;font-weight:500;cursor:pointer" style-hover="background:#F5F6F6">Review &amp; lock →</button></div>
                 </div>
-                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px">Spot is up <b style="font-weight:600;color:#1D1D20">14% since April</b>. Your two overflow lanes — MEM → BNA and ATL → CLT, 9 loads/wk — still ride the spot market through brokerage.</div>
-                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:6px">Locking them into dedicated at your contracted <b style="font-weight:600;color:#1D1D20">$2.11/mi</b> (spot ≈ $2.38/mi) runs <b style="font-weight:600;color:#1D1D20">≈$3.4K/mo below today's market</b> — and the rate holds for 12 months.</div>
-                <sc-if value="{{ flexAOpen }}">
-                <div style="border-top:1px solid #ECEDED;margin-top:12px;padding-top:11px;animation:rev .2s ease both">
-                  <div style="font-size:12px;color:#303235;line-height:1.7">Volume consistency 96% over 12 weeks — qualifies for dedicated capacity under the flex provision.<br>Removes ±$38K/quarter of rate exposure from your transportation budget.<br>Service upgrades to Ryder drivers and equipment; receivers keep their windows.</div>
-                  <div style="font-size:11.5px;color:#696B6F;line-height:1.6;margin-top:9px">Dual sign-off: your approval here, then your Ryder account team countersigns before tenders shift. Logged and reversible at renewal.</div>
-                  <button onClick="{{ flexLock }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:11px">Lock dedicated rates</button>
-                </div>
-                </sc-if>
-                <div style="margin-top:11px">
-                  <button data-f="a" onClick="{{ flexToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ flexALabel }}</button>
-                </div>
+              </div>
+              </sc-if>
+              <sc-if value="{{ flexLockDone }}">
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
+                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Rates locked — 2 lanes move to dedicated at $2.11/mi. Your Ryder team is countersigning.</div>
               </div>
               </sc-if>
 
-              <!-- Scenario B: one lane soft → flex eligible dedicated loads to brokerage -->
-              <sc-if value="{{ flexOutDone }}">
-              <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">
-                <svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span style="font-size:13px;font-weight:500;color:#1F7A61;line-height:1.5">Dallas → Austin flexing to brokerage at ≈$1.87/mi. Weekly re-check armed — loads return to dedicated the moment the lane firms.</span>
-              </div>
-              </sc-if>
+              <!-- Market: flex out -->
               <sc-if value="{{ flexOutPending }}">
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px">
-                <div style="display:flex;align-items:center;gap:8px">
-                  <span style="font-size:14px;font-weight:600;color:#1D1D20;flex:1">One lane prices below dedicated</span>
-                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#ECF4F9;color:#276A92;white-space:nowrap">Lane soft</span>
-                </div>
-                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:8px">Even in a rising market, lanes move independently. Dallas → Austin — 4 loads/wk, 2 stops, dry van — prices at <b style="font-weight:600;color:#1D1D20">≈$1.87/mi on the spot market</b> against your <b style="font-weight:600;color:#1D1D20">$2.14/mi</b> dedicated cost-to-serve.</div>
-                <div style="font-size:12.5px;color:#303235;line-height:1.55;margin-top:6px">Flexing it to brokerage saves <b style="font-weight:600;color:#1D1D20">≈$2.2K/mo</b> while the lane stays soft.</div>
-                <sc-if value="{{ flexBOpen }}">
-                <div style="border-top:1px solid #ECEDED;margin-top:12px;padding-top:11px;animation:rev .2s ease both">
-                  <div style="font-size:12px;color:#303235;line-height:1.7">Eligibility passed: 2 stops · dry van · flexible windows · carrier OTD 96.4%.<br>Critical loads never flex — eligibility rules are set in your contract, and this lane clears them.<br>The agent re-checks weekly and pulls loads back to dedicated when the lane firms.</div>
-                  <div style="font-size:11.5px;color:#696B6F;line-height:1.6;margin-top:9px">Dual sign-off: your approval here, then Ryder dedicated ops confirms service requirements before any tender moves.</div>
-                  <button onClick="{{ flexOut }}" style="background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:8px 14px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:11px">Flex to brokerage</button>
-                </div>
-                </sc-if>
-                <div style="margin-top:11px">
-                  <button data-f="b" onClick="{{ flexToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ flexBLabel }}</button>
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#ECF4F9;border:2.5px solid #307CA7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
+                <div style="background:#fff;border:1px solid #ECEDEE;border-radius:12px;box-shadow:0 2px 12px rgba(16,17,20,0.05);padding:18px 24px;margin-top:8px">
+                  <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;background:#ECF4F9;color:#276A92;white-space:nowrap">Needs you</span><span style="font-size:14.5px;font-weight:600;color:#1D1D20">Dallas → Austin prices below dedicated — flex it out</span></div>
+                  <div style="font-size:13px;color:#696B6F;margin-top:8px;line-height:1.65">$1.87 spot vs $2.14 cost-to-serve · <b style="color:#1D1D20;font-weight:600">≈$2.2K/mo</b> · loads return when the lane firms</div>
+                  <div style="margin-top:13px"><button data-f="b" onClick="{{ openFlexPanel }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:7px;padding:8px 15px;font-size:12.5px;font-weight:500;cursor:pointer" style-hover="background:#F5F6F6">Review &amp; flex →</button></div>
                 </div>
               </div>
               </sc-if>
+              <sc-if value="{{ flexOutDone }}">
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">6:02 AM · Adaptive capacity</div>
+                <div style="font-size:13.5px;color:#1F7A61;font-weight:500;margin-top:4px;line-height:1.6">Dallas → Austin flexing to brokerage at ≈$1.87/mi. Loads return the moment the lane firms.</div>
+              </div>
+              </sc-if>
+
+              <!-- Also waiting: tender + trailer -->
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">Also waiting</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+                  <sc-if value="{{ tenderOn }}">
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Backhaul tender</b> · ≈$3.9K/wk · expires Fri <button data-q="q5" onClick="{{ askQ }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Review →</button> <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;color:#A9AAAC;cursor:pointer;margin-left:6px">Dismiss</button></div>
+                  </sc-if>
+                  <sc-if value="{{ tenderSentR }}">
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Tender sent — MEM → DAL to the network desk</div>
+                  </sc-if>
+                  <sc-if value="{{ tenderDismissedR }}">
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#696B6F">Tender dismissed — the agent re-scouts next cycle</div>
+                  </sc-if>
+                  <sc-if value="{{ wNotSched }}">
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Trailer 4482</b> · Sat service window <button onClick="{{ wSchedule }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Schedule →</button></div>
+                  </sc-if>
+                  <sc-if value="{{ wSched }}">
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Trailer 4482 scheduled — Sat Jul 12 · Orlando DC-04</div>
+                  </sc-if>
+                </div>
+              </div>
+
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">5:52 AM · ETA &amp; notifications</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">A telematics unit went quiet near Tyler, TX — re-polled it and the feed came back on its own. Load on plan.</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">5:40 AM · Safety coach</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Briefed Thursday's drivers on the storm corridor — crosswinds, staging changes, revised windows.</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:38px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">Watching this week</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6"><b style="color:#1D1D20;font-weight:600">Tampa docks</b> — 9 of 12 June misses trace here, recurs Fri PM · <b style="color:#1D1D20;font-weight:600">Atlanta Saturday</b> — two-route plan holds 40 min HOS margin</div>
+                <div style="display:flex;gap:8px;margin-top:10px"><button data-q="q1" onClick="{{ askQ }}" style="padding:5px 12px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Tampa dock misses</button><button data-q="q6" onClick="{{ askQ }}" style="padding:5px 12px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Saturday consolidation</button></div>
+              </div>
+
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#A9AAAC;margin-bottom:22px">Overnight</div>
+
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">Documents &amp; POD</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Matched <b style="color:#1D1D20;font-weight:600">214 PODs</b> to their loads, chased 2 down from receivers, and drafted a <b style="color:#1D1D20;font-weight:600">$312</b> OS&amp;D claim for your sign-off.</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:26px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">Dock scheduling</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Reshuffled 3 dock slots at Orlando DC-04 around the pre-load window — receivers confirmed, no route impact.</div>
+              </div>
+
+              <div style="position:relative;margin-bottom:38px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                <div style="font-size:11.5px;color:#A9AAAC">Adaptive capacity</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Re-priced all <b style="color:#1D1D20;font-weight:600">14 lanes</b> against the spot market — 11 within band, 3 flagged, 2 staged above for your sign-off.</div>
+              </div>
+
+              <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                <div style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#A9AAAC">This month</div>
+                <div style="font-size:13.5px;color:#44464B;margin-top:8px;line-height:1.7"><b style="color:#1F7A61;font-weight:600">{{ ledgerV1 }}</b> recovered · <b style="color:#1D1D20;font-weight:600">≈$458K/yr</b> identified in backhaul · on-time held at <b style="color:#1D1D20;font-weight:600">96.2%</b><br><button data-nav="reviews" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13.5px;color:#307CA7;cursor:pointer">Read the June business review →</button></div>
+              </div>
             </div>
 
-            <!-- Decisions: the queue is the hero -->
-            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Decisions</div>
-            <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);overflow:hidden">
-              <div style="margin-top:-1px">
-                <sc-if value="{{ tenderOn }}">
-                <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid #E3E4E5;flex-wrap:wrap;min-height:60px">
-                  <span style="width:28px;height:28px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
-                  <div style="flex:1;min-width:280px">
-                    <div style="font-size:14px;font-weight:600;color:#1D1D20">MEM → DAL backhaul tender draft</div>
-                    <div style="font-size:12.5px;color:#696B6F;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">3 loads/wk ≈ <b style="font-weight:600;color:#303235">$3.9K/wk gross</b>, credited to your invoice · draft expires Friday</div>
+            <!-- History: collapsed until asked for -->
+            <sc-if value="{{ tlHistClosed }}">
+            <div style="text-align:center;margin-top:44px">
+              <button onClick="{{ tlHistToggle }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:999px;padding:10px 22px;font-size:13px;font-weight:500;cursor:pointer;box-shadow:0 2px 12px rgba(16,17,20,0.05)" style-hover="background:#F5F6F6">See all history →</button>
+            </div>
+            </sc-if>
+            <sc-if value="{{ tlHistOpen }}">
+            <div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:44px;padding-top:28px;border-top:1px solid #E3E4E5">
+                <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:#696B6F">History</span>
+                <span style="flex:1"></span>
+                <span style="font-size:12px;color:#696B6F">Jump to</span>
+                <button data-m="jul" onClick="{{ tlJump }}" style="font-family:inherit;background:#1D1D20;color:#fff;border:0;border-radius:999px;padding:5px 13px;font-size:12px;font-weight:500;cursor:pointer">July</button>
+                <button data-m="jun" onClick="{{ tlJump }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:999px;padding:5px 13px;font-size:12px;cursor:pointer" style-hover="background:#F5F6F6">June</button>
+                <button data-m="may" onClick="{{ tlJump }}" style="font-family:inherit;background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:999px;padding:5px 13px;font-size:12px;cursor:pointer" style-hover="background:#F5F6F6">May</button>
+                <button onClick="{{ tlHistToggle }}" style="font-family:inherit;background:none;border:0;color:#696B6F;font-size:12px;cursor:pointer;padding:5px 6px">Collapse</button>
+              </div>
+
+              <div data-tlm="jul" style="margin-top:26px">
+                <div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:650;color:#1D1D20">July</span><span style="font-size:12px;color:#696B6F">to date · 96 agent actions · 2 moves staged · $186 claim ready</span></div>
+                <div style="position:relative;margin-top:18px;padding-left:40px">
+                  <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:#E9EAEB"></div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Mon Jul 6 · ETA &amp; notifications</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Answered a receiver's ETA query from the live plan in 40 seconds — Savannah receiving, tomorrow's window.</div>
                   </div>
-                  <span style="display:inline-flex;align-items:center;gap:8px;flex:none">
-                    <button data-q="q5" onClick="{{ askQ }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Review enrollment</button>
-                    <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:7px 4px;font-family:inherit;font-size:12.5px;font-weight:500;color:#696B6F;cursor:pointer">Dismiss</button>
-                  </span>
-                </div>
-                </sc-if>
-                <sc-if value="{{ wNotSched }}">
-                <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-top:1px solid #E3E4E5;flex-wrap:wrap;min-height:60px">
-                  <span style="width:28px;height:28px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path><circle cx="17" cy="18" r="2"></circle><circle cx="7" cy="18" r="2"></circle></svg></span>
-                  <div style="flex:1;min-width:280px">
-                    <div style="font-size:14px;font-weight:600;color:#1D1D20">Trailer 4482 preventive service</div>
-                    <div style="font-size:12.5px;color:#696B6F;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Open window Saturday at Orlando DC-04 · no route impact this week</div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#FEF9E6;border:2.5px solid #B48A09"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Thu Jul 2 · Safety coach</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Routed a repeat following-distance pattern to your Ryder safety lead — human review, not automation.</div>
                   </div>
-                  <span style="display:inline-flex;align-items:center;flex:none">
-                    <button onClick="{{ wSchedule }}" style="background:#fff;border:1px solid #C5C6C7;color:#303235;border-radius:6px;padding:7px 13px;font-size:12.5px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Schedule service</button>
-                  </span>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Thu Jul 2 · Adaptive capacity</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Cleared Dallas → Austin for flex — 2 stops, dry van, flexible windows, carrier OTD 96.4%.</div>
+                  </div>
+                  <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Wed Jul 1 · Adaptive capacity</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Weekly sweep re-priced 14 lanes against spot — 11 within band, 3 flagged for review.</div>
+                  </div>
                 </div>
-                </sc-if>
-                <sc-if value="{{ wSched }}">
-                <div style="display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid #E3E4E5;font-size:13px;font-weight:500;color:#1F7A61"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Trailer 4482 service scheduled — Sat Jul 12 · Orlando DC-04.</div>
-                </sc-if>
-                <sc-if value="{{ decQueueEmpty }}">
-                <div style="display:flex;align-items:center;gap:10px;padding:11px 18px;border-top:1px solid #E3E4E5;font-size:13px;color:#696B6F"><svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>All caught up — nothing needs you right now.</div>
-                </sc-if>
+              </div>
+
+              <div data-tlm="jun" style="margin-top:40px">
+                <div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:650;color:#1D1D20">June</span><span style="font-size:12px;color:#696B6F">$1,120 recovered · OTD 96.2% · 214 lines audited · 128 agent actions</span></div>
+                <div style="position:relative;margin-top:18px;padding-left:40px">
+                  <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:#E9EAEB"></div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Mon Jun 29 · Adaptive capacity</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Pulled 2 loads back from brokerage — the Nashville lane firmed 9% in two weeks; returned to dedicated at contract rate.</div>
+                  </div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#ECF4F9;border:2.5px solid #307CA7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">Fri Jun 26 · Adaptive capacity</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Learned from your override — the Waco lane stays on dedicated for driver familiarity; now exempt from flex analysis.</div>
+                  </div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#E8F5F0;border:2.5px solid #1F7A61"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">June cycle · Invoice audit</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Audited 214 invoice lines against contract rates — $1,120 recovered, one $214 duplicate lumper fee disputed.</div>
+                  </div>
+                  <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">June cycle · Safety coach</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">June closed with zero preventable incidents — clean streak at 61 days, TTM rate 0.4/100K mi and trending down.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-tlm="may" style="margin-top:40px;padding-bottom:8px">
+                <div style="display:flex;align-items:baseline;gap:12px"><span style="font-size:16px;font-weight:650;color:#1D1D20">May</span><span style="font-size:12px;color:#696B6F">OTD 95.8% · April incident review closed · 84 agent actions</span></div>
+                <div style="position:relative;margin-top:18px;padding-left:40px">
+                  <div style="position:absolute;left:13px;top:6px;bottom:0;width:2px;background:linear-gradient(#E9EAEB, transparent)"></div>
+                  <div style="position:relative;margin-bottom:22px"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">May 2 · Safety coach</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">Closed the April incident review — coaching plan completed; the April business review carries the record.</div>
+                  </div>
+                  <div style="position:relative"><span style="position:absolute;left:-32.5px;top:4px;width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid #C5C6C7"></span>
+                    <div style="font-size:11.5px;color:#A9AAAC">May · Documents &amp; POD</div>
+                    <div style="font-size:13.5px;color:#44464B;margin-top:4px;line-height:1.6">198 PODs matched · 3 chased from receivers · zero claims carried into June.</div>
+                  </div>
+                </div>
+                <div style="font-size:12px;color:#696B6F;margin-top:22px;padding-left:40px">Earlier months live in your business reviews — <button data-nav="reviews" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12px;color:#307CA7;cursor:pointer">open Reviews →</button></div>
               </div>
             </div>
-
-            <!-- Value: three big numbers, the page's moment of rest -->
-            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Intelligence this month</div>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
-                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ ledgerL1 }}</div>
-                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">{{ ledgerV1 }}</div>
-              </div>
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
-                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">{{ ledgerL2 }}</div>
-                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">6</div>
-              </div>
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
-                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Identified in backhaul</div>
-                <div style="font-size:22px;font-weight:650;color:#1D1D20;margin-top:5px;font-variant-numeric:tabular-nums">≈ $458K/yr</div>
-              </div>
-            </div>
-
-            <!-- Agents: workforce health, glanceable -->
-                        <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Your workforce</div>
-            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:12px 18px">
-              <button data-log="agEta" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agEtaOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agEtaOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>ETA &amp; notifications</button>
-              <button data-log="agDock" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDockOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDockOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Dock scheduling</button>
-              <button data-log="agAudit" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agAuditOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agAuditOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Invoice audit</button>
-              <button data-log="agBh" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agBhOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agBhOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Backhaul tender</button>
-              <button data-log="agDwell" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDwellOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDwellOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Detention &amp; dwell</button>
-              <button data-log="agDocs" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agDocsOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agDocsOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Documents &amp; POD</button>
-              <button data-log="agSafety" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agSafetyOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agSafetyOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Safety coach</button>
-              <button data-log="agFlex" onClick="{{ openAgLog }}" style="display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #E3E4E5;border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:500;color:#1D1D20;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 1px 3px rgba(0,0,0,0.15)" style-hover="background:#F5F6F6"><sc-if value="{{ agFlexOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081"></span></sc-if><sc-if value="{{ agFlexOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7"></span></sc-if>Adaptive capacity</button>
-              <span style="flex:1"></span>
-              <button data-nav="workforce" onClick="{{ navTo }}" style="background:none;border:0;padding:6px 4px;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Meet your agents →</button>
-            </div>
-
-            <!-- Topics: optional reading, fact fragments -->
-            <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Topics · 4</div>
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Storm response — Thursday, Jul 9</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px">
-                  <sc-if value="{{ notApproved }}"><div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">6 notifications drafted</b> — send on your approval</div></sc-if>
-                  <sc-if value="{{ approved }}"><div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">6 receivers notified</b> — pre-loads and reroutes scheduled</div></sc-if>
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Dock slots held</b> Wed 6:00–7:00 PM · Orlando DC-04</div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q4" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">At-risk loads</button><button data-nav="risk" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View the storm plan</button></div>
-                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · NWS advisory 041 · Load schedule, week of Jul 6</div>
-              </div>
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">June billing — closed clean</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px">
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">214 lines matched</b> to rate schedule C — zero off-contract</div>
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">9 disputes carried</b> · 4.2-day avg resolution</div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q2" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Why was June 8% higher?</button><button data-nav="reviews" onClick="{{ navTo }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">View business review</button></div>
-                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Invoice SBG-2026-06 · Contract SBG-DTS-2024</div>
-              </div>
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Watching this week</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px">
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Tampa docks</b> — 9 of 12 June misses trace here; recurs Fri PM</div>
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Atlanta Saturday</b> — two-route plan holds 40 min HOS margin</div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q1" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Tampa dock misses</button><button data-q="q6" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Saturday consolidation</button></div>
-                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Load records · Site telemetry</div>
-              </div>
-              <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
-                <div style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span><span style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul opportunity — ≈ $458K/yr gross</span></div>
-                <div style="display:flex;flex-direction:column;gap:6px">
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">3 return lanes run empty</b> — MEM → DAL is 44% of value</div>
-                  <div style="font-size:12.5px;color:#696B6F;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><b style="font-weight:600;color:#303235">Revenue share</b> returns ≈ $320K/yr to SBG</div>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px"><button data-q="q3" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Backhaul value</button><button data-q="q5" onClick="{{ askQ }}" style="padding:5px 11px;border:1px solid #C5C6C7;border-radius:999px;background:#fff;font-size:11.5px;color:#303235;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:#F5F6F6">Enrollment steps</button></div>
-                <div style="font-size:11.5px;color:#A9AAAC;margin-top:2px">Sources · Ryder network freight availability · Market rate index</div>
-              </div>
+            </sc-if>
             </div>
 
           </div>
@@ -2136,6 +2100,244 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
             <!-- Footer -->
             <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
               <div style="font-size:11.5px;color:#696B6F;line-height:1.5">Every action is logged and reversible. Your approvals and edits tune this agent's guardrails.</div>
+            </div>
+          </div>
+          </sc-if>
+
+      <sc-if value="{{ flexPanelA }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Rate lock decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Lock in dedicated rates</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Spot ↑14%</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">MEM → BNA + ATL → CLT · 9 loads/wk · brokerage today</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:16px 18px">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:8px">Spot vs your contracted rate · Apr–Jul</div>
+              <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both" viewBox="0 0 520 190">
+                <g stroke="#ECEDED" stroke-width="1"><line x1="46" y1="29" x2="506" y2="29"></line><line x1="46" y1="56" x2="506" y2="56"></line><line x1="46" y1="83" x2="506" y2="83"></line><line x1="46" y1="110" x2="506" y2="110"></line><line x1="46" y1="137" x2="506" y2="137"></line></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="end"><text x="38" y="33">2.40</text><text x="38" y="60">2.30</text><text x="38" y="87">2.20</text><text x="38" y="114">2.10</text><text x="38" y="141">2.00</text></g>
+                <polygon points="130,107 162,104 220,97 278,88 336,74 394,60 452,46 506,35 506,107" fill="rgba(180,138,9,0.10)"></polygon>
+                <line x1="46" y1="107" x2="506" y2="107" stroke="#1D1D20" stroke-width="1.5" stroke-dasharray="5 4"></line>
+                <polyline points="46,113 104,110 162,104 220,97 278,88 336,74 394,60 452,46 506,35" fill="none" stroke="#307CA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="506" cy="35" r="3" fill="#307CA7"></circle>
+                <g font-size="11.5" font-family="Inter, sans-serif" text-anchor="end"><text x="500" y="26" fill="#1D1D20" font-weight="600">Spot $2.38/mi</text><text x="500" y="122" fill="#696B6F">Contracted $2.11/mi</text></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif"><text x="46" y="168">Apr</text><text x="199" y="168" text-anchor="middle">May</text><text x="352" y="168" text-anchor="middle">Jun</text><text x="506" y="168" text-anchor="end">Jul</text></g>
+              </svg>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Spot today</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.38/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">↑14% since Apr</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Contracted</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.11/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">held 12 months</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Exposure removed</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">±$38K/qtr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">budget stabilized</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Volume consistency 96% over 12 weeks — qualifies under the flex provision</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Receivers keep their windows; service moves to Ryder drivers</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — your Ryder account team countersigns before tenders shift</span></div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ flexLock }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Lock dedicated rates</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Logged and reversible at renewal · nothing moves without your sign-off</div>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ flexPanelB }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Flex decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Flex Dallas → Austin to brokerage</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#ECF4F9;color:#276A92">Lane soft</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">4 loads/wk · 2 stops · dry van · dedicated today</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:16px 18px">
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-bottom:8px">Lane spot vs your dedicated cost-to-serve · Apr–Jul</div>
+              <svg style="width:100%;height:auto;display:block;animation:chartIn .3s ease both" viewBox="0 0 520 190">
+                <g stroke="#ECEDED" stroke-width="1"><line x1="46" y1="29" x2="506" y2="29"></line><line x1="46" y1="56" x2="506" y2="56"></line><line x1="46" y1="83" x2="506" y2="83"></line><line x1="46" y1="110" x2="506" y2="110"></line><line x1="46" y1="137" x2="506" y2="137"></line></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif" text-anchor="end"><text x="38" y="33">2.20</text><text x="38" y="60">2.10</text><text x="38" y="87">2.00</text><text x="38" y="114">1.90</text><text x="38" y="141">1.80</text></g>
+                <polygon points="46,56 104,60 162,68 220,80 278,92 336,100 394,108 452,114 506,118 506,46 46,46" fill="rgba(31,122,97,0.09)"></polygon>
+                <line x1="46" y1="46" x2="506" y2="46" stroke="#1D1D20" stroke-width="1.5" stroke-dasharray="5 4"></line>
+                <polyline points="46,56 104,60 162,68 220,80 278,92 336,100 394,108 452,114 506,118" fill="none" stroke="#307CA7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                <circle cx="506" cy="118" r="3" fill="#307CA7"></circle>
+                <g font-size="11.5" font-family="Inter, sans-serif" text-anchor="end"><text x="500" y="40" fill="#696B6F">Cost-to-serve $2.14/mi</text><text x="500" y="133" fill="#1D1D20" font-weight="600">Lane spot $1.87/mi</text></g>
+                <g fill="#696B6F" font-size="11" font-family="Inter, sans-serif"><text x="46" y="168">Apr</text><text x="199" y="168" text-anchor="middle">May</text><text x="352" y="168" text-anchor="middle">Jun</text><text x="506" y="168" text-anchor="end">Jul</text></g>
+              </svg>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Lane spot</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$1.87/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">8-week low</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Cost-to-serve</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$2.14/mi</div><div style="font-size:11px;color:#696B6F;margin-top:1px">dedicated</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Saves</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">≈$2.2K/mo</div><div style="font-size:11px;color:#696B6F;margin-top:1px">while the lane is soft</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Eligibility passed — 2 stops · dry van · flexible windows · carrier OTD 96.4%</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Auto-return — the agent re-checks weekly and pulls loads back when the lane firms</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Dual sign-off — Ryder dedicated ops confirms service before any tender moves</span></div>
+              </div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ flexOut }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Flex to brokerage</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Critical loads never flex · logged and reversible · nothing moves without your sign-off</div>
+            </div>
+          </div>
+          </sc-if>
+<sc-if value="{{ flexPanelS }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Storm plan decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Storm plan — 6 loads Thursday</span>
+                  <sc-if value="{{ notApproved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">NWS 041</span></sc-if>
+                  <sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#E8F5F0;color:#1F7A61">Active</span></sc-if>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">Weather · Thursday, Jul 9 · Orlando + Atlanta corridors</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:14px 18px">
+              <div style="display:flex;align-items:flex-start;gap:10px;background:#FEF9E6;border-left:3px solid #F0C005;border-radius:8px;padding:11px 14px">
+                <svg style="flex:none;margin-top:1px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg>
+                <span style="font-size:12.5px;color:#655102;line-height:1.5">Tropical system expected across the Gulf Coast Thursday. Orlando and Atlanta corridors affected. Confidence: high — NWS advisory 041.</span>
+              </div>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">Recommended plan</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.6">Pre-load and dispatch 4 Orlando loads <b style="font-weight:600;color:#1D1D20">{{ adjWinLabel }}</b>; reroute 2 Atlanta loads <b style="font-weight:600;color:#1D1D20">{{ adjRouteLabel }}</b>. Customer deliveries unaffected. Estimated cost impact <b style="font-weight:600;color:#1D1D20">{{ planCostLabel }}</b>; estimated avoided service failures: <b style="font-weight:600;color:#1D1D20">6</b>.</div>
+              <sc-if value="{{ notApproved }}">
+              <div style="margin-top:8px"><button onClick="{{ adjToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">{{ adjLinkLabel }}</button></div>
+              <sc-if value="{{ adjOpen }}">
+              <div style="border:1px solid #ECEDED;border-radius:8px;padding:12px 14px;margin-top:8px;animation:rev .2s ease both">
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Orlando pre-load window · 4 loads</div>
+                <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                  <button data-w="6" onClick="{{ adjPickW }}" style="border:0;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ aw6St }}">Wed 6:00 PM</button>
+                  <button data-w="8" onClick="{{ adjPickW }}" style="border:0;border-left:1px solid #C5C6C7;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ aw8St }}">Wed 8:00 PM (+$310)</button>
+                </div>
+                <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin-top:12px">Atlanta reroute · 2 loads</div>
+                <div style="display:inline-flex;border:1px solid #C5C6C7;border-radius:6px;overflow:hidden;margin-top:8px">
+                  <button data-r="75" onClick="{{ adjPickR }}" style="border:0;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar75St }}">I-75 · +40 min</button>
+                  <button data-r="16" onClick="{{ adjPickR }}" style="border:0;border-left:1px solid #C5C6C7;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;{{ ar16St }}">I-16 → I-75 · +55 min (+$450)</button>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:10px">Adjustments update the plan summary and cost estimate — nothing is committed until you approve.</div>
+              </div>
+              </sc-if>
+              </sc-if>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">Affected loads · 6</div>
+              <div style="border:1px solid #ECEDED;border-radius:8px;overflow:hidden">
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31307</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Tampa retail loop · Thu 6:00 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31309</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Jacksonville run · Thu 7:30 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31315</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Miami corridor · Thu 5:15 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31321</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ORL → Orlando metro · Thu 8:00 AM</span><span style="color:#303235;flex:none">Pre-load Wed 6:00 PM</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31288</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATL → Savannah corridor · Thu 9:45 AM</span><span style="color:#303235;flex:none">Reroute via I-75 (+40 min)</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #F0F0F1;font-size:12px"><b style="font-weight:600;color:#1D1D20;flex:none">SBG-31294</b><span style="color:#696B6F;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATL → Macon/Columbus · Thu 10:30 AM</span><span style="color:#303235;flex:none">Reroute via I-75 (+40 min)</span></div>
+              </div>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED">
+                  <div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">If you do nothing</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><span style="font-size:12px;color:#696B6F;flex:1">Service failures Thu</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">6</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">Est. exposure</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">≈ $9.8K</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">On-time next week</span><span style="font-size:12.5px;font-weight:600;color:#B45309">▼ ≈ 2.2 pts</span></div>
+                </div>
+                <div style="flex:1;padding:10px 14px">
+                  <div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">With the plan</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:6px"><span style="font-size:12px;color:#696B6F;flex:1">Service failures Thu</span><span style="font-size:12.5px;font-weight:600;color:#1F7A61">0</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">Cost to run the plan</span><span style="font-size:12.5px;font-weight:600;color:#1D1D20">{{ planCostLabel }}</span></div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-top:4px"><span style="font-size:12px;color:#696B6F;flex:1">On-time next week</span><span style="font-size:12.5px;font-weight:600;color:#1F7A61">holds at 96.2%</span></div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#A9AAAC;margin-top:10px">Estimates from June service-failure costs and this week's load values · Sources · Load records · Invoice SBG-2026-06</div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <sc-if value="{{ notApproved }}">
+              <button onClick="{{ stormApprove }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Approve plan</button>
+              <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Notifies 6 receivers on approval · logged and reversible</div>
+              </sc-if>
+              <sc-if value="{{ approved }}">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:6px;background:#E8F5F0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:13px;font-weight:500;color:#1F7A61">Plan active — 6 loads covered · receivers notified</span></div>
+              </sc-if>
+            </div>
+          </div>
+          </sc-if>
+          <sc-if value="{{ rosterPanel }}">
+          <div data-roster="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Agents on shift" style="position:fixed;top:48px;right:0;bottom:0;width:440px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <div style="flex:1"><span style="font-size:15px;font-weight:600;color:#1D1D20">Agents on shift · 8</span><div style="font-size:11.5px;color:#696B6F;margin-top:2px">Tap an agent for its action history</div></div>
+              <button onClick="{{ closeRoster }}" aria-label="Close roster" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:6px 18px">
+              <button data-log="agEta" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agEtaOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agEtaOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">ETA & notifications</span>
+                <sc-if value="{{ agEtaOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agEtaOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDock" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDockOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDockOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Dock scheduling</span>
+                <sc-if value="{{ agDockOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDockOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agAudit" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agAuditOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agAuditOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Invoice audit</span>
+                <sc-if value="{{ agAuditOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agAuditOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agBh" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agBhOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agBhOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Backhaul tender</span>
+                <sc-if value="{{ agBhOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agBhOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDwell" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDwellOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDwellOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Detention & dwell</span>
+                <sc-if value="{{ agDwellOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDwellOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agDocs" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agDocsOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agDocsOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Documents & POD</span>
+                <sc-if value="{{ agDocsOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agDocsOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agSafety" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agSafetyOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agSafetyOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Safety coach</span>
+                <sc-if value="{{ agSafetyOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agSafetyOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              <button data-log="agFlex" onClick="{{ openAgLog }}" style="width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid #F0F0F1;padding:12px 2px;font-family:inherit;cursor:pointer;text-align:left" style-hover="background:#FAFAFA">
+                <sc-if value="{{ agFlexOn }}"><span style="width:7px;height:7px;border-radius:50%;background:#34A081;flex:none"></span></sc-if>
+                <sc-if value="{{ agFlexOff }}"><span style="width:7px;height:7px;border-radius:50%;background:#C5C6C7;flex:none"></span></sc-if>
+                <span style="font-size:13px;font-weight:500;color:#1D1D20;flex:1">Adaptive capacity</span>
+                <sc-if value="{{ agFlexOn }}"><span style="font-size:11.5px;color:#696B6F">Active</span></sc-if>
+                <sc-if value="{{ agFlexOff }}"><span style="font-size:11.5px;color:#696B6F">Paused</span></sc-if>
+                <svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#A9AAAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+              
+            </div>
+            <div style="padding:12px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button data-nav="workforce" onClick="{{ navTo }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Meet your agents →</button>
             </div>
           </div>
           </sc-if>
@@ -3176,8 +3378,10 @@ class ComponentV2 extends Component {
     this.state.agFlex = true;        // Adaptive capacity agent
     this.state.flexLockDone = false; // scenario A: 2-lane rate lock approved
     this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
-    this.state.flexAOpen = false;    // market-watch card details expanded
-    this.state.flexBOpen = false;
+    this.state.flexPanel = null;     // 'a'|'b'|'s': which decision panel is open
+    this.state.agRoster = false;     // agents-on-shift roster panel
+    this.state.briefOpen = null;     // (legacy accordion key — harmless)
+    this.state.tlHist = false;       // feed history: collapsed on every load
     this.state.riskExpanded = false; // approved incident details re-expand
     this.state.wfOpen = null;        // workforce showroom: which agent's history is open
     this.state.detClaimFiled = false; // in-log approval: Macon detention claim
@@ -3482,17 +3686,62 @@ class ComponentV2 extends Component {
       v.flexLockPending = !s.flexLockDone;
       v.flexOutDone = s.flexOutDone;
       v.flexOutPending = !s.flexOutDone;
-      v.flexAOpen = s.flexAOpen;
-      v.flexBOpen = s.flexBOpen;
-      v.flexALabel = s.flexAOpen ? 'Hide details' : 'Review & lock rates →';
-      v.flexBLabel = s.flexBOpen ? 'Hide details' : 'Review & flex →';
-      v.flexToggle = function (e) {
-        var f = e.currentTarget.dataset.f;
-        if (f === 'a') self.setState({ flexAOpen: !self.state.flexAOpen });
-        else self.setState({ flexBOpen: !self.state.flexBOpen });
+      // Needs-you stream: the H1 count covers all five queue items (storm,
+      // both market moves, tender, trailer). One arithmetic, never
+      // hand-decremented — a stale count against a draining queue is an
+      // on-stage credibility bug.
+      var needs = (s.approved ? 0 : 1) + (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1) + (s.tenderGone ? 0 : 1) + (s.wSched ? 0 : 1);
+      v.todoCount = needs;
+      v.todoWord = needs === 1 ? 'decision' : 'decisions';
+      v.allClear = needs === 0;
+      v.notAllClear = needs > 0;
+      v.tenderSentR = s.tenderSent;
+      v.tenderDismissedR = s.tenderGone && !s.tenderSent;
+
+      v.flexPanelA = s.flexPanel === 'a' && !s.flexLockDone;
+      v.flexPanelB = s.flexPanel === 'b' && !s.flexOutDone;
+      v.flexPanelS = s.flexPanel === 's';
+      v.openFlexPanel = function (e) { self.setState({ flexPanel: e.currentTarget.dataset.f }); };
+      v.closeFlexPanel = function () { self.setState({ flexPanel: null }); };
+      v.flexLock = function () { self.setState({ flexLockDone: true, flexPanel: null }); };
+      v.flexOut = function () { self.setState({ flexOutDone: true, flexPanel: null }); };
+      // Storm approve: the V1 approve flow, then the panel slides away.
+      var baseApprove = v.approve;
+      v.stormApprove = function () { baseApprove(); self.setState({ flexPanel: null }); };
+      v.adjLinkLabel = s.adjOpen ? 'Hide adjustments' : 'Adjust the plan';
+      // Agent roster panel (rail drill-down); an open audit log covers it, and
+      // closing the log falls back to the roster — free back-navigation.
+      v.rosterPanel = !!s.agRoster && !s.agLog;
+      v.openRoster = function () { self.setState({ agRoster: true }); };
+      v.closeRoster = function () { self.setState({ agRoster: false }); };
+      // Feed grammar: "5 things need you" / "1 thing needs you".
+      v.feedThingWord = v.todoCount === 1 ? 'thing' : 'things';
+      v.feedVerbS = v.todoCount === 1 ? 's' : '';
+      // Market-upside analytics card status line tracks the two flex moves.
+      var mwPend = (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1);
+      v.mwPendLabel = mwPend === 0 ? '● both moves approved' : mwPend === 1 ? '● 1 flex move awaits sign-off' : '● 2 flex moves await sign-off';
+      v.mwPendStyle = mwPend === 0 ? 'color:#1F7A61' : 'color:#B45309';
+      // Feed history: collapsed until asked for; month chips jump-scroll.
+      v.tlHistOpen = !!s.tlHist;
+      v.tlHistClosed = !s.tlHist;
+      v.tlHistToggle = function () { self.setState({ tlHist: !self.state.tlHist }); };
+      v.tlJump = function (e) {
+        var m = e.currentTarget.dataset.m;
+        try { document.querySelector('[data-tlm="' + m + '"]').scrollIntoView({ block: 'start' }); } catch (e2) {}
       };
-      v.flexLock = function () { self.setState({ flexLockDone: true, flexAOpen: false }); };
-      v.flexOut = function () { self.setState({ flexOutDone: true, flexBOpen: false }); };
+      // Briefing accordion (single-open).
+      ['Storm', 'Billing', 'Watch', 'Backhaul'].forEach(function (k2) {
+        var key = k2.toLowerCase();
+        v['brief' + k2 + 'Open'] = s.briefOpen === key;
+        v['brief' + k2 + 'Closed'] = s.briefOpen !== key;
+      });
+      v.briefToggle = function (e) {
+        var b = e.currentTarget.dataset.b;
+        self.setState({ briefOpen: self.state.briefOpen === b ? null : b });
+      };
+      v.goBriefing = function () {
+        try { document.querySelector('[data-briefing]').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e2) {}
+      };
 
       // Right-side meta per agent row: when it last acted — live, so a
       // session approval reads "Just now".
@@ -3644,6 +3893,10 @@ class ComponentV2 extends Component {
     if (r !== this.state.route) {
       var patch = {};
       if (this.state.agLog) patch.agLog = null;
+      if (this.state.flexPanel) patch.flexPanel = null;
+      if (this.state.agRoster) patch.agRoster = false;
+      if (this.state.briefOpen) patch.briefOpen = null;
+      if (this.state.tlHist) patch.tlHist = false;
       if (this.state.loadRef) patch.loadRef = null;
       if (this.state.askOpen) patch.askOpen = false;
       if (this.state.marker >= 0) { patch.marker = -1; patch.popPx = null; }

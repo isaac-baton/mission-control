@@ -273,19 +273,9 @@ INCIDENT_BODY = risk_section[_adv:_cfe]
 markup = markup[:_rs2] + markup[_re2:]
 applied.append("risk screen merged out (1)")
 
-INCIDENT = (
-    '<div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:28px 0 10px">Active risk — Thursday, Jul 9'
-    '<sc-if value="{{ approved }}"><span style="display:inline-flex;align-items:center;margin-left:10px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;background:#E8F5F0;color:#1F7A61">Plan active</span></sc-if></div>'
-    '<sc-if value="{{ riskCollapsed }}">'
-    '<div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:13px 18px">'
-    '<svg style="flex:none" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
-    '<span style="font-size:13px;font-weight:500;color:#1F7A61;flex:1">Storm plan active — 6 loads covered · {{ planCostLabel }} · receivers notified.</span>'
-    '<button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Show details</button>'
-    '</div></sc-if>'
-    '<sc-if value="{{ riskOpen }}"><div>'
-    '<sc-if value="{{ approved }}"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button onClick="{{ riskToggle }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer">Hide details</button></div></sc-if>'
-    + INCIDENT_BODY +
-    '</div></sc-if>')
+# The storm renders as a compact queue row + receipt authored in agents2.html;
+# its full dossier lives in the storm decision panel (flex-panel.html). The
+# inline INCIDENT module is retired — INCIDENT_BODY is no longer injected.
 
 sub("risk rail item removed",
     f'<a href="#/risk" data-intel-only="" {RAIL_STYLE}', '<a data-removed-risk ')
@@ -304,8 +294,7 @@ _ae = markup.find('data-screen-label', _ad + 40)
 _ae = markup.rfind('<sc-if', 0, _ae)
 assert 20000 < (_ae - _as) < 30000, f"agents slice looks wrong ({_ae - _as} chars)"
 agents2 = (V2 / "agents2.html").read_text(encoding="utf-8")
-assert agents2.count('<!--INCIDENT-->') == 1
-agents2 = agents2.replace('<!--INCIDENT-->', INCIDENT)
+assert agents2.count('<!--INCIDENT-->') == 0, "inline incident placeholder is retired"
 workforce = (V2 / "workforce.html").read_text(encoding="utf-8")
 markup = markup[:_as] + agents2 + '\n        ' + workforce + '\n        ' + markup[_ae:]
 applied.append("agents screen redesign + incident + workforce (1)")
@@ -352,6 +341,12 @@ agent_log = (V2 / "agent-log.html").read_text(encoding="utf-8")
 sub("agent log panel insert",
     '<!-- S0a docked prompt bar -->',
     agent_log + '\n      <!-- S0a docked prompt bar -->')
+
+# T11b2b — the adaptive-capacity decision panel (rate charts + approve)
+flex_panel = (V2 / "flex-panel.html").read_text(encoding="utf-8")
+sub("flex decision panel insert",
+    '<!-- S0a docked prompt bar -->',
+    flex_panel + '\n      <!-- S0a docked prompt bar -->')
 
 # T11b3 — dynamic ask answers: one generic bubble template renders any
 # intent-engine answer (logic.js dynSubmit); styling mirrors the fb bubble.
@@ -478,5 +473,16 @@ window.__app = window.__dcBoot(ComponentV2, {json.dumps(props)});
 
 OUT.write_text(out, encoding="utf-8")
 print(f"wrote {OUT.name}: {OUT.stat().st_size:,} bytes")
+
+# Mirror to the always-on local preview (a LaunchAgent serves this dir on
+# :8765 — it lives outside ~/Desktop because macOS TCC blocks launchd agents
+# from privacy-protected folders).
+_preview = Path.home() / ".rydershare-preview" / "index.html"
+try:
+    _preview.parent.mkdir(exist_ok=True)
+    _preview.write_text(out, encoding="utf-8")
+    print(f"mirrored to {_preview}")
+except OSError as e:
+    print(f"preview mirror skipped: {e}")
 for a in applied:
     print("  ✓", a)

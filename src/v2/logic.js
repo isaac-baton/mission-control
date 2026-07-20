@@ -59,8 +59,10 @@ class ComponentV2 extends Component {
     this.state.agFlex = true;        // Adaptive capacity agent
     this.state.flexLockDone = false; // scenario A: 2-lane rate lock approved
     this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
-    this.state.flexAOpen = false;    // market-watch card details expanded
-    this.state.flexBOpen = false;
+    this.state.flexPanel = null;     // 'a'|'b'|'s': which decision panel is open
+    this.state.agRoster = false;     // agents-on-shift roster panel
+    this.state.briefOpen = null;     // (legacy accordion key — harmless)
+    this.state.tlHist = false;       // feed history: collapsed on every load
     this.state.riskExpanded = false; // approved incident details re-expand
     this.state.wfOpen = null;        // workforce showroom: which agent's history is open
     this.state.detClaimFiled = false; // in-log approval: Macon detention claim
@@ -365,17 +367,62 @@ class ComponentV2 extends Component {
       v.flexLockPending = !s.flexLockDone;
       v.flexOutDone = s.flexOutDone;
       v.flexOutPending = !s.flexOutDone;
-      v.flexAOpen = s.flexAOpen;
-      v.flexBOpen = s.flexBOpen;
-      v.flexALabel = s.flexAOpen ? 'Hide details' : 'Review & lock rates →';
-      v.flexBLabel = s.flexBOpen ? 'Hide details' : 'Review & flex →';
-      v.flexToggle = function (e) {
-        var f = e.currentTarget.dataset.f;
-        if (f === 'a') self.setState({ flexAOpen: !self.state.flexAOpen });
-        else self.setState({ flexBOpen: !self.state.flexBOpen });
+      // Needs-you stream: the H1 count covers all five queue items (storm,
+      // both market moves, tender, trailer). One arithmetic, never
+      // hand-decremented — a stale count against a draining queue is an
+      // on-stage credibility bug.
+      var needs = (s.approved ? 0 : 1) + (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1) + (s.tenderGone ? 0 : 1) + (s.wSched ? 0 : 1);
+      v.todoCount = needs;
+      v.todoWord = needs === 1 ? 'decision' : 'decisions';
+      v.allClear = needs === 0;
+      v.notAllClear = needs > 0;
+      v.tenderSentR = s.tenderSent;
+      v.tenderDismissedR = s.tenderGone && !s.tenderSent;
+
+      v.flexPanelA = s.flexPanel === 'a' && !s.flexLockDone;
+      v.flexPanelB = s.flexPanel === 'b' && !s.flexOutDone;
+      v.flexPanelS = s.flexPanel === 's';
+      v.openFlexPanel = function (e) { self.setState({ flexPanel: e.currentTarget.dataset.f }); };
+      v.closeFlexPanel = function () { self.setState({ flexPanel: null }); };
+      v.flexLock = function () { self.setState({ flexLockDone: true, flexPanel: null }); };
+      v.flexOut = function () { self.setState({ flexOutDone: true, flexPanel: null }); };
+      // Storm approve: the V1 approve flow, then the panel slides away.
+      var baseApprove = v.approve;
+      v.stormApprove = function () { baseApprove(); self.setState({ flexPanel: null }); };
+      v.adjLinkLabel = s.adjOpen ? 'Hide adjustments' : 'Adjust the plan';
+      // Agent roster panel (rail drill-down); an open audit log covers it, and
+      // closing the log falls back to the roster — free back-navigation.
+      v.rosterPanel = !!s.agRoster && !s.agLog;
+      v.openRoster = function () { self.setState({ agRoster: true }); };
+      v.closeRoster = function () { self.setState({ agRoster: false }); };
+      // Feed grammar: "5 things need you" / "1 thing needs you".
+      v.feedThingWord = v.todoCount === 1 ? 'thing' : 'things';
+      v.feedVerbS = v.todoCount === 1 ? 's' : '';
+      // Market-upside analytics card status line tracks the two flex moves.
+      var mwPend = (s.flexLockDone ? 0 : 1) + (s.flexOutDone ? 0 : 1);
+      v.mwPendLabel = mwPend === 0 ? '● both moves approved' : mwPend === 1 ? '● 1 flex move awaits sign-off' : '● 2 flex moves await sign-off';
+      v.mwPendStyle = mwPend === 0 ? 'color:#1F7A61' : 'color:#B45309';
+      // Feed history: collapsed until asked for; month chips jump-scroll.
+      v.tlHistOpen = !!s.tlHist;
+      v.tlHistClosed = !s.tlHist;
+      v.tlHistToggle = function () { self.setState({ tlHist: !self.state.tlHist }); };
+      v.tlJump = function (e) {
+        var m = e.currentTarget.dataset.m;
+        try { document.querySelector('[data-tlm="' + m + '"]').scrollIntoView({ block: 'start' }); } catch (e2) {}
       };
-      v.flexLock = function () { self.setState({ flexLockDone: true, flexAOpen: false }); };
-      v.flexOut = function () { self.setState({ flexOutDone: true, flexBOpen: false }); };
+      // Briefing accordion (single-open).
+      ['Storm', 'Billing', 'Watch', 'Backhaul'].forEach(function (k2) {
+        var key = k2.toLowerCase();
+        v['brief' + k2 + 'Open'] = s.briefOpen === key;
+        v['brief' + k2 + 'Closed'] = s.briefOpen !== key;
+      });
+      v.briefToggle = function (e) {
+        var b = e.currentTarget.dataset.b;
+        self.setState({ briefOpen: self.state.briefOpen === b ? null : b });
+      };
+      v.goBriefing = function () {
+        try { document.querySelector('[data-briefing]').scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e2) {}
+      };
 
       // Right-side meta per agent row: when it last acted — live, so a
       // session approval reads "Just now".
@@ -527,6 +574,10 @@ class ComponentV2 extends Component {
     if (r !== this.state.route) {
       var patch = {};
       if (this.state.agLog) patch.agLog = null;
+      if (this.state.flexPanel) patch.flexPanel = null;
+      if (this.state.agRoster) patch.agRoster = false;
+      if (this.state.briefOpen) patch.briefOpen = null;
+      if (this.state.tlHist) patch.tlHist = false;
       if (this.state.loadRef) patch.loadRef = null;
       if (this.state.askOpen) patch.askOpen = false;
       if (this.state.marker >= 0) { patch.marker = -1; patch.popPx = null; }
