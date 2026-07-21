@@ -1,116 +1,59 @@
 # RyderShare Intelligence — vision prototype
 
-Implementation of the Claude Design project **RyderShare Intelligence** (`.dc.html`), built for
-the Tom Regan / DTS VPs demo (week of Jul 6, 2026). PRD of record: `docs/PRD.md` (v3.1 FINAL).
+This is the RyderShare Intelligence demo: an AI-native layer on RyderShare for a Dedicated
+customer (Summit Beverage Group), built for exec demos. PRD of record: `docs/PRD.md`.
 
 ## The deliverable
 
-**`index.html`** — the **Version 2** onboarding journey (see the V2 section below). This is the
-deployed site: Vercel serves `index.html` at the root. Built by `python3 src/build_v2.py`.
+**`index.html`** — one self-contained file (~830 KB). Open it in any browser, including from
+`file://` with the network disabled — no server, no build step, no CDN. Vercel serves this
+file at the site root (repo: `isaac-baton/mission-control`, live at prototype.staging.baton.io).
 
-One self-contained file (~698 KB). Open it in any browser, including from `file://` with the
-network disabled — no server, no build step, no CDN.
+Useful addresses:
 
-- Zero external requests (verified via the Performance API: 0 resource fetches). Inter is embedded
-  as a base64 WOFF2 (variable, latin subset) with the PRD's metric-compatible fallback stack;
-  the RyderShare wordmark is an inline data URI; the US map and all charts are inline SVG.
-- Reload = clean demo reset (per PRD §0.6). Unknown/invalid hash redirects to `#/shipments`.
-- `prefers-reduced-motion` honored (CSS media query + the logic's fast reveal path, 30 ms vs 550 ms).
+- `index.html` — the full journey from the pre-enable splash ("Put your supply chain on
+  autopilot.") through activation
+- `index.html?intel=1#/agents` — boots enabled, straight onto the Autopilot feed
+- A reload resets the demo state; `?intel=1` is the only boot override
 
-Routes: `#/shipments` `#/network` `#/insights` `#/reviews` `#/risk` (+ `#/agents`, and `#/ask`
-which opens the Ask RyderShare slide-over on top of the current screen).
+## What's in the product
 
-**Version 1** (the "product as if Intelligence is already on" — no onboarding) is superseded on the
-live site but stays reproducible: `python3 src/build.py` → `v1.html` (gitignored, not deployed).
+- **Autopilot** — the agent feed: analytics cards, a chronological timeline with five
+  decisions embedded (storm plan, two adaptive-capacity flex moves, backhaul tender,
+  trailer service), receipts as you approve, and month-grouped history behind
+  "See all history"
+- **Agents** — the dark showroom for the eight agents, each with an audit-log side panel
+- **Network** — live map with real state geometry, an interstate-corridor layer, and the
+  storm overlay
+- **Insights / Reviews / Shipments** — digest, document-style business reviews with month
+  tabs, and the load board
+- **Ask bar** — scripted answers for the core questions plus a dynamic intent engine that
+  answers unscripted questions in character
 
-## How it was built
-
-The Claude Design preview runs the design file on React + Babel + `support.js` pulled from unpkg —
-fine in the tool, but not demoable offline. This implementation keeps the design's markup and
-logic **verbatim** (zero transcription drift from what was signed off in Claude Design) and swaps
-the preview stack for `src/runtime.js`, a ~350-line dependency-free runtime that implements the
-same template semantics: `sc-if` / `sc-for`, `{{ path }}` text/attribute bindings, React-style
-event attributes (`onChange` ⇒ `input`), callback refs, `style-hover` pseudo-classes, and
-synchronous `setState` commits against `renderVals()`.
+## Build
 
 ```
-RyderShare Intelligence.dc.html   design source of record (exported from Claude Design)
-support.js                        the preview runtime it replaces (reference only)
-src/runtime.js                    dc-lite standalone runtime (shared by both builds)
-src/build_v2.py                   canonical build → index.html (V2, deployed)
-src/v2/                           V2 patch layer: landing.html, logic.js, v2.css
-src/build.py                      legacy V1 build → v1.html (gitignored)
-assets/                           Inter woff2 + logo png (embedded at build time)
-docs/PRD.md                       the PRD (from the design project's uploads/)
-uploads/                          logo at its original path, so the .dc.html preview also works locally
+python3 src/build_v2.py
 ```
 
-**Rebuild after a design change:** replace `RyderShare Intelligence.dc.html` with the new export
-from claude.ai/design, then run `python3 src/build_v2.py` (rebuilds `index.html`). The V2 build
-applies count-asserted transforms over the verbatim source, so a design re-export that moves an
-anchor fails the build loudly instead of drifting silently. If the design adds template features
-the runtime doesn't know (new `on*` events are handled generically; `sc-for` nesting, `$index`,
-mixed-string attributes are supported), `src/runtime.js` is the place to extend.
+The build inlines the design source (`RyderShare Intelligence.dc.html`) verbatim, applies
+anchored count-asserted transforms, layers the `src/v2/` patch files, swaps the preview
+stack for the hand-written dc-lite runtime (`src/runtime.js`), embeds fonts and the logo
+from `assets/`, and writes `index.html` (plus a best-effort mirror for the always-on local
+preview server on Isaac's machine).
 
-## Verification (2026-07-03)
+Two generators produce patch files and only need re-running when you change them:
 
-Compared side-by-side against the live design preview (original `.dc.html` + CDN runtime) — all
-six screens pixel-equivalent, and the PRD §12 acceptance checklist passed line by line:
+```
+python3 src/v2/gen_workforce.py    # the dark Agents page (cards, hues, ghost icons)
+python3 src/v2/gen_map_layers.py   # all map geometry: states/provinces, roads, cities, labels
+```
 
-- Demo path S0a → Network → Insights → typed Q2 (waterfall + Sources 4) → Q3 chip → Q5 chip →
-  Reviews → risk card → S4 Approve (toast, table flips to Scheduled, button disables, storm zone
-  dims to 0.35, approved state cascades to Shipments band / Insights / Agents to-dos).
-- Keyword router per §8.2: punctuation stripped, `late` word-boundary (`lately` ⇒ fallback),
-  chips hard-bound (never routed). Fallback answer has no sources expander.
-- Filters (status tiles, 4 multi-select menus with count labels, search, reset), sort with CSS
-  order + arrows, map zoom/pan/markers/layers/tabs, load panels from board rows and map popups,
-  agent toggles with AI-flash, tender dismiss / trailer scheduling, decisions counter 3 → 0.
-- Reduced-motion delays measured: [30, 60] reduced vs [550, 1470] normal. Binding commit ≈0.9 ms.
-- Menus close on outside click via the fixed backdrop. Reload resets. 1280×800 and 1440×900 clean.
-- `file://` load verified in Chrome (screenshot), zero network.
+## Layout
 
-Prop defaults baked at build time: `motion: true`, `startRoute: "shipments"` (same as the design's
-Tweaks panel).
-
-## Version 2 — the onboarding journey (`index.html`, deployed)
-
-V2 tells the adoption story: RyderShare **without** Intelligence, then the switch flips.
-Built by `python3 src/build_v2.py` from the same verbatim design source plus a patch layer in
-`src/v2/` (landing markup, `ComponentV2` logic, gating CSS).
-
-- **Pre-enable** — the rail holds only Shipments / Network / Insights (pulsing cue); no prompt
-  bar, no storm plan, no Why? links, no network brief, no at-risk tile, no Backhaul $ layer.
-  A one-line teaser sits in the storm band's slot. `#/insights` is a landing page: hero, four
-  benefit cards, the four agents, a trust card, Enable CTA. Deep links to gated routes
-  (`#/risk`, `#/agents`, `#/reviews`, `#/ask`) land on the landing.
-- **Enable** — a ~5s staged activation ("Connecting… · Reading June — 1,187 loads · 214
-  invoice lines · Generating your first digest") inside a corner-matched fast rainbow ring, then
-  the same page becomes the intelligence hub (its persistent glows only — no extra flash) and the
-  rail grows to six destinations. AI surfaces discovered on *other* pages (shipments storm band,
-  network brief) carry a one-time ~3s rainbow flash (`[data-intel-flash]`) while the enable moment
-  is fresh. Reduced motion ⇒ instant enable.
-  Pre-enable there is no storm overlay anywhere (map zone, label, layer pill, board band) —
-  weather response arrives with Intelligence. No "Concept" chips: it presents as real product.
-- **Map tiles** — the Network stat strip renders as cards (taller, larger icons); the two
-  actionable tiles (Running late → filters the load list, At-risk → Risk radar) carry a chevron.
-- **Agent audit logs** — every agent tile has "See all actions →", opening a side panel with
-  that agent's action history: guardrails up top, then entries with status chips and an
-  attribution line encoding the Vision 2025 agentic patterns — auto-within-guardrails,
-  confidence-threshold escalation ("routed to you"), agent-to-agent handoffs (Risk radar →
-  Dock scheduling), self-healing (silent telematics nudge), and the human feedback loop
-  ("learned from your edit"). Data lives in `AGLOG` in `src/v2/logic.js`.
-- **Reviews as a document** — the business review is a generated artifact (paper frame,
-  provenance chip, month tabs June/May/April with real month data and an adoption trail,
-  compact scorecard, sources footer). Judge-verdict replacement for the old tile-grid screen;
-  `#/reviews2` aliases to `#/reviews`.
-- **State** — enablement and approvals mirror to sessionStorage, so a mid-demo refresh
-  recovers; a fresh tab is a clean rehearsal reset, and `?reset=1` clears explicitly.
-  `?intel=1` boots straight to enabled.
-- **Judge loop (closed 2026-07-10)** — iterated under an independent principal-designer/PM
-  review to **Designer 96 / PM 95** ("no remaining blockers"; bar was 95). That review drove:
-  the board's third late load (SBG-31252, GPS-offline, driver-reported ETA), the
-  "Showing 19 of 267" scope label, real month tabs on Reviews, the risk counterfactual
-  ("If you do nothing / With the plan", live plan cost), the receiver-notice artifact in the
-  ETA log, the agents value ledger (live, carries adjusted plan cost), panel auto-collapse on
-  navigation, Adjust hidden on a locked plan, and the retiring NEW badge. Known deferred item:
-  app-wide keyboard focus-visible coverage (product bar, not demo bar).
+- `RyderShare Intelligence.dc.html` — design source of record (never edited by hand)
+- `src/build_v2.py` — the canonical build
+- `src/runtime.js` — dc-lite runtime (sc-if / sc-for / bindings / events)
+- `src/v2/` — patch layer: screens, panels, logic, styles, generators
+- `assets/` — Inter variable font + logo, embedded at build time
+- `docs/PRD.md` — the PRD

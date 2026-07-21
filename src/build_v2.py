@@ -45,6 +45,58 @@ sub("root data-intel",
     '<div style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">',
     '<div data-intel="{{ dataIntel }}" data-theme="{{ pageTheme }}" style="display:flex;height:100vh;overflow:hidden;background:#F5F6F6">')
 
+# T12 — Network map, brought up to visibility-platform standard (project44
+# Movement / FourKites conventions): quieter water, land with more contrast,
+# an interstate-corridor layer under the labels, five missing anchor cities,
+# smaller pin-style load markers, and a softer storm overlay.
+sub("map water softened",
+    'background:#D9E7F0;overflow:hidden;min-width:0;cursor:grab',
+    'background:linear-gradient(180deg,#E0E7EE,#D6E0E9);overflow:hidden;min-width:0;cursor:grab')
+# The design's two hand-drawn state groups (gappy borders, SE-only coverage)
+# are excised wholesale and replaced with the generated basemap: Canada/Mexico
+# admin1 + gap-free Census states + TIGER-derived highways, sized to the zoom
+# clamp so a full zoom-out stays on real geometry.
+_g1 = markup.find('<g fill="#F1F2F0" stroke="#D5D8DA" stroke-width="1">')
+assert _g1 > 0, "map state group 1 not found"
+_g2 = markup.find('<g fill="#F7F8F6" stroke="#DEE0E2" stroke-width="1">', _g1)
+assert _g2 > 0, "map state group 2 not found"
+_g2e = markup.find('</g>', _g2) + len('</g>')
+assert markup.find('</g>', _g1) < _g2, "state groups not adjacent as expected"
+map_base = (V2 / "map-base.html").read_text(encoding="utf-8")
+markup = markup[:_g1] + map_base + markup[_g2e:]
+applied.append("map basemap replaced with real geometry (1)")
+# The design source ALSO carries its own cased road network (a grey-casing
+# group under a white-core group over identical geometry). With the real
+# TIGER interstates in the basemap, that layer renders as a second road
+# system a few px off the real one — excise both groups wholesale.
+for _sig in ('<g fill="none" stroke="#DDDFE1" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">',
+             '<g fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'):
+    _r = markup.find(_sig)
+    assert _r > 0, "design road group not found: " + _sig[:44]
+    assert markup.find(_sig, _r + 1) < 0, "design road group signature not unique: " + _sig[:44]
+    _re = markup.find('</g>', _r) + len('</g>')
+    markup = markup[:_r] + markup[_re:]
+applied.append("design's own cased road layer excised (2)")
+map_roads = (V2 / "map-roads.html").read_text(encoding="utf-8")
+_lbl = markup.find('style="pointer-events:none;paint-order:stroke;stroke:#F7F8F6;stroke-width:3px">')
+assert _lbl > 0, "state labels group not found"
+_lbl = markup.rfind('<g ', 0, _lbl)
+markup = markup[:_lbl] + map_roads + markup[_lbl:]
+applied.append("interstate corridors + anchor cities injected (1)")
+sub("marker halos resized (blue)",
+    'r="15" fill="rgba(48,124,167,0.14)"', 'r="10.5" fill="rgba(48,124,167,0.16)"', 55)
+sub("marker halos resized (amber)",
+    'r="15" fill="rgba(240,192,5,0.18)"', 'r="10.5" fill="rgba(240,192,5,0.20)"', 5)
+sub("marker cores resized (blue)",
+    'r="11" fill="#307CA7" stroke="#fff" stroke-width="2"', 'r="7" fill="#307CA7" stroke="#fff" stroke-width="1.6"', 55)
+sub("marker cores resized (amber)",
+    'r="11" fill="#F0C005" stroke="#fff" stroke-width="2"', 'r="7" fill="#F0C005" stroke="#fff" stroke-width="1.6"', 5)
+sub("marker heading arrows resized",
+    '"M0,-6.5 L4.5,5.5 L0,3 L-4.5,5.5 Z"', '"M0,-4.2 L2.9,3.6 L0,1.9 L-2.9,3.6 Z"', 60)
+sub("storm overlay softened",
+    'fill="rgba(206,17,38,0.07)" stroke="#DC6B60" stroke-width="1"',
+    'fill="rgba(214,90,60,0.06)" stroke="#E2907F" stroke-width="1.2"')
+
 # footer badge hook so the dark theme can restyle it
 sub("footer badge hook",
     '<div style="position:absolute;left:12px;bottom:10px;z-index:9;pointer-events:none;background:rgba(255,255,255,0.85);',
@@ -474,38 +526,6 @@ window.__app = window.__dcBoot(ComponentV2, {json.dumps(props)});
 </html>
 """
 
-# T12 — Network map, brought up to visibility-platform standard (project44
-# Movement / FourKites conventions): quieter water, land with more contrast,
-# an interstate-corridor layer under the labels, five missing anchor cities,
-# smaller pin-style load markers, and a softer storm overlay.
-sub("map water softened",
-    'background:#D9E7F0;overflow:hidden;min-width:0;cursor:grab',
-    'background:linear-gradient(180deg,#E0E7EE,#D6E0E9);overflow:hidden;min-width:0;cursor:grab')
-sub("map background states restyled",
-    '<g fill="#F1F2F0" stroke="#D5D8DA" stroke-width="1">',
-    '<g fill="#EDEFF0" stroke="#DADDE0" stroke-width="1">')
-sub("map focus states restyled",
-    '<g fill="#F7F8F6" stroke="#DEE0E2" stroke-width="1">',
-    '<g fill="#FAFAF9" stroke="#D4D8DC" stroke-width="1">')
-map_roads = (V2 / "map-roads.html").read_text(encoding="utf-8")
-_lbl = markup.find('style="pointer-events:none;paint-order:stroke;stroke:#F7F8F6;stroke-width:3px">')
-assert _lbl > 0, "state labels group not found"
-_lbl = markup.rfind('<g ', 0, _lbl)
-markup = markup[:_lbl] + map_roads + markup[_lbl:]
-applied.append("interstate corridors + anchor cities injected (1)")
-sub("marker halos resized (blue)",
-    'r="15" fill="rgba(48,124,167,0.14)"', 'r="10.5" fill="rgba(48,124,167,0.16)"', 55)
-sub("marker halos resized (amber)",
-    'r="15" fill="rgba(240,192,5,0.18)"', 'r="10.5" fill="rgba(240,192,5,0.20)"', 5)
-sub("marker cores resized (blue)",
-    'r="11" fill="#307CA7" stroke="#fff" stroke-width="2"', 'r="7" fill="#307CA7" stroke="#fff" stroke-width="1.6"', 55)
-sub("marker cores resized (amber)",
-    'r="11" fill="#F0C005" stroke="#fff" stroke-width="2"', 'r="7" fill="#F0C005" stroke="#fff" stroke-width="1.6"', 5)
-sub("marker heading arrows resized",
-    '"M0,-6.5 L4.5,5.5 L0,3 L-4.5,5.5 Z"', '"M0,-4.2 L2.9,3.6 L0,1.9 L-2.9,3.6 Z"', 60)
-sub("storm overlay softened",
-    'fill="rgba(206,17,38,0.07)" stroke="#DC6B60" stroke-width="1"',
-    'fill="rgba(214,90,60,0.06)" stroke="#E2907F" stroke-width="1.2"')
 
 # T-final — Isaac's voice: em dashes are always tight (word—word, never
 # word — word), across every string in the file. Runs last so it covers the
@@ -518,9 +538,11 @@ OUT.write_text(out, encoding="utf-8")
 print(f"wrote {OUT.name}: {OUT.stat().st_size:,} bytes")
 
 # Mirror to the always-on local preview (a LaunchAgent serves this dir on
-# :8765 — it lives outside ~/Desktop because macOS TCC blocks launchd agents
-# from privacy-protected folders).
-_preview = Path.home() / ".rydershare-preview" / "index.html"
+# :8791 — it lives outside ~/Desktop because macOS TCC blocks launchd agents
+# from privacy-protected folders). NOTE: the old :8765/.rydershare-preview
+# pair is abandoned to Kimi's copy of this script, which mirrors there too
+# and was silently overwriting our builds.
+_preview = Path.home() / ".rydershare-preview-claude" / "index.html"
 try:
     _preview.parent.mkdir(exist_ok=True)
     _preview.write_text(out, encoding="utf-8")
