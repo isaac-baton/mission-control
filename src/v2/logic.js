@@ -61,6 +61,7 @@ class ComponentV2 extends Component {
     this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
     this.state.flexPanel = null;     // 'a'|'b'|'s': which decision panel is open
     this.state.agRoster = false;     // agents-on-shift roster panel
+    this.state.bhSpot = false;       // review CTA spotlight on the Backhaul card
     this.state.briefOpen = null;     // (legacy accordion key — harmless)
     this.state.tlHist = false;       // feed history: collapsed on every load
     this.state.riskExpanded = false; // approved incident details re-expand
@@ -382,10 +383,13 @@ class ComponentV2 extends Component {
       v.flexPanelA = s.flexPanel === 'a' && !s.flexLockDone;
       v.flexPanelB = s.flexPanel === 'b' && !s.flexOutDone;
       v.flexPanelS = s.flexPanel === 's';
+      v.flexPanelT = s.flexPanel === 't' && !s.tenderGone;
       v.openFlexPanel = function (e) { self.setState({ flexPanel: e.currentTarget.dataset.f }); };
       v.closeFlexPanel = function () { self.setState({ flexPanel: null }); };
       v.flexLock = function () { self.setState({ flexLockDone: true, flexPanel: null }); };
       v.flexOut = function () { self.setState({ flexOutDone: true, flexPanel: null }); };
+      v.tenderSend = function () { self.setState({ tenderSent: true, tenderGone: true, flexPanel: null }); };
+      v.tenderDismiss = function () { self.setState({ tenderGone: true, flexPanel: null }); };
       // Storm approve: the V1 approve flow, then the panel slides away.
       var baseApprove = v.approve;
       v.stormApprove = function () { baseApprove(); self.setState({ flexPanel: null }); };
@@ -436,7 +440,7 @@ class ComponentV2 extends Component {
       // Toggles sit inside clickable agent rows — don't let the tap bubble
       // into the row's open-log handler.
       var baseTog = v.agToggle;
-      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); };
+      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); if (self.state.bhSpot) self.setState({ bhSpot: false }); };
       // Weather response is Intelligence: pre-enable the map carries no storm overlay.
       if (!s.intel) v.stormOp = '0';
       v.showLanding = s.route === 'insights' && !s.intel;
@@ -497,9 +501,14 @@ class ComponentV2 extends Component {
       v.agLogStatusOff = !!(s.agLog && !s[s.agLog]);
       v.openAgLog = function (e) {
         if (e.stopPropagation) e.stopPropagation();
-        self.setState({ agLog: e.currentTarget.dataset.log });
+        self.setState({ agLog: e.currentTarget.dataset.log, bhSpot: false });
       };
       v.closeAgLog = function () { self.setState({ agLog: null }); };
+      // Review recommendation #1 → the Agents tab with the Backhaul card
+      // spotlit (no side panel) — the user flips the agent on themselves.
+      // nav first: the route-change patch clears bhSpot, so set it after.
+      v.goBhAgent = function () { self.nav('workforce'); self.setState({ bhSpot: true }); };
+      v.bhSpot = s.bhSpot ? 'on' : 'off';
       return v;
     };
   }
@@ -576,6 +585,7 @@ class ComponentV2 extends Component {
       if (this.state.agLog) patch.agLog = null;
       if (this.state.flexPanel) patch.flexPanel = null;
       if (this.state.agRoster) patch.agRoster = false;
+      if (this.state.bhSpot) patch.bhSpot = false;
       if (this.state.briefOpen) patch.briefOpen = null;
       if (this.state.tlHist) patch.tlHist = false;
       if (this.state.loadRef) patch.loadRef = null;

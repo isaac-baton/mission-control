@@ -52,7 +52,10 @@ def backdrop(key):
 def card(key):
     hue, _ = HUES[key]
     name, desc, guard = META[key]
-    return f'''            <div data-aiflash="{{{{ {key}Flash }}}}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+    # The Backhaul card carries a spotlight hook: the June review's
+    # "Enable the Backhaul agent" CTA lands here with a purple glow.
+    spot = ' data-spot="{{ bhSpot }}"' if key == 'agBh' else ''
+    return f'''            <div data-aiflash="{{{{ {key}Flash }}}}"{spot} style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
               {backdrop(key)}
               <div style="position:relative;display:flex;align-items:center;gap:12px">
                 <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{hue}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">{ICONS[key]}</svg></span>

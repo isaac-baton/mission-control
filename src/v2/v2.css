@@ -100,3 +100,11 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 [data-aask][data-ptheme="dark"] button[style*="border-radius:999px"]:hover{background:rgba(255,255,255,0.14) !important}
 [data-aask][data-ptheme="dark"] button[aria-label="Back"]:hover{background:rgba(255,255,255,0.08) !important}
 [data-aask][data-ptheme="dark"] [style*="padding:9px 12px"]:hover{background:rgba(255,255,255,0.06) !important}
+
+/* Review CTA spotlight: the Backhaul card glows purple (its own aura hue)
+   until the user toggles an agent, opens a log, or leaves the tab. */
+[data-spot="on"]{border-color:rgba(167,139,250,0.7) !important;animation:bhSpot 1.8s ease-in-out infinite}
+@keyframes bhSpot{
+  0%,100%{box-shadow:0 0 0 1px rgba(167,139,250,0.5),0 0 26px rgba(139,92,246,0.32),0 0 64px rgba(139,92,246,0.16)}
+  50%{box-shadow:0 0 0 2px rgba(167,139,250,0.9),0 0 42px rgba(139,92,246,0.55),0 0 92px rgba(139,92,246,0.28)}
+}

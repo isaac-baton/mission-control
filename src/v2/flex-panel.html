@@ -82,6 +82,43 @@
             </div>
           </div>
           </sc-if>
+<sc-if value="{{ flexPanelT }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Backhaul tender decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Send the MEM → DAL backhaul tender</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Expires Fri</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">3 loads/wk · Ryder-managed freight · drafted today 5:45 AM</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:14px 18px">
+              <div style="display:flex;align-items:flex-start;gap:10px;background:#E8F5F0;border-left:3px solid #1F7A61;border-radius:8px;padding:11px 14px">
+                <svg style="flex:none;margin-top:1px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path></svg>
+                <span style="font-size:12.5px;color:#1F7A61;line-height:1.5">Your Memphis → Dallas return leg runs empty after the Tuesday and Thursday deliveries, and the Ryder network desk has matching managed freight ready to ride it.</span>
+              </div>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Gross at market</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$3.9K/wk</div><div style="font-size:11px;color:#696B6F;margin-top:1px">3 loads/wk</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Credits to you</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">≈$2.7K/wk</div><div style="font-size:11px;color:#696B6F;margin-top:1px">net against your invoice</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Annualized</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">≈$142K/yr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">this lane alone</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">No new carriers — the loads are Ryder-managed freight moving on your existing return leg</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Outbound service is untouched — the tender fills empty miles only</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Expires Friday — the desk re-prices weekly, and the agent re-drafts next cycle if this one lapses</span></div>
+              </div>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">If you pass</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.6">The leg keeps running empty at <b style="font-weight:600;color:#1D1D20">≈$3.9K/wk</b> unrealized, and empty miles hold at <b style="font-weight:600;color:#1D1D20">18.4%</b>. Across all three scoped return lanes the gap is <b style="font-weight:600;color:#1D1D20">≈$458K/yr</b> gross at market.</div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ tenderSend }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Approve &amp; send tender</button>
+              <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:8px"><span style="font-size:11px;color:#696B6F">Sends to the Ryder network desk · logged · nothing moves without your sign-off</span><button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11px;font-weight:500;color:#A9AAAC;cursor:pointer">Dismiss instead</button></div>
+            </div>
+          </div>
+          </sc-if>
 <sc-if value="{{ flexPanelS }}">
           <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Storm plan decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
             <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">

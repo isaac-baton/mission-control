@@ -135,6 +135,14 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
 [data-aask][data-ptheme="dark"] button[style*="border-radius:999px"]:hover{background:rgba(255,255,255,0.14) !important}
 [data-aask][data-ptheme="dark"] button[aria-label="Back"]:hover{background:rgba(255,255,255,0.08) !important}
 [data-aask][data-ptheme="dark"] [style*="padding:9px 12px"]:hover{background:rgba(255,255,255,0.06) !important}
+
+/* Review CTA spotlight: the Backhaul card glows purple (its own aura hue)
+   until the user toggles an agent, opens a log, or leaves the tab. */
+[data-spot="on"]{border-color:rgba(167,139,250,0.7) !important;animation:bhSpot 1.8s ease-in-out infinite}
+@keyframes bhSpot{
+  0%,100%{box-shadow:0 0 0 1px rgba(167,139,250,0.5),0 0 26px rgba(139,92,246,0.32),0 0 64px rgba(139,92,246,0.16)}
+  50%{box-shadow:0 0 0 2px rgba(167,139,250,0.9),0 0 42px rgba(139,92,246,0.55),0 0 92px rgba(139,92,246,0.28)}
+}
 </style>
 <style>body:not(.dc-ready){visibility:hidden}x-dc{display:contents}</style>
 </head>
@@ -894,7 +902,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
             <sc-if value="{{ actIdle }}">
             <div style="margin-top:28px">
               <button data-aiglow="cta" onClick="{{ enableIntel }}" style="background:#1D1D20;color:#fff;border:0;border-radius:10px;padding:0 26px;height:44px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap">Enable RyderShare Intelligence</button>
-              <div style="font-size:12px;color:#696B6F;margin-top:14px">There is no setup—it reads the RyderShare data you already have · Preview for Summit Beverage Group</div>
+              <div style="font-size:12px;color:#696B6F;margin-top:14px">No setup · Reads the RyderShare data you already have · Preview for Summit Beverage Group</div>
             </div>
             </sc-if>
 
@@ -937,7 +945,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">The digest reads your week first</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Every morning the digest covers on-time, cost per stop, and the two things worth your attention, and it writes itself from your live loads and invoices before you sit down.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">It covers on-time, cost per stop, and the two things worth your attention, written from your live loads before you sit down.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">96.2% on-time, explained · generated 6:02 AM</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -945,7 +953,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Ask anything and get a cited answer</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Ask why June ran 8% higher or what your empty backhaul is worth, and you get a chart-backed answer with sources you can audit—your data shows its work.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Ask why June ran 8% higher and you get a chart-backed answer with sources you can audit.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Found for SBG: ≈ $458K/yr in empty return lanes</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -953,7 +961,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#F5F6F6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#44464B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="14" y2="17"></line></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Your business review in 42 seconds</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">Intelligence generates the review your team assembles by hand today—for every account, every month, from invoice bridge to open opportunities.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">It generates the review your team assembles by hand today—every account, every month.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">June review ready Jul 1 · 214 lines audited against contract</div>
             </div>
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:22px">
@@ -961,14 +969,14 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <span style="width:32px;height:32px;border-radius:6px;background:#FEF9E6;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.33A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.97"></path><path d="m13 12-3 5h4l-3 5"></path></svg></span>
                 <span style="font-size:15px;font-weight:600;color:#1D1D20">Ahead of the storm</span>
               </div>
-              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">At-risk loads get flagged days early with a recommended plan—pre-loads, reroutes, and receiver notices. You approve it and it happens.</div>
+              <div style="font-size:13px;color:#303235;line-height:1.55;margin-top:10px">At-risk loads get flagged days early with a plan ready—you approve it and it happens.</div>
               <div style="font-size:11.5px;color:#A9AAAC;margin-top:10px">Thursday handled Tuesday · 6 avoided failures for +$1,840</div>
             </div>
           </div>
 
           <!-- Agents -->
           <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:36px 0 6px">A workforce of eight agents</div>
-          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Agents act within approved guardrails—every action is logged and reversible, and nothing cost-bearing ships without your decision. Alongside these four: Detention &amp; dwell, Documents &amp; POD, a Safety coach for Ryder’s drivers, and Adaptive capacity, which re-prices every lane against the spot market and flexes loads between dedicated and brokerage.</div>
+          <div style="font-size:13px;color:#303235;line-height:1.55;margin-bottom:12px">Here are four of the eight. Every action is logged and reversible, and nothing cost-bearing ships without your decision.</div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
             <div style="background:#fff;border:1px solid #E3E4E5;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:14px 16px">
               <span style="width:28px;height:28px;border-radius:6px;background:#ECF4F9;display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#276A92" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"></path><path d="M22 2 11 13"></path></svg></span>
@@ -995,7 +1003,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
           <!-- Trust -->
           <div data-aiedge="" style="position:relative;overflow:hidden;background:#fff;border:1px solid #E3E4E5;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.15);padding:20px 24px;margin-top:36px">
             <div style="font-size:15px;font-weight:600;color:#1D1D20">Every answer shows its work</div>
-            <div style="font-size:13px;color:#303235;line-height:1.6;margin-top:8px;max-width:760px">Intelligence reads the same records that run your freight—loads, invoices, telemetry, contracts. Answers cite their sources, agents keep an audit log, and you stay the approver on anything that costs money.</div>
+            <div style="font-size:13px;color:#303235;line-height:1.6;margin-top:8px;max-width:760px">Answers cite the records that run your freight, agents keep an audit log, and you stay the approver on anything that costs money.</div>
           </div>
 
           <!-- Bottom CTA -->
@@ -1528,7 +1536,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <div style="font-size:11.5px;color:#A9AAAC">Also waiting</div>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
                   <sc-if value="{{ tenderOn }}">
-                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Backhaul tender</b> · ≈$3.9K/wk · expires Fri <button data-q="q5" onClick="{{ askQ }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Review →</button> <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;color:#A9AAAC;cursor:pointer;margin-left:6px">Dismiss</button></div>
+                  <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;box-shadow:0 2px 12px rgba(16,17,20,0.04);padding:12px 18px;font-size:13px;color:#303235"><b style="font-weight:600">Backhaul tender</b> · ≈$3.9K/wk · expires Fri <button data-f="t" onClick="{{ openFlexPanel }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:13px;font-weight:500;color:#307CA7;cursor:pointer;margin-left:8px">Review →</button> <button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;color:#A9AAAC;cursor:pointer;margin-left:6px">Dismiss</button></div>
                   </sc-if>
                   <sc-if value="{{ tenderSentR }}">
                   <div style="background:#fff;border:1px solid #ECEDEE;border-radius:10px;padding:12px 18px;font-size:13px;color:#1F7A61;font-weight:500">✓ Tender sent—MEM → DAL to the network desk</div>
@@ -1735,7 +1743,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                 <button data-log="agAudit" onClick="{{ openAgLog }}" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#E8EAED;border-radius:7px;padding:6px 13px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;white-space:nowrap" style-hover="background:rgba(255,255,255,0.12)">View history</button>
               </div>
             </div>
-            <div data-aiflash="{{ agBhFlash }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
+            <div data-aiflash="{{ agBhFlash }}" data-spot="{{ bhSpot }}" style="position:relative;background:#17181C;border:1px solid #26272C;border-radius:14px;padding:24px 26px;display:flex;flex-direction:column;gap:12px">
               <div style="position:absolute;inset:0;border-radius:13px;overflow:hidden;pointer-events:none" aria-hidden="true"><svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 520 260" preserveAspectRatio="xMidYMid slice"><defs><radialGradient id="wfaBh" cx="82%" cy="10%" r="75%"><stop offset="0%" stop-color="#A78BFA" stop-opacity="0.34"/><stop offset="55%" stop-color="#A78BFA" stop-opacity="0.10"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/></radialGradient><radialGradient id="wfbBh" cx="8%" cy="100%" r="60%"><stop offset="0%" stop-color="#A78BFA" stop-opacity="0.14"/><stop offset="100%" stop-color="#A78BFA" stop-opacity="0"/></radialGradient></defs><rect width="520" height="260" fill="url(#wfaBh)"/><rect width="520" height="260" fill="url(#wfbBh)"/></svg><svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-opacity="0.11" stroke-width="0.45" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:-20px;bottom:-34px;transform:rotate(-9deg)"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></div>
               <div style="position:relative;display:flex;align-items:center;gap:12px">
                 <span style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);display:flex;align-items:center;justify-content:center;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg></span>
@@ -1943,7 +1951,7 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
                   <span style="font-size:14px;font-weight:600;color:#696B6F;min-width:18px;font-variant-numeric:tabular-nums">1</span>
                   <div style="flex:1;min-width:260px"><div style="font-size:14px;font-weight:600;color:#1D1D20">Backhaul capacity</div><div style="font-size:13px;color:#696B6F;margin-top:3px">Three return lanes run empty on a regular schedule.</div></div>
                   <span style="display:inline-block;background:#E8F5F0;color:#1F7A61;font-size:12px;font-weight:600;padding:3px 8px;border-radius:4px;white-space:nowrap">≈ $458K/yr gross</span>
-                  <span style="font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Discuss with Marcus Reed →</span>
+                  <button onClick="{{ goBhAgent }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:12.5px;font-weight:500;color:#307CA7;cursor:pointer;white-space:nowrap">Enable the Backhaul agent →</button>
                 </div>
                 <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #F0F0F1;flex-wrap:wrap">
                   <span style="font-size:14px;font-weight:600;color:#696B6F;min-width:18px;font-variant-numeric:tabular-nums">2</span>
@@ -2140,6 +2148,43 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
             <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
               <button onClick="{{ flexOut }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Flex to brokerage</button>
               <div style="font-size:11px;color:#696B6F;margin-top:8px;text-align:center">Critical loads never flex · logged and reversible · nothing moves without your sign-off</div>
+            </div>
+          </div>
+          </sc-if>
+<sc-if value="{{ flexPanelT }}">
+          <div data-flexp="" data-aglog="" data-ptheme="{{ pageTheme }}" data-screen-label="Backhaul tender decision" style="position:fixed;top:48px;right:0;bottom:0;width:560px;max-width:calc(100vw - 120px);background:#fff;border-left:1px solid #E3E4E5;box-shadow:-8px 0 24px rgba(0,0,0,0.08);z-index:12;display:flex;flex-direction:column;animation:toastIn .18s ease both">
+            <div style="display:flex;align-items:center;gap:10px;padding:16px 18px 12px;border-bottom:1px solid #E3E4E5">
+              <span style="width:32px;height:32px;border-radius:6px;background:#E8F5F0;display:flex;align-items:center;justify-content:center;flex:none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"></path><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"></path><path d="m18 22 4-4-4-4"></path></svg></span>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <span style="font-size:15px;font-weight:600;color:#1D1D20">Send the MEM → DAL backhaul tender</span>
+                  <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;background:#FEF9E6;color:#655102">Expires Fri</span>
+                </div>
+                <div style="font-size:11.5px;color:#696B6F;margin-top:2px">3 loads/wk · Ryder-managed freight · drafted today 5:45 AM</div>
+              </div>
+              <button onClick="{{ closeFlexPanel }}" aria-label="Close decision panel" style="width:30px;height:30px;border-radius:6px;background:none;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#696B6F;flex:none" style-hover="background:#F5F6F6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="flex:1;overflow:auto;padding:14px 18px">
+              <div style="display:flex;align-items:flex-start;gap:10px;background:#E8F5F0;border-left:3px solid #1F7A61;border-radius:8px;padding:11px 14px">
+                <svg style="flex:none;margin-top:1px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"></path><path d="m18 2 4 4-4 4"></path></svg>
+                <span style="font-size:12.5px;color:#1F7A61;line-height:1.5">Your Memphis → Dallas return leg runs empty after the Tuesday and Thursday deliveries, and the Ryder network desk has matching managed freight ready to ride it.</span>
+              </div>
+              <div style="display:flex;gap:0;margin-top:14px;border:1px solid #E3E4E5;border-radius:6px;overflow:hidden">
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Gross at market</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">$3.9K/wk</div><div style="font-size:11px;color:#696B6F;margin-top:1px">3 loads/wk</div></div>
+                <div style="flex:1;padding:10px 14px;border-right:1px solid #ECEDED"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Credits to you</div><div style="font-size:15px;font-weight:600;color:#1F7A61;margin-top:2px">≈$2.7K/wk</div><div style="font-size:11px;color:#696B6F;margin-top:1px">net against your invoice</div></div>
+                <div style="flex:1;padding:10px 14px"><div style="font-size:10px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F">Annualized</div><div style="font-size:15px;font-weight:600;color:#1D1D20;margin-top:2px">≈$142K/yr</div><div style="font-size:11px;color:#696B6F;margin-top:1px">this lane alone</div></div>
+              </div>
+              <div style="margin-top:14px">
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">No new carriers—the loads are Ryder-managed freight moving on your existing return leg</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F7A61" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span style="font-size:12.5px;color:#303235">Outbound service is untouched—the tender fills empty miles only</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 0"><svg style="flex:none" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#655102" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span style="font-size:12.5px;color:#303235">Expires Friday—the desk re-prices weekly, and the agent re-drafts next cycle if this one lapses</span></div>
+              </div>
+              <div style="font-size:11px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;color:#696B6F;margin:14px 0 6px">If you pass</div>
+              <div style="font-size:12.5px;color:#303235;line-height:1.6">The leg keeps running empty at <b style="font-weight:600;color:#1D1D20">≈$3.9K/wk</b> unrealized, and empty miles hold at <b style="font-weight:600;color:#1D1D20">18.4%</b>. Across all three scoped return lanes the gap is <b style="font-weight:600;color:#1D1D20">≈$458K/yr</b> gross at market.</div>
+            </div>
+            <div style="padding:14px 18px;border-top:1px solid #E3E4E5;background:#FAFAFA">
+              <button onClick="{{ tenderSend }}" style="width:100%;background:#1D1D20;color:#fff;border:0;border-radius:6px;padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">Approve &amp; send tender</button>
+              <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-top:8px"><span style="font-size:11px;color:#696B6F">Sends to the Ryder network desk · logged · nothing moves without your sign-off</span><button onClick="{{ tenderDismiss }}" style="background:none;border:0;padding:0;font-family:inherit;font-size:11px;font-weight:500;color:#A9AAAC;cursor:pointer">Dismiss instead</button></div>
             </div>
           </div>
           </sc-if>
@@ -3335,6 +3380,7 @@ class ComponentV2 extends Component {
     this.state.flexOutDone = false;  // scenario B: Dallas → Austin flexed out
     this.state.flexPanel = null;     // 'a'|'b'|'s': which decision panel is open
     this.state.agRoster = false;     // agents-on-shift roster panel
+    this.state.bhSpot = false;       // review CTA spotlight on the Backhaul card
     this.state.briefOpen = null;     // (legacy accordion key—harmless)
     this.state.tlHist = false;       // feed history: collapsed on every load
     this.state.riskExpanded = false; // approved incident details re-expand
@@ -3656,10 +3702,13 @@ class ComponentV2 extends Component {
       v.flexPanelA = s.flexPanel === 'a' && !s.flexLockDone;
       v.flexPanelB = s.flexPanel === 'b' && !s.flexOutDone;
       v.flexPanelS = s.flexPanel === 's';
+      v.flexPanelT = s.flexPanel === 't' && !s.tenderGone;
       v.openFlexPanel = function (e) { self.setState({ flexPanel: e.currentTarget.dataset.f }); };
       v.closeFlexPanel = function () { self.setState({ flexPanel: null }); };
       v.flexLock = function () { self.setState({ flexLockDone: true, flexPanel: null }); };
       v.flexOut = function () { self.setState({ flexOutDone: true, flexPanel: null }); };
+      v.tenderSend = function () { self.setState({ tenderSent: true, tenderGone: true, flexPanel: null }); };
+      v.tenderDismiss = function () { self.setState({ tenderGone: true, flexPanel: null }); };
       // Storm approve: the V1 approve flow, then the panel slides away.
       var baseApprove = v.approve;
       v.stormApprove = function () { baseApprove(); self.setState({ flexPanel: null }); };
@@ -3710,7 +3759,7 @@ class ComponentV2 extends Component {
       // Toggles sit inside clickable agent rows—don't let the tap bubble
       // into the row's open-log handler.
       var baseTog = v.agToggle;
-      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); };
+      v.agToggle = function (e) { if (e.stopPropagation) e.stopPropagation(); baseTog(e); if (self.state.bhSpot) self.setState({ bhSpot: false }); };
       // Weather response is Intelligence: pre-enable the map carries no storm overlay.
       if (!s.intel) v.stormOp = '0';
       v.showLanding = s.route === 'insights' && !s.intel;
@@ -3771,9 +3820,14 @@ class ComponentV2 extends Component {
       v.agLogStatusOff = !!(s.agLog && !s[s.agLog]);
       v.openAgLog = function (e) {
         if (e.stopPropagation) e.stopPropagation();
-        self.setState({ agLog: e.currentTarget.dataset.log });
+        self.setState({ agLog: e.currentTarget.dataset.log, bhSpot: false });
       };
       v.closeAgLog = function () { self.setState({ agLog: null }); };
+      // Review recommendation #1 → the Agents tab with the Backhaul card
+      // spotlit (no side panel)—the user flips the agent on themselves.
+      // nav first: the route-change patch clears bhSpot, so set it after.
+      v.goBhAgent = function () { self.nav('workforce'); self.setState({ bhSpot: true }); };
+      v.bhSpot = s.bhSpot ? 'on' : 'off';
       return v;
     };
   }
@@ -3850,6 +3904,7 @@ class ComponentV2 extends Component {
       if (this.state.agLog) patch.agLog = null;
       if (this.state.flexPanel) patch.flexPanel = null;
       if (this.state.agRoster) patch.agRoster = false;
+      if (this.state.bhSpot) patch.bhSpot = false;
       if (this.state.briefOpen) patch.briefOpen = null;
       if (this.state.tlHist) patch.tlHist = false;
       if (this.state.loadRef) patch.loadRef = null;
