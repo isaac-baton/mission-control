@@ -379,17 +379,27 @@ _ap_end = markup.find('</a>', _ap) + len('</a>')
 markup = markup[:_ap_end] + '\n    ' + AGENTS_TAB + markup[_ap_end:]
 applied.append("agents rail tab (1)")
 
-# Rail order: Shipments · Network · Insights · Reviews · Autopilot · Agents —
-# the Reviews item moves up so the two agentic tabs sit together at the bottom.
-_rv = markup.find('<a href="#/reviews" data-intel-only="" ')
-assert _rv > 0, "reviews rail item not found"
-_rv_end = markup.find('</a>', _rv) + len('</a>')
-reviews_item = markup[_rv:_rv_end]
-markup = markup[:_rv] + markup[_rv_end:]
-_ap2 = markup.find('<a href="#/agents" data-intel-only="" ')
-assert 0 < _ap2 < _rv, "autopilot rail item must precede the old reviews slot"
-markup = markup[:_ap2] + reviews_item + '\n    ' + markup[_ap2:]
-applied.append("rail reordered: reviews before autopilot (1)")
+# Rail order: Insights · Shipments · Network · Autopilot · Reviews · Agents
+# (Isaac, 2026-07-20). Extract the six rail anchors (identified by their
+# 56px rail style, so in-page links to the same routes are not touched)
+# and re-emit them in order at the first one's position.
+RAIL_ORDER = ['#/insights', '#/shipments', '#/network', '#/agents', '#/reviews', '#/workforce']
+_items = []
+for _href in RAIL_ORDER:
+    _j = 0
+    while True:
+        _j = markup.find(f'<a href="{_href}" ', _j)
+        assert _j > 0, f"rail item not found: {_href}"
+        if 'height:56px' in markup[_j:_j + 420]:
+            break
+        _j += 1
+    _e = markup.find('</a>', _j) + len('</a>')
+    _items.append((_j, _e, markup[_j:_e]))
+_first = min(_j for _j, _e, _h in _items)
+for _j, _e, _h in sorted(_items, reverse=True):
+    markup = markup[:_j] + markup[_e:]
+markup = markup[:_first] + '\n    '.join(_h for _j, _e, _h in _items) + markup[_first:]
+applied.append("rail reordered: Insights first, agentic tabs at the bottom (1)")
 
 # T11b2 — the audit-log side panel itself, mounted inside the agents route
 agent_log = (V2 / "agent-log.html").read_text(encoding="utf-8")

@@ -147,6 +147,13 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
     <div style="display:flex;align-items:center;justify-content:center;height:56px">
       <div style="width:32px;height:32px;background:#fff;border-radius:7px;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-label="RyderShare Intelligence"><path d="M5 17 L12 5 L19 17" stroke="#CE1126" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="5" cy="17" r="2.6" fill="#CE1126"></circle><circle cx="12" cy="5" r="2.6" fill="#CE1126"></circle><circle cx="19" cy="17" r="2.6" fill="#303235"></circle></svg></div>
     </div>
+    <a href="#/insights" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+      <sc-if value="{{ isInsights }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
+      <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>
+      
+      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
+      <span style="position:relative;font-size:10px;font-weight:500">Insights</span>
+    </a>
     <a href="#/shipments" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isShipments }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
@@ -157,29 +164,26 @@ header,[data-pbar],[data-badge]{transition:background-color .45s ease,border-col
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.1 5.55a2 2 0 0 0 1.8 0l3.65-1.83A1 1 0 0 1 21 4.62v12.76a1 1 0 0 1-.55.9l-4.55 2.27a2 2 0 0 1-1.8 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.65 1.83A1 1 0 0 1 3 19.38V6.62a1 1 0 0 1 .55-.9L8.1 3.45a2 2 0 0 1 1.8 0z"></path><path d="M15 5.76v15"></path><path d="M9 3.24v15"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Network</span>
     </a>
-    <a href="#/insights" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
-      <sc-if value="{{ isInsights }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <span data-intel-off-only="" style="position:absolute;top:7px;right:15px;width:8px;height:8px;border-radius:50%;background:#5AC8FA;z-index:2;animation:dotPulse 2.4s ease infinite"></span>
-      
-      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5a2 2 0 0 0-1.44-1.44l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"></path><path d="M19 3v3"></path><path d="M20.5 4.5h-3"></path></svg>
-      <span style="position:relative;font-size:10px;font-weight:500">Insights</span>
-    </a>
-    <a href="#/reviews" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
-      <sc-if value="{{ isReviews }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
-      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 18v-1"></path><path d="M12 18v-6"></path><path d="M16 18v-3"></path></svg>
-      <span style="position:relative;font-size:10px;font-weight:500">Reviews</span>
-    </a>
     <a href="#/agents" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isAgents }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Autopilot</span>
     </a>
+    <a href="#/reviews" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
+      <sc-if value="{{ isReviews }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
+      <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M8 18v-1"></path><path d="M12 18v-6"></path><path d="M16 18v-3"></path></svg>
+      <span style="position:relative;font-size:10px;font-weight:500">Reviews</span>
+    </a>
     <a href="#/workforce" data-intel-only="" style="position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;height:56px;text-decoration:none;color:rgba(255,255,255,0.78)" style-hover="background:rgba(255,255,255,0.06)">
       <sc-if value="{{ isWorkforce }}"><span style="position:absolute;inset:0;background:#1D1D20;box-shadow:inset 2px 0 0 #CE1126"></span></sc-if>
       <svg style="position:relative" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="14" height="11" rx="2"></rect><path d="M12 9V5"></path><circle cx="12" cy="4" r="1"></circle><path d="M9.5 13.5v2"></path><path d="M14.5 13.5v2"></path><path d="M2 14h3"></path><path d="M19 14h3"></path></svg>
       <span style="position:relative;font-size:10px;font-weight:500">Agents</span>
     </a>
+    
+    
+    
+    
     
     
     
